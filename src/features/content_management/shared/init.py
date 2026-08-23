@@ -33,6 +33,12 @@ from src.features.content_management.update_resource_status.update_resource_stat
 from src.features.content_management.get_recommended_content.get_recommended_content_endpoint import (
     router as get_recommended_content_router,
 )
+from src.features.content_management.update_content_path_status.update_content_path_status_endpoint import (
+    router as update_content_path_status_router,
+)
+from src.features.content_management.get_learning_path_progress.get_learning_path_progress_endpoint import (
+    router as get_learning_path_progress_router,
+)
 
 router = APIRouter()
 router.include_router(get_all_contents_router)
@@ -46,3 +52,5 @@ router.include_router(get_contents_by_category_topic_router)
 router.include_router(update_resource_content_router)
 router.include_router(update_resource_status_router)
 router.include_router(get_recommended_content_router)
+router.include_router(update_content_path_status_router)
+router.include_router(get_learning_path_progress_router)

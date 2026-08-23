@@ -17,6 +17,9 @@ from src.features.content_management.get_contents_by_title.get_contents_by_title
 from src.features.content_management.get_contents_by_category_topic.get_contents_by_category_topic_handler import (
     GetContentsByCategoryTopicHandler,
 )
+from src.features.content_management.get_learning_path_progress.get_learning_path_progress_handler import (
+    GetLearningPathProgressHandler,
+)
 from src.features.content_management.get_recommended_content.get_recommended_content_handler import (
     GetRecommendedContentHandler,
 )
@@ -35,6 +38,9 @@ from src.features.content_management.shared.content_repository import (
 )
 from src.features.content_management.shared.learning_path_repository import (
     LearningPathRepository,
+)
+from src.features.content_management.update_content_path_status.update_content_path_status_handler import (
+    UpdateContentPathStatusHandler,
 )
 from src.features.content_management.update_resource_content.update_resource_content_handler import (
     UpdateResourceContentHandler,
@@ -166,3 +172,20 @@ def get_get_recommended_content_handler(
     ],
 ) -> GetRecommendedContentHandler:
     return GetRecommendedContentHandler(learning_path_repository)
+
+
+def get_update_content_path_status_handler(
+    learning_path_repository: Annotated[
+        LearningPathRepository, Depends(get_learning_path_repository)
+    ],
+) -> UpdateContentPathStatusHandler:
+    return UpdateContentPathStatusHandler(learning_path_repository)
+
+
+def get_get_learning_path_progress_handler(
+    learning_path_repository: Annotated[
+        LearningPathRepository, Depends(get_learning_path_repository)
+    ],
+) -> GetLearningPathProgressHandler:
+
+    return GetLearningPathProgressHandler(learning_path_repository)

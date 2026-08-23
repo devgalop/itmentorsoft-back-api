@@ -25,7 +25,7 @@ router = APIRouter()
     status_code=200,
     summary="Get recommended content for a student",
     description="Retrieve recommended content for a student based on their learning path.",
-    tags=["Content Management"],
+    tags=["Learning Path Management"],
     responses={
         200: {
             "description": "Recommended content retrieved successfully.",
