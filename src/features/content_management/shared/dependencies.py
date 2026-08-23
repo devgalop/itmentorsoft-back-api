@@ -17,6 +17,9 @@ from src.features.content_management.get_contents_by_title.get_contents_by_title
 from src.features.content_management.get_contents_by_category_topic.get_contents_by_category_topic_handler import (
     GetContentsByCategoryTopicHandler,
 )
+from src.features.content_management.get_recommended_content.get_recommended_content_handler import (
+    GetRecommendedContentHandler,
+)
 from src.features.content_management.get_resource_content.get_resource_content_handler import (
     GetResourceContentHandler,
 )
@@ -30,6 +33,9 @@ from src.features.content_management.shared.content import ResourceContentBuilde
 from src.features.content_management.shared.content_repository import (
     ResourceContentRepository,
 )
+from src.features.content_management.shared.learning_path_repository import (
+    LearningPathRepository,
+)
 from src.features.content_management.update_resource_content.update_resource_content_handler import (
     UpdateResourceContentHandler,
 )
@@ -39,8 +45,14 @@ from src.features.content_management.update_resource_status.update_resource_stat
 from src.infrastructure.database.postgresql.models.postgresql_content_rating_mapper import (
     RateContentMapper,
 )
+from src.infrastructure.database.postgresql.models.postgresql_learning_path_mapper import (
+    PostgresLearningPathMapper,
+)
 from src.infrastructure.database.postgresql.models.postgresql_resource_content_mapper import (
     ResourceContentMapper,
+)
+from src.infrastructure.database.postgresql.repository.postgres_learning_path_repository import (
+    PostgresLearningPathRepository,
 )
 from src.infrastructure.database.postgresql.repository.postgres_resource_content_repository import (
     PostgresResourceContentRepository,
@@ -138,3 +150,19 @@ def get_update_resource_status_handler(
     ],
 ) -> UpdateResourceStatusHandler:
     return UpdateResourceStatusHandler(content_repository)
+
+
+def get_learning_path_repository(
+    session: Annotated[AsyncSession, Depends(get_db)],
+) -> PostgresLearningPathRepository:
+    return PostgresLearningPathRepository(
+        session_factory=session, mapper=PostgresLearningPathMapper
+    )
+
+
+def get_get_recommended_content_handler(
+    learning_path_repository: Annotated[
+        LearningPathRepository, Depends(get_learning_path_repository)
+    ],
+) -> GetRecommendedContentHandler:
+    return GetRecommendedContentHandler(learning_path_repository)

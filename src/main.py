@@ -18,6 +18,7 @@ from src.infrastructure.database.postgresql.shared.postgresql_database_session i
 )
 from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
     seed_assessments,
+    seed_contents,
     seed_database,
 )
 from src.infrastructure.security.bcrypt_password_hasher import BcryptPasswordHasher
@@ -31,6 +32,7 @@ async def lifespan(app: FastAPI):
     await seed_database(BcryptPasswordHasher())
     await seed_questions()
     await seed_assessments()
+    await seed_contents()
     print("Application startup complete.")
     print("Starting the SQS consumer services...")
     evaluate_contract = EvaluateAssessmentHandler(EvaluateAssessmentService())

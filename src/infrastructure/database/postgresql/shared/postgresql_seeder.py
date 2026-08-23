@@ -15,8 +15,14 @@ from src.infrastructure.database.postgresql.models.postgresql_assessment_model i
     ClassificationResultEntity,
     TopicResultEntity,
 )
+from src.infrastructure.database.postgresql.models.postgresql_content_rating import (
+    ContentRating,
+)
 from src.infrastructure.database.postgresql.models.postgresql_question_model import (
     QuestionEntity,
+)
+from src.infrastructure.database.postgresql.models.postgresql_resource_content import (
+    ResourceContentEntity,
 )
 from src.infrastructure.database.postgresql.models.postgresql_role_model import (
     RoleEntity,
@@ -219,4 +225,48 @@ async def seed_assessments():
                     f"Knowledge profile created for student {student.username} with status {is_enabled}"
                 )
 
+        await session.commit()
+
+
+async def seed_contents():
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(select(ResourceContentEntity))
+        contents = result.scalars().all()
+
+        if contents:
+            print("Contents already seeded. Skipping seeding.")
+            return
+        topics_result = await session.execute(
+            select(QuestionEntity.classification).distinct()
+        )
+        topics = topics_result.scalars().all()
+        students = await session.execute(
+            select(UserEntity).where(UserEntity.username.contains("student"))
+        )
+        students = students.scalars().all()
+        contents = []
+        ratings = []
+        for topic in topics:
+            for i in range(1, 30):
+                content_id = uuid.uuid4().hex
+                content = ResourceContentEntity(
+                    id=content_id,
+                    title=f"Sample Content {i}",
+                    summary=f"This is a description for Sample Content {i}.",
+                    category="básico" if i % 2 == 0 else "intermedio",
+                    url=f"https://example.com/content/{i}",
+                    related_topics=f"{topic}",
+                )
+                contents.append(content)
+                rating = ContentRating(
+                    id=uuid.uuid4().hex,
+                    content_id=content_id,
+                    user_id=students[i % len(students)].id,
+                    rating=secrets.randbelow(5) + 1,
+                )
+                ratings.append(rating)
+            print(f"Sample contents created for topic {topic}")
+        session.add_all(contents)
+        session.add_all(ratings)
+        print("Sample contents created")
         await session.commit()
