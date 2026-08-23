@@ -5,6 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.features.content_management.shared.learning_path import (
     ContentByTopic,
     LearningPath,
+    LearningPathProgress,
+    LearningPathProgressResponse,
     LearningPathResponse,
 )
 from src.features.content_management.shared.learning_path_repository import (
@@ -18,6 +20,9 @@ from src.infrastructure.database.postgresql.models.postgresql_content_rating imp
 )
 from src.infrastructure.database.postgresql.models.postgresql_learning_path_mapper import (
     PostgresLearningPathMapper,
+)
+from src.infrastructure.database.postgresql.models.postgresql_learning_path_model import (
+    LearningPathContentEntity,
 )
 from src.infrastructure.database.postgresql.models.postgresql_resource_content import (
     ResourceContentEntity,
@@ -96,3 +101,59 @@ class PostgresLearningPathRepository(LearningPathRepository):
         self.session_factory.add(learning_path_entity)
         self.session_factory.add_all(learning_path_contents)
         await self.session_factory.commit()
+
+    async def update_status_content_path(
+        self, path_id: str, content_id: str, status: bool
+    ) -> LearningPathProgressResponse:
+        smt = select(LearningPathContentEntity).where(
+            LearningPathContentEntity.learning_path_id == path_id,
+            LearningPathContentEntity.content_id == content_id,
+        )
+        result_content_path = await self.session_factory.execute(smt)
+        content_path = result_content_path.scalars().one()
+        if not content_path:
+            return LearningPathProgressResponse(
+                is_success=False,
+                message="Content path not found.",
+                path_progress=None,
+            )
+
+        content_path.is_completed = status
+        await self.session_factory.commit()
+
+        progress = await self.get_learning_path_progress(path_id)
+        if not progress.is_success:
+            return LearningPathProgressResponse(
+                is_success=False,
+                message="Learning path not found.",
+                path_progress=None,
+            )
+
+        return LearningPathProgressResponse(
+            is_success=True,
+            message="Content path status updated successfully.",
+            path_progress=progress.path_progress,
+        )
+
+    async def get_learning_path_progress(
+        self, path_id: str
+    ) -> LearningPathProgressResponse:
+        stmt = select(LearningPathContentEntity).where(
+            LearningPathContentEntity.learning_path_id == path_id
+        )
+        result = await self.session_factory.execute(stmt)
+        contents = result.scalars().all()
+        if not contents:
+            return LearningPathProgressResponse(
+                is_success=False,
+                message="Learning path not found.",
+                path_progress=None,
+            )
+        total = len(contents)
+        completed = sum(1 for content in contents if content.is_completed)
+        progress = (completed / total) * 100 if total > 0 else 0.0
+        return LearningPathProgressResponse(
+            is_success=True,
+            message="Learning path progress retrieved successfully.",
+            path_progress=LearningPathProgress(path_id=path_id, progress=progress),
+        )

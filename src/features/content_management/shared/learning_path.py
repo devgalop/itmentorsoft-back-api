@@ -29,3 +29,18 @@ class LearningPathResponse:
         self.is_success = is_success
         self.message = message
         self.recommendation = recommendation
+
+
+class LearningPathProgress:
+    def __init__(self, path_id: str, progress: float):
+        self.path_id = path_id
+        self.progress = progress
+
+
+class LearningPathProgressResponse:
+    def __init__(
+        self, is_success: bool, message: str, path_progress: LearningPathProgress | None
+    ):
+        self.is_success = is_success
+        self.message = message
+        self.path_progress = path_progress
