@@ -18,6 +18,7 @@ from src.features.content_management.rate_content.rate_content_request import (
 from src.features.content_management.shared.content import (
     PaginatedResourceContentResult,
     ResourceContent,
+    ResourceContentRating,
     ResourceContentResponse,
 )
 from src.features.content_management.update_resource_content.update_resource_content_request import (
@@ -136,5 +137,19 @@ class ResourceContentRepository(ABC):
             new_status (bool): The new status to be set for the educational resource content
         Returns:
             bool: True if the update was successful, False otherwise
+        """
+        pass
+
+    @abstractmethod
+    async def get_top_content(
+        self, topic: str, limit: int, order: str = "desc"
+    ) -> list[ResourceContentRating]:
+        """Get the top educational resource contents based on rating for a specific topic
+        Args:
+            topic (str): The topic to filter the educational resource contents
+            limit (int): The maximum number of top educational resource contents to retrieve
+            order (str): The order of the ratings, either "desc" for descending or "asc" for ascending
+        Returns:
+            list[ResourceContentRating]: A list of the top educational resource contents based on rating for the specified topic
         """
         pass
