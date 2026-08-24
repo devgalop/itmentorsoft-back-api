@@ -26,6 +26,12 @@ from src.features.content_management.get_recommended_content.get_recommended_con
 from src.features.content_management.get_resource_content.get_resource_content_handler import (
     GetResourceContentHandler,
 )
+from src.features.content_management.get_top_best_content.get_top_best_content_handler import (
+    GetTopBestContentHandler,
+)
+from src.features.content_management.get_top_worse_content.get_top_worse_content_handler import (
+    GetTopWorseContentHandler,
+)
 from src.features.content_management.rate_content.rate_content_handler import (
     RateContentHandler,
 )
@@ -189,3 +195,19 @@ def get_get_learning_path_progress_handler(
 ) -> GetLearningPathProgressHandler:
 
     return GetLearningPathProgressHandler(learning_path_repository)
+
+
+def get_get_top_best_content_handler(
+    content_repository: Annotated[
+        ResourceContentRepository, Depends(get_resource_content_repository)
+    ],
+) -> GetTopBestContentHandler:
+    return GetTopBestContentHandler(content_repository)
+
+
+def get_get_top_worse_content_handler(
+    content_repository: Annotated[
+        ResourceContentRepository, Depends(get_resource_content_repository)
+    ],
+) -> GetTopWorseContentHandler:
+    return GetTopWorseContentHandler(content_repository)

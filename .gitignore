@@ -213,3 +213,5 @@ db/
 bandit/
 
 .atl/
+
+.sonar/

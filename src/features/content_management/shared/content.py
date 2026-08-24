@@ -16,6 +16,17 @@ class ContentCategory(Enum):
     PROFICIENT = "avanzado"
 
 
+class TopContentOrder(Enum):
+    """Top content order
+
+    Args:
+        Enum (Enum): Enum class for top content order.
+    """
+
+    DESCENDING = "desc"
+    ASCENDING = "asc"
+
+
 class ResourceContentResponse(BaseModel):
     """Represents a response for educational resource content
 
@@ -177,3 +188,20 @@ class ResourceContentBuilder:
             ResourceContent: The built content.
         """
         return self.content
+
+
+class ResourceContentRating:
+    """Represents a rating for educational resource content
+
+    Args:
+        content_id (str): The ID of the content.
+        title (str): The title of the content.
+        summary (str): The summary of the content.
+        rating (float): The rating of the content.
+    """
+
+    def __init__(self, content_id: str, title: str, summary: str, rating: float):
+        self.content_id = content_id
+        self.title = title
+        self.summary = summary
+        self.rating = rating

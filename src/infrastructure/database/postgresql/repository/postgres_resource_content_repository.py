@@ -19,6 +19,7 @@ from src.features.content_management.rate_content.rate_content_request import (
 from src.features.content_management.shared.content import (
     PaginatedResourceContentResult,
     ResourceContent,
+    ResourceContentRating,
     ResourceContentResponse,
 )
 from src.features.content_management.shared.content_repository import (
@@ -26,6 +27,9 @@ from src.features.content_management.shared.content_repository import (
 )
 from src.features.content_management.update_resource_content.update_resource_content_request import (
     UpdateResourceContentRequest,
+)
+from src.infrastructure.database.postgresql.models.postgresql_content_rating import (
+    ContentRating,
 )
 from src.infrastructure.database.postgresql.models.postgresql_content_rating_mapper import (
     RateContentMapper,
@@ -233,3 +237,35 @@ class PostgresResourceContentRepository(ResourceContentRepository):
         self.session_factory.add(content_entity)
         await self.session_factory.commit()
         return True
+
+    async def get_top_content(
+        self, topic: str, limit: int, order: str = "desc"
+    ) -> list[ResourceContentRating]:
+        smt = (
+            select(
+                ResourceContentEntity,
+                func.avg(ContentRating.rating).label("avg_rating"),
+            )
+            .join(ContentRating, ResourceContentEntity.id == ContentRating.content_id)
+            .where(ResourceContentEntity.related_topics.ilike(f"%{topic}%"))
+            .group_by(ResourceContentEntity.id)
+            .order_by(
+                func.avg(ContentRating.rating).desc()
+                if order == "desc"
+                else func.avg(ContentRating.rating).asc()
+            )
+            .limit(limit)
+        )
+        result = await self.session_factory.execute(smt)
+        content_entities = result.all()
+        if not content_entities:
+            return []
+        return [
+            ResourceContentRating(
+                content_id=entity.id,
+                title=entity.title,
+                summary=entity.summary,
+                rating=avg_rating,
+            )
+            for entity, avg_rating in content_entities
+        ]

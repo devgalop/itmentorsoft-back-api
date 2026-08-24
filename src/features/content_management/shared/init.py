@@ -39,6 +39,12 @@ from src.features.content_management.update_content_path_status.update_content_p
 from src.features.content_management.get_learning_path_progress.get_learning_path_progress_endpoint import (
     router as get_learning_path_progress_router,
 )
+from src.features.content_management.get_top_best_content.get_top_best_content_endpoint import (
+    router as get_top_best_content_router,
+)
+from src.features.content_management.get_top_worse_content.get_top_worse_content_endpoint import (
+    router as get_top_worse_content_router,
+)
 
 router = APIRouter()
 router.include_router(get_all_contents_router)
@@ -54,3 +60,5 @@ router.include_router(update_resource_status_router)
 router.include_router(get_recommended_content_router)
 router.include_router(update_content_path_status_router)
 router.include_router(get_learning_path_progress_router)
+router.include_router(get_top_best_content_router)
+router.include_router(get_top_worse_content_router)
