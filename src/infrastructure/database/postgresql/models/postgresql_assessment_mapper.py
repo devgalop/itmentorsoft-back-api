@@ -4,6 +4,7 @@ from src.features.assessments.shared.assessment import (
     Assessment,
     AssessmentAnswer,
     AssessmentQuiz,
+    AssessmentSummary,
 )
 from src.features.assessments.shared.classification_service import ClassificationResult
 from src.features.assessments.shared.qualifier_service import (
@@ -182,6 +183,30 @@ class PostgresAssessmentMapper:
         classification_result: ClassificationResult,
     ) -> ClassificationResultEntity:
         return PostgresClassificationResultMapper.to_entity(classification_result)
+
+    @staticmethod
+    def assessment_entity_to_summary(entity: AssessmentEntity) -> AssessmentSummary:
+        avg_score = (
+            sum(qualification.score for qualification in entity.qualifications)
+            / len(entity.qualifications)
+            if entity.qualifications
+            else 0.0
+        )
+        return AssessmentSummary(
+            assessment_id=entity.id,
+            score=avg_score,
+            date_taken=entity.created_at.strftime("%Y-%m-%d %H:%M"),
+            classification=(
+                entity.classification_result.classification
+                if entity.classification_result
+                else None
+            ),
+            feedback=(
+                entity.classification_result.feedback
+                if entity.classification_result
+                else None
+            ),
+        )
 
 
 class PostgresAssessmentAnswerMapper:

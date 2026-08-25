@@ -47,3 +47,29 @@ class AssessmentQuiz:
         self.user_id = user_id
         self.created_at = created_at
         self.questions = questions
+
+
+class AssessmentSummary:
+    def __init__(
+        self,
+        assessment_id: str,
+        score: float,
+        date_taken: str,
+        classification: str | None = None,
+        feedback: str | None = None,
+    ):
+        self.assessment_id = assessment_id
+        self.score = score
+        self.date_taken = date_taken
+        self.classification = classification
+        self.feedback = feedback
+
+
+class PaginatedAssessmentSummary:
+    def __init__(
+        self,
+        total_assessments: int,
+        assessments: list[AssessmentSummary],
+    ):
+        self.total_assessments = total_assessments
+        self.assessments = assessments
