@@ -174,3 +174,15 @@ class AssessmentRepository(ABC):
             bool: True if the qualification process is completed for the user and assessment, False otherwise.
         """
         pass
+
+    @abstractmethod
+    async def get_quantity_of_assessments(self, student_id: str) -> int:
+        """Obtain the quantity of assessments for a student by student ID
+
+        Args:
+            student_id (str): The ID of the student to retrieve the quantity of assessments for.
+
+        Returns:
+            int: The quantity of assessments corresponding to the given student ID.
+        """
+        pass

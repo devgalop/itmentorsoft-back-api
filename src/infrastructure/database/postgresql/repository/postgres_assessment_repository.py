@@ -289,3 +289,9 @@ class PostgresAssessmentRepository(AssessmentRepository):
         result = await self.session_factory.execute(smt)
         existing_result = result.scalars().first()
         return existing_result is not None
+
+    async def get_quantity_of_assessments(self, student_id: str) -> int:
+        smt = select(AssessmentEntity).where(AssessmentEntity.user_id == student_id)
+        result = await self.session_factory.execute(smt)
+        assessments = result.scalars().all()
+        return len(assessments)
