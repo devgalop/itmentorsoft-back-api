@@ -1,10 +1,14 @@
 from datetime import datetime
 from typing import Type
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.features.assessments.shared.assessment import Assessment, AssessmentQuiz
+from src.features.assessments.shared.assessment import (
+    Assessment,
+    AssessmentQuiz,
+    PaginatedAssessmentSummary,
+)
 from src.features.assessments.shared.assessment_repository import AssessmentRepository
 from src.features.assessments.shared.classification_service import ClassificationResult
 from src.features.assessments.shared.qualifier_service import (
@@ -289,3 +293,44 @@ class PostgresAssessmentRepository(AssessmentRepository):
         result = await self.session_factory.execute(smt)
         existing_result = result.scalars().first()
         return existing_result is not None
+
+    async def get_quantity_of_assessments(self, student_id: str) -> int:
+        smt = select(AssessmentEntity).where(AssessmentEntity.user_id == student_id)
+        result = await self.session_factory.execute(smt)
+        assessments = result.scalars().all()
+        return len(assessments)
+
+    async def get_assessments_summary(
+        self, student_id: str, page: int, page_size: int
+    ) -> PaginatedAssessmentSummary:
+        count_smt = (
+            select(func.count())
+            .select_from(AssessmentEntity)
+            .where(AssessmentEntity.user_id == student_id)
+        )
+        total_result = await self.session_factory.execute(count_smt)
+        total = total_result.scalar()
+        if not total:
+            return PaginatedAssessmentSummary(total_assessments=0, assessments=[])
+
+        smt = (
+            select(AssessmentEntity)
+            .options(
+                selectinload(AssessmentEntity.qualifications),
+                selectinload(AssessmentEntity.classification_result),
+            )
+            .where(AssessmentEntity.user_id == student_id)
+            .order_by(AssessmentEntity.created_at.desc())
+            .offset(page * page_size)
+            .limit(page_size)
+        )
+        result = await self.session_factory.execute(smt)
+        assessment_entities = result.scalars().all()
+        total_assessments = await self.get_quantity_of_assessments(student_id)
+        assessments_summary = [
+            self.mapper.assessment_entity_to_summary(entity)
+            for entity in assessment_entities
+        ]
+        return PaginatedAssessmentSummary(
+            total_assessments=total_assessments, assessments=assessments_summary
+        )

@@ -1,6 +1,10 @@
 from abc import ABC, abstractmethod
 
-from src.features.assessments.shared.assessment import Assessment, AssessmentQuiz
+from src.features.assessments.shared.assessment import (
+    Assessment,
+    AssessmentQuiz,
+    PaginatedAssessmentSummary,
+)
 from src.features.assessments.shared.classification_service import ClassificationResult
 from src.features.assessments.shared.qualifier_service import (
     QualifierResult,
@@ -172,5 +176,32 @@ class AssessmentRepository(ABC):
 
         Returns:
             bool: True if the qualification process is completed for the user and assessment, False otherwise.
+        """
+        pass
+
+    @abstractmethod
+    async def get_quantity_of_assessments(self, student_id: str) -> int:
+        """Obtain the quantity of assessments for a student by student ID
+
+        Args:
+            student_id (str): The ID of the student to retrieve the quantity of assessments for.
+
+        Returns:
+            int: The quantity of assessments corresponding to the given student ID.
+        """
+        pass
+
+    @abstractmethod
+    async def get_assessments_summary(
+        self, student_id: str, page: int, page_size: int
+    ) -> PaginatedAssessmentSummary:
+        """Obtain a paginated summary of assessments for a student by student ID
+
+        Args:
+            student_id (str): The ID of the student to retrieve the assessment summaries for.
+            page (int): The page number to retrieve.
+            page_size (int): The number of assessment summaries per page.
+        Returns:
+            PaginatedAssessmentSummary: A paginated summary of assessments corresponding to the given student ID.
         """
         pass

@@ -21,11 +21,17 @@ from src.features.assessments.get_assessment_by_topic.get_assessment_by_topic_ha
 from src.features.assessments.get_assessment_result.get_assessment_result_handler import (
     GetAssessmentResultHandler,
 )
+from src.features.assessments.get_assessments_summary.get_assessments_summary_handler import (
+    GetAssessmentsSummaryHandler,
+)
 from src.features.assessments.get_pending_approval_questions.get_pending_approval_questions_handler import (
     GetPendingApprovalQuestionsHandler,
 )
 from src.features.assessments.get_qualification_status.get_qualification_status_handler import (
     GetQualificationStatusHandler,
+)
+from src.features.assessments.get_quantity_of_assessments.get_quantity_of_assessments_handler import (
+    GetQuantityOfAssessmentsHandler,
 )
 from src.features.assessments.get_question_categories.get_question_categories_handler import (
     GetQuestionCategoriesHandler,
@@ -386,3 +392,19 @@ def get_update_question_status_handler(
     ],
 ) -> UpdateQuestionStatusHandler:
     return UpdateQuestionStatusHandler(question_repository=question_repository)
+
+
+def get_get_quantity_of_assessments_handler(
+    assessment_repository: Annotated[
+        AssessmentRepository, Depends(get_assessment_repository)
+    ],
+) -> GetQuantityOfAssessmentsHandler:
+    return GetQuantityOfAssessmentsHandler(assessment_repository=assessment_repository)
+
+
+def get_get_assessments_summary_handler(
+    assessment_repository: Annotated[
+        AssessmentRepository, Depends(get_assessment_repository)
+    ],
+) -> GetAssessmentsSummaryHandler:
+    return GetAssessmentsSummaryHandler(assessment_repository=assessment_repository)
