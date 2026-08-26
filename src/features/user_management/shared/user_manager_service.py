@@ -10,7 +10,12 @@ from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.password_hasher import PasswordHasher
 from src.features.user_management.shared.role_repository import RoleRepository
 from src.features.user_management.shared.user_repository import UserRepository
-from src.features.user_management.shared.user import User, UserRole, UserStatus
+from src.features.user_management.shared.user import (
+    User,
+    UserResponse,
+    UserRole,
+    UserStatus,
+)
 
 load_dotenv()
 
@@ -28,6 +33,13 @@ class CreateUserResponse:
         self.is_success = is_success
         self.message = message
         self.user_id = user_id
+
+
+class GetUsersByRoleResponse:
+    def __init__(self, is_success: bool, message: str, users: list[UserResponse]):
+        self.is_success = is_success
+        self.message = message
+        self.users = users
 
 
 LOGIN_URL_BASE = os.getenv("LOGIN_URL_BASE", "")
@@ -104,4 +116,33 @@ class UserManagerService:
 
         return CreateUserResponse(
             is_success=True, message="User created successfully", user_id=user_entity.id
+        )
+
+    async def get_users_by_role(self, role: str) -> GetUsersByRoleResponse:
+        """Retrieve users by their role.
+
+        Args:
+            role (str): The role to filter users by.
+
+        Returns:
+            GetUsersByRoleResponse: Response object containing the result of the query.
+        """
+
+        role_entity = await self.role_repository.get_role_by_name(role)
+        if not role_entity:
+            return GetUsersByRoleResponse(
+                is_success=False, message="Invalid role specified", users=[]
+            )
+
+        users = await self.user_repository.get_users_by_role(role)
+
+        if not users:
+            return GetUsersByRoleResponse(
+                is_success=False,
+                message="No users found for the specified role",
+                users=[],
+            )
+
+        return GetUsersByRoleResponse(
+            is_success=True, message="Users retrieved successfully", users=users
         )

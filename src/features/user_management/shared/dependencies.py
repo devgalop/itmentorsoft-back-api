@@ -34,6 +34,9 @@ from src.features.user_management.refresh_token.refresh_token_handler import (
     RefreshTokenHandler,
 )
 from sqlalchemy.ext.asyncio import AsyncSession
+from src.features.user_management.update_user_status.update_user_status_handler import (
+    UpdateUserStatusHandler,
+)
 from src.infrastructure.database.postgresql.models.postgresql_role_mapper import (
     PostgresRoleMapper,
 )
@@ -233,3 +236,9 @@ def get_create_user_from_admin_handler(
 ) -> CreateUserFromAdminHandler:
 
     return CreateUserFromAdminHandler(user_manager_service)
+
+
+def get_update_user_status_handler(
+    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+) -> UpdateUserStatusHandler:
+    return UpdateUserStatusHandler(user_repository)

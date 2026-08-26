@@ -10,6 +10,7 @@ from src.features.user_management.shared.user import (
     User,
     UserResponse,
     UserRole,
+    UserStatus,
 )
 from src.features.user_management.shared.user_repository import UserRepository
 from src.infrastructure.database.postgresql.models.postgresql_role_model import (
@@ -129,3 +130,32 @@ class PostgresUserRepository(UserRepository):
         if not users_found:
             return []
         return [self.user_mapper.to_response(user) for user in users_found]
+
+    async def get_users_by_role(self, role: str) -> list[UserResponse]:
+        role_stmt = select(RoleEntity).where(RoleEntity.name == role)
+        role_result = await self.session_factory.execute(role_stmt)
+        role_entity = role_result.scalars().first()
+        if not role_entity:
+            return []
+        stmt = (
+            select(UserEntity)
+            .options(selectinload(UserEntity.role))
+            .where(
+                UserEntity.role_id == role_entity.id,
+                UserEntity.status == UserStatus.ACTIVE.value,
+            )
+        )
+        result = await self.session_factory.execute(stmt)
+        users_found = result.scalars().all()
+        if not users_found:
+            return []
+        return [self.user_mapper.to_response(user) for user in users_found]
+
+    async def update_user_status(self, user_id: str, new_status: str):
+        stmt = select(UserEntity).where(UserEntity.id == user_id)
+        result = await self.session_factory.execute(stmt)
+        user_found = result.scalars().first()
+        if not user_found:
+            return None
+        user_found.status = new_status
+        await self.session_factory.commit()

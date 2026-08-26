@@ -19,9 +19,16 @@ from src.features.reports.get_student_progress.get_student_progress_handler impo
 from src.features.reports.get_student_summary.get_student_summary_handler import (
     GetStudentSummaryHandler,
 )
+from src.features.reports.get_users_by_role.get_users_by_role_handler import (
+    GetUsersByRoleHandler,
+)
 from src.features.reports.shared.report_repository import ReportRepository
 from src.features.reports.shared.student_report_service import StudentReportService
-from src.features.user_management.shared.dependencies import get_user_repository
+from src.features.user_management.shared.dependencies import (
+    get_user_manager_service,
+    get_user_repository,
+)
+from src.features.user_management.shared.user_manager_service import UserManagerService
 from src.features.user_management.shared.user_repository import UserRepository
 from src.infrastructure.database.postgresql.models.postgresql_report_mapper import (
     PostgresReportMapper,
@@ -96,3 +103,11 @@ def get_get_students_by_category_handler(
     return GetStudentsByCategoryHandler(
         report_repository=student_report_service.report_repository
     )
+
+
+def get_get_users_by_role_handler(
+    user_manager_service: Annotated[
+        UserManagerService, Depends(get_user_manager_service)
+    ],
+) -> GetUsersByRoleHandler:
+    return GetUsersByRoleHandler(user_manager_service=user_manager_service)
