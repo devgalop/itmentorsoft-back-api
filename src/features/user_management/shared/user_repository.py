@@ -111,3 +111,25 @@ class UserRepository(ABC):
             list[UserResponse]: A list of user response objects for admin users.
         """
         pass
+
+    @abstractmethod
+    async def get_users_by_role(self, role: str) -> list[UserResponse]:
+        """Get the list of users by role.
+
+        Args:
+            role (str): The role to filter users by.
+
+        Returns:
+            list[UserResponse]: A list of users with the specified role.
+        """
+        pass
+
+    @abstractmethod
+    async def update_user_status(self, user_id: str, new_status: str):
+        """Update the status of a user.
+
+        Args:
+            user_id (str): The ID of the user whose status is to be updated.
+            new_status (str): The new status to be set for the user.
+        """
+        pass
