@@ -24,6 +24,9 @@ from src.features.assessments.get_assessment_result.get_assessment_result_handle
 from src.features.assessments.get_assessments_summary.get_assessments_summary_handler import (
     GetAssessmentsSummaryHandler,
 )
+from src.features.assessments.get_available_models.get_available_models_handler import (
+    GetAvailableModelsHandler,
+)
 from src.features.assessments.get_pending_approval_questions.get_pending_approval_questions_handler import (
     GetPendingApprovalQuestionsHandler,
 )
@@ -408,3 +411,9 @@ def get_get_assessments_summary_handler(
     ],
 ) -> GetAssessmentsSummaryHandler:
     return GetAssessmentsSummaryHandler(assessment_repository=assessment_repository)
+
+
+def get_get_available_models_handler(
+    qualifier_service: Annotated[QualifierService, Depends(get_qualifier_service)],
+) -> GetAvailableModelsHandler:
+    return GetAvailableModelsHandler(qualifier_service=qualifier_service)

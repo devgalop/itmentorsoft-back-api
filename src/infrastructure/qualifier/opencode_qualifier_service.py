@@ -210,3 +210,11 @@ class OpencodeQualifierService(QualifierService):
         answer_order = {a.answer_id: i for i, a in enumerate(batch_prompt.answers)}
         results.sort(key=lambda r: answer_order.get(r.answer_id, 999))
         return results
+
+    async def get_available_models(self) -> list[str]:
+        try:
+            response = await asyncio.to_thread(self.client.models.list)
+            models = [model.id for model in response.data]
+            return models
+        except Exception:
+            return []

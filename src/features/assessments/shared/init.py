@@ -54,6 +54,9 @@ from src.features.assessments.get_quantity_of_assessments.get_quantity_of_assess
 from src.features.assessments.get_assessments_summary.get_assessments_summary_endpoint import (
     router as get_assessments_summary_router,
 )
+from src.features.assessments.get_available_models.get_available_models_endpoint import (
+    router as get_available_models_router,
+)
 
 router = APIRouter()
 router.include_router(register_question_router)
@@ -74,3 +77,4 @@ router.include_router(get_questions_topics_router)
 router.include_router(update_question_status_router)
 router.include_router(get_quantity_of_assessments_router)
 router.include_router(get_assessments_summary_router)
+router.include_router(get_available_models_router)

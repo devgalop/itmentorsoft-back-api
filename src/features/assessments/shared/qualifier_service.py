@@ -115,3 +115,12 @@ class QualifierService(ABC):
         Raises BatchQualificationError if response cannot be parsed.
         """
         pass
+
+    @abstractmethod
+    async def get_available_models(self) -> list[str]:
+        """Fetches the list of available models from the OpenCode API.
+
+        Returns:
+            list[str]: A list of model names available for use.
+        """
+        pass
