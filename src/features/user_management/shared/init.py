@@ -28,6 +28,9 @@ from src.features.user_management.create_user_from_admin.create_user_from_admin_
 from src.features.user_management.update_user_status.update_user_status_endpoint import (
     router as update_user_status_router,
 )
+from src.features.user_management.get_connected_users.get_connected_users_endpoint import (
+    router as get_connected_users_router,
+)
 
 router = APIRouter()
 router.include_router(create_user_router)
@@ -40,3 +43,4 @@ router.include_router(assign_role_router)
 router.include_router(refresh_token_router)
 router.include_router(create_user_from_admin_router)
 router.include_router(update_user_status_router)
+router.include_router(get_connected_users_router)

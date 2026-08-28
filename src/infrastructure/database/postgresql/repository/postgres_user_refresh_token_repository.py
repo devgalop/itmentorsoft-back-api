@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from typing import Type
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,6 +7,7 @@ from src.features.user_management.shared.refresh_token_repository import (
     RefreshTokenData,
     RefreshTokenInfo,
     RefreshTokenRepository,
+    TotalActiveUsers,
 )
 from src.infrastructure.database.postgresql.models.postgresql_user_refresh_token_mapper import (
     PostgresRefreshTokenMapper,
@@ -47,3 +49,14 @@ class PostgresUserRefreshTokenRepository(RefreshTokenRepository):
         for token in tokens_to_revoke:
             token.status = "revoked"
         await self.session_factory.commit()
+
+    async def get_users_with_active_tokens(self) -> TotalActiveUsers:
+        timestamp_now = datetime.now(tz=timezone.utc).timestamp()
+        stmt = select(RefreshTokenEntity.user_id).where(
+            RefreshTokenEntity.status == "active",
+            RefreshTokenEntity.expiration_time > timestamp_now,
+        )
+        result = await self.session_factory.execute(stmt)
+        active_tokens = result.scalars().all()
+        total_active_users = len(set(active_tokens))
+        return TotalActiveUsers(total_active_users)
