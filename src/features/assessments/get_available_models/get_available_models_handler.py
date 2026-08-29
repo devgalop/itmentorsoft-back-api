@@ -1,11 +1,13 @@
 from src.features.assessments.get_available_models.get_available_models_response import (
     GetAvailableModelsResponse,
 )
-from src.features.assessments.shared.qualifier_service import QualifierService
+from src.features.assessments.shared.qualifier_service import (
+    QualifierModelsService,
+)
 
 
 class GetAvailableModelsHandler:
-    def __init__(self, qualifier_service: QualifierService):
+    def __init__(self, qualifier_service: QualifierModelsService):
         self.qualifier_service = qualifier_service
 
     async def handle(self) -> GetAvailableModelsResponse:

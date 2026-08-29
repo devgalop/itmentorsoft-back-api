@@ -68,7 +68,10 @@ from src.features.assessments.save_assessments_answers.save_assessments_answers_
     SaveAssessmentsAnswersService,
 )
 from src.features.assessments.shared.assessment_repository import AssessmentRepository
-from src.features.assessments.shared.qualifier_service import QualifierService
+from src.features.assessments.shared.qualifier_service import (
+    QualifierModelsService,
+    QualifierService,
+)
 from src.features.assessments.shared.question_assessment_repository import (
     QuestionAssessmentRepository,
 )
@@ -125,6 +128,9 @@ from src.infrastructure.database.postgresql.shared.postgresql_database_session i
 
 from src.infrastructure.notification.brevo_notification_service import (
     BrevoNotificationService,
+)
+from src.infrastructure.qualifier.opencode_qualifier_models_proxy import (
+    OpencodeQualifierModelsProxy,
 )
 from src.infrastructure.qualifier.opencode_qualifier_service import (
     OpencodeQualifierService,
@@ -413,7 +419,12 @@ def get_get_assessments_summary_handler(
     return GetAssessmentsSummaryHandler(assessment_repository=assessment_repository)
 
 
+@lru_cache()
+def get_models_service() -> QualifierModelsService:
+    return OpencodeQualifierModelsProxy()
+
+
 def get_get_available_models_handler(
-    qualifier_service: Annotated[QualifierService, Depends(get_qualifier_service)],
+    qualifier_service: Annotated[QualifierModelsService, Depends(get_models_service)],
 ) -> GetAvailableModelsHandler:
     return GetAvailableModelsHandler(qualifier_service=qualifier_service)

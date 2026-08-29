@@ -116,9 +116,11 @@ class QualifierService(ABC):
         """
         pass
 
+
+class QualifierModelsService(ABC):
     @abstractmethod
     async def get_available_models(self) -> list[str]:
-        """Fetches the list of available models from the OpenCode API.
+        """Fetches the list of available models from the LLM Provider.
 
         Returns:
             list[str]: A list of model names available for use.

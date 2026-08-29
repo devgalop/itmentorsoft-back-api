@@ -10,6 +10,7 @@ import asyncio
 from src.features.assessments.shared.qualifier_service import (
     BatchQualificationError,
     BatchQualifierPrompt,
+    QualifierModelsService,
     QualifierPrompt,
     QualifierResult,
     QualifierService,
@@ -23,7 +24,7 @@ OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY", "")
 OPENCODE_API_URL = os.getenv("OPENCODE_API_URL", "")
 
 
-class OpencodeQualifierService(QualifierService):
+class OpencodeQualifierService(QualifierService, QualifierModelsService):
 
     def __init__(self):
         self.client = OpenAI(api_key=OPENCODE_API_KEY, base_url=OPENCODE_API_URL)
