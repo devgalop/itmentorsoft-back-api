@@ -37,6 +37,9 @@ from src.features.user_management.refresh_token.refresh_token_handler import (
     RefreshTokenHandler,
 )
 from sqlalchemy.ext.asyncio import AsyncSession
+from src.features.user_management.update_user_profile.update_user_profile_handler import (
+    UpdateUserProfileHandler,
+)
 from src.features.user_management.update_user_status.update_user_status_handler import (
     UpdateUserStatusHandler,
 )
@@ -253,3 +256,9 @@ def get_get_connected_users_handler(
     ],
 ) -> GetConnectedUsersHandler:
     return GetConnectedUsersHandler(refresh_token_repository)
+
+
+def get_update_user_profile_handler(
+    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+) -> UpdateUserProfileHandler:
+    return UpdateUserProfileHandler(user_repository)

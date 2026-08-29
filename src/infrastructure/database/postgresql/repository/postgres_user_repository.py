@@ -159,3 +159,12 @@ class PostgresUserRepository(UserRepository):
             return None
         user_found.status = new_status
         await self.session_factory.commit()
+
+    async def update_username(self, user_id: str, new_username: str):
+        stmt = select(UserEntity).where(UserEntity.id == user_id)
+        result = await self.session_factory.execute(stmt)
+        user_found = result.scalars().first()
+        if not user_found:
+            return None
+        user_found.username = new_username
+        await self.session_factory.commit()
