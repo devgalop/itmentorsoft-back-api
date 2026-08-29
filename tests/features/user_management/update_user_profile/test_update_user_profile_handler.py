@@ -22,7 +22,9 @@ async def test_when_user_does_not_exist_should_return_failure():
 
     handler = UpdateUserProfileHandler(user_repository)
     response = await handler.handle(
-        UpdateUserProfileRequest(user_id="non_existent_id", username="new_username")
+        UpdateUserProfileRequest(
+            user_id="non_existent_id", username="new_username", name="New Name"
+        )
     )
 
     assert not response.is_success
@@ -58,7 +60,9 @@ async def test_when_username_is_taken_by_another_user_should_return_failure():
 
     handler = UpdateUserProfileHandler(user_repository)
     response = await handler.handle(
-        UpdateUserProfileRequest(user_id="user_id", username="taken_username")
+        UpdateUserProfileRequest(
+            user_id="user_id", username="taken_username", name="New Name"
+        )
     )
 
     assert not response.is_success
@@ -95,12 +99,16 @@ async def test_when_username_belongs_to_same_user_should_update_successfully():
 
     handler = UpdateUserProfileHandler(user_repository)
     response = await handler.handle(
-        UpdateUserProfileRequest(user_id="user_id", username="old_username")
+        UpdateUserProfileRequest(
+            user_id="user_id", username="old_username", name="New Name"
+        )
     )
 
     assert response.is_success
-    assert response.message == "Username updated successfully"
-    user_repository.update_username.assert_called_once_with("user_id", "old_username")
+    assert response.message == "Username and name updated successfully"
+    user_repository.update_username.assert_called_once_with(
+        "user_id", "old_username", "New Name"
+    )
 
 
 @pytest.mark.asyncio
@@ -121,11 +129,15 @@ async def test_when_user_exists_and_username_is_available_should_update_successf
 
     handler = UpdateUserProfileHandler(user_repository)
     response = await handler.handle(
-        UpdateUserProfileRequest(user_id="user_id", username="new_username")
+        UpdateUserProfileRequest(
+            user_id="user_id", username="new_username", name="New Name"
+        )
     )
 
     assert response.is_success
-    assert response.message == "Username updated successfully"
+    assert response.message == "Username and name updated successfully"
     user_repository.get_user_by_id.assert_called_once_with("user_id")
     user_repository.get_user_by_username.assert_called_once_with("new_username")
-    user_repository.update_username.assert_called_once_with("user_id", "new_username")
+    user_repository.update_username.assert_called_once_with(
+        "user_id", "new_username", "New Name"
+    )

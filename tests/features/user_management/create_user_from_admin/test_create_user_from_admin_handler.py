@@ -26,7 +26,10 @@ async def test_when_user_is_valid_should_create_user():
         handler = CreateUserFromAdminHandler(user_manager_service)
         response = await handler.handle(
             CreateUserFromAdminRequest(
-                email="test@example.com", username="testuser", role="student"
+                email="test@example.com",
+                username="testuser",
+                role="student",
+                name="Test User",
             )
         )
 
@@ -48,7 +51,10 @@ async def test_when_default_password_is_not_set_should_return_error():
     ):
         response = await handler.handle(
             CreateUserFromAdminRequest(
-                email="test@example.com", username="testuser", role="student"
+                email="test@example.com",
+                username="testuser",
+                role="student",
+                name="Test User",
             )
         )
 
@@ -74,7 +80,10 @@ async def test_when_email_already_exists_should_return_error():
         handler = CreateUserFromAdminHandler(user_manager_service)
         response = await handler.handle(
             CreateUserFromAdminRequest(
-                email="test@example.com", username="testuser", role="student"
+                email="test@example.com",
+                username="testuser",
+                role="student",
+                name="Test User",
             )
         )
 
@@ -99,7 +108,10 @@ async def test_when_username_already_exists_should_return_error():
         handler = CreateUserFromAdminHandler(user_manager_service)
         response = await handler.handle(
             CreateUserFromAdminRequest(
-                email="test@example.com", username="testuser", role="student"
+                email="test@example.com",
+                username="testuser",
+                role="student",
+                name="Test User",
             )
         )
 
@@ -124,7 +136,10 @@ async def test_when_role_is_invalid_should_return_error():
         handler = CreateUserFromAdminHandler(user_manager_service)
         response = await handler.handle(
             CreateUserFromAdminRequest(
-                email="test@example.com", username="testuser", role="invalid_role"
+                email="test@example.com",
+                username="testuser",
+                role="invalid_role",
+                name="Test User",
             )
         )
 

@@ -22,6 +22,7 @@ class UserEntity(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True, index=True)
     username: Mapped[str] = mapped_column(String, unique=True, index=True)
     email: Mapped[str] = mapped_column(String, unique=True, index=True)
+    name: Mapped[str] = mapped_column(String)
     hashed_password: Mapped[str] = mapped_column(String)
     status: Mapped[str] = mapped_column(String)
 

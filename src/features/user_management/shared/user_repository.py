@@ -135,11 +135,12 @@ class UserRepository(ABC):
         pass
 
     @abstractmethod
-    async def update_username(self, user_id: str, new_username: str):
+    async def update_username(self, user_id: str, new_username: str, name: str):
         """Update the username of a user.
 
         Args:
             user_id (str): The ID of the user whose username is to be updated.
             new_username (str): The new username to be set for the user.
+            name (str): The new name to be set for the user.
         """
         pass

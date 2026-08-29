@@ -15,6 +15,7 @@ async def test_when_user_exists_should_return_user():
         id="123",
         username="testuser",
         email="testuser@example.com",
+        name="Test User",
         status=UserStatus("active"),
         role=UserRole("student"),
     )

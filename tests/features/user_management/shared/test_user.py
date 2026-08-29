@@ -9,6 +9,7 @@ def active_admin_user():
     return User(
         username="alice",
         email="alice@example.com",
+        name="Alice Smith",
         password_hashed=sample_pass,
         status=UserStatus.ACTIVE,
         role=UserRole.ADMIN,
@@ -21,6 +22,7 @@ def inactive_student_user():
     return User(
         username="bob",
         email="bob@example.com",
+        name="Bob Johnson",
         password_hashed=sample_pass,
         status=UserStatus.INACTIVE,
         role=UserRole.STUDENT,
@@ -33,6 +35,7 @@ def suspended_user():
     return User(
         username="charlie",
         email="charlie@example.com",
+        name="Charlie Brown",
         password_hashed=sample_pass,
         status=UserStatus.SUSPENDED,
         role=UserRole.USER,

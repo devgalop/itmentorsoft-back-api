@@ -8,6 +8,7 @@ SPECIAL_CHAR_PATTERN = r'[!@#$%^&*()_+\-=\[\]{}|;\'":,.<>\/?]'
 
 class CreateUserRequest(BaseModel):
     email: str
+    name: str
     username: str
     password: str
 
@@ -35,6 +36,16 @@ class CreateUserRequest(BaseModel):
             raise ValueError(
                 "Username must be alphanumeric and can include underscores"
             )
+        return value
+
+    @field_validator("name")
+    def validate_name(cls, value: str) -> str:
+        if not value:
+            raise ValueError("Name is required")
+        if len(value) < 3:
+            raise ValueError("Name must be at least 3 characters long")
+        if len(value) > 100:
+            raise ValueError("Name must be no more than 100 characters long")
         return value
 
     @field_validator("password")

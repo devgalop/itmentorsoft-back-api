@@ -30,7 +30,9 @@ class UpdateUserProfileHandler:
                 is_success=False, message="Username is not available"
             )
 
-        await self.user_repository.update_username(request.user_id, request.username)
+        await self.user_repository.update_username(
+            request.user_id, request.username, request.name
+        )
         return UpdateUserProfileResponse(
-            is_success=True, message="Username updated successfully"
+            is_success=True, message="Username and name updated successfully"
         )

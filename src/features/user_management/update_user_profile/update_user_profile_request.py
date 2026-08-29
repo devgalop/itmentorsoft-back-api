@@ -7,6 +7,17 @@ USERNAME_PATTERN = r"\w+$"
 class UpdateUserProfileRequest(BaseModel):
     user_id: str
     username: str
+    name: str
+
+    @field_validator("name")
+    def validate_name(cls, value: str) -> str:
+        if not value:
+            raise ValueError("Name is required")
+        if len(value) < 3:
+            raise ValueError("Name must be at least 3 characters long")
+        if len(value) > 100:
+            raise ValueError("Name must be no more than 100 characters long")
+        return value
 
     @field_validator("user_id")
     def validate_user_id(cls, value: str) -> str:
