@@ -89,6 +89,9 @@ from src.features.assessments.shared.questions_cache_repository import (
 from src.features.assessments.shared.review_question_service import (
     ReviewQuestionService,
 )
+from src.features.assessments.update_model.update_model_handler import (
+    UpdateModelHandler,
+)
 from src.features.assessments.update_question.update_question_handler import (
     UpdateQuestionHandler,
 )
@@ -451,3 +454,17 @@ def get_get_model_selected_handler(
     ],
 ) -> GetModelSelectedHandler:
     return GetModelSelectedHandler(model_selector_service=model_selector_service)
+
+
+def get_update_model_handler(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+    model_explorer_service: Annotated[
+        ModelExplorerService, Depends(get_models_service)
+    ],
+) -> UpdateModelHandler:
+    return UpdateModelHandler(
+        model_selector_service=model_selector_service,
+        model_explorer_service=model_explorer_service,
+    )
