@@ -18,9 +18,10 @@ OPENCODE_API_URL = os.getenv("OPENCODE_API_URL", "")
 
 
 class OpenCodeClassificationService(ClassificationService):
-    def __init__(self):
+    def __init__(self, model_id: str):
         self.client = OpenAI(api_key=OPENCODE_API_KEY, base_url=OPENCODE_API_URL)
         self.generic_prompt: str = self.get_generic_prompt()
+        self.model_id: str = model_id
 
     async def classify(self, input_data: ClassificationPrompt) -> ClassificationResult:
         if not input_data.qualifications or len(input_data.qualifications) == 0:
@@ -30,7 +31,7 @@ class OpenCodeClassificationService(ClassificationService):
 
         completion = await asyncio.to_thread(
             self.client.chat.completions.create,
-            model="minimax-m2.7",
+            model=self.model_id,
             messages=[
                 {"role": "system", "content": self.generic_prompt},
                 {"role": "user", "content": user_content},

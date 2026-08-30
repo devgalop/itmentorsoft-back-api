@@ -284,8 +284,13 @@ def get_qualifier_service(
 
 
 @lru_cache()
-def get_classification_service() -> ClassificationService:
-    return OpenCodeClassificationService()
+def get_classification_service(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+) -> ClassificationService:
+    model = model_selector_service.get_selected_model(AvailableProcesses.CLASSIFIER)
+    return OpenCodeClassificationService(model_id=model)
 
 
 def get_evaluate_assessment_service() -> EvaluateAssessmentService:
