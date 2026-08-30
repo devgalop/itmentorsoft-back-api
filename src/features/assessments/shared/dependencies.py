@@ -24,6 +24,12 @@ from src.features.assessments.get_assessment_result.get_assessment_result_handle
 from src.features.assessments.get_assessments_summary.get_assessments_summary_handler import (
     GetAssessmentsSummaryHandler,
 )
+from src.features.assessments.get_available_models.get_available_models_handler import (
+    GetAvailableModelsHandler,
+)
+from src.features.assessments.get_model_selected.get_model_selected_handler import (
+    GetModelSelectedHandler,
+)
 from src.features.assessments.get_pending_approval_questions.get_pending_approval_questions_handler import (
     GetPendingApprovalQuestionsHandler,
 )
@@ -65,7 +71,12 @@ from src.features.assessments.save_assessments_answers.save_assessments_answers_
     SaveAssessmentsAnswersService,
 )
 from src.features.assessments.shared.assessment_repository import AssessmentRepository
-from src.features.assessments.shared.qualifier_service import QualifierService
+from src.features.assessments.shared.qualifier_service import (
+    AvailableProcesses,
+    ModelExplorerService,
+    ModelSelectorService,
+    QualifierService,
+)
 from src.features.assessments.shared.question_assessment_repository import (
     QuestionAssessmentRepository,
 )
@@ -77,6 +88,9 @@ from src.features.assessments.shared.questions_cache_repository import (
 )
 from src.features.assessments.shared.review_question_service import (
     ReviewQuestionService,
+)
+from src.features.assessments.update_model.update_model_handler import (
+    UpdateModelHandler,
 )
 from src.features.assessments.update_question.update_question_handler import (
     UpdateQuestionHandler,
@@ -120,6 +134,9 @@ from src.infrastructure.database.postgresql.shared.postgresql_database_session i
     get_db,
 )
 
+from src.infrastructure.model_manager.opencode_model_manager_proxy import (
+    OpencodeModelsManagerProxy,
+)
 from src.infrastructure.notification.brevo_notification_service import (
     BrevoNotificationService,
 )
@@ -252,13 +269,28 @@ def get_get_assessment_handler(
 
 
 @lru_cache()
-def get_qualifier_service() -> QualifierService:
-    return OpencodeQualifierService()
+def get_model_selector_service() -> ModelSelectorService:
+    return OpencodeModelsManagerProxy()
 
 
 @lru_cache()
-def get_classification_service() -> ClassificationService:
-    return OpenCodeClassificationService()
+def get_qualifier_service(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+) -> QualifierService:
+    model = model_selector_service.get_selected_model(AvailableProcesses.QUALIFIER)
+    return OpencodeQualifierService(model)
+
+
+@lru_cache()
+def get_classification_service(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+) -> ClassificationService:
+    model = model_selector_service.get_selected_model(AvailableProcesses.CLASSIFIER)
+    return OpenCodeClassificationService(model_id=model)
 
 
 def get_evaluate_assessment_service() -> EvaluateAssessmentService:
@@ -408,3 +440,36 @@ def get_get_assessments_summary_handler(
     ],
 ) -> GetAssessmentsSummaryHandler:
     return GetAssessmentsSummaryHandler(assessment_repository=assessment_repository)
+
+
+@lru_cache()
+def get_models_service() -> ModelExplorerService:
+    return OpencodeModelsManagerProxy()
+
+
+def get_get_available_models_handler(
+    explorer_service: Annotated[ModelExplorerService, Depends(get_models_service)],
+) -> GetAvailableModelsHandler:
+    return GetAvailableModelsHandler(explorer_service=explorer_service)
+
+
+def get_get_model_selected_handler(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+) -> GetModelSelectedHandler:
+    return GetModelSelectedHandler(model_selector_service=model_selector_service)
+
+
+def get_update_model_handler(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+    model_explorer_service: Annotated[
+        ModelExplorerService, Depends(get_models_service)
+    ],
+) -> UpdateModelHandler:
+    return UpdateModelHandler(
+        model_selector_service=model_selector_service,
+        model_explorer_service=model_explorer_service,
+    )

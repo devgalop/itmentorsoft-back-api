@@ -35,6 +35,7 @@ class CreateUserFromAdminHandler:
         response = await self.user_manager_service.create_user(
             request=CreateUserRequest(
                 email=request.email,
+                name=request.name,
                 username=request.username,
                 password=DEFAULT_PASSWORD,
                 role=request.role,

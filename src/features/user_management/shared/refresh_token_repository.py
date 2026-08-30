@@ -32,6 +32,11 @@ class RefreshTokenData:
         self.status = status
 
 
+class TotalActiveUsers:
+    def __init__(self, total_users: int):
+        self.total_users = total_users
+
+
 class RefreshTokenRepository(ABC):
     """Interface for refresh token repository implementations.
 
@@ -66,5 +71,14 @@ class RefreshTokenRepository(ABC):
 
         Args:
             user_id (str): The ID of the user whose tokens should be revoked.
+        """
+        pass
+
+    @abstractmethod
+    async def get_users_with_active_tokens(self) -> TotalActiveUsers:
+        """Retrieve the total number of users with active refresh tokens.
+
+        Returns:
+            TotalActiveUsers: An object containing the total number of users with active tokens.
         """
         pass

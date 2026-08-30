@@ -42,6 +42,7 @@ class User:
         self,
         username: str,
         email: str,
+        name: str,
         password_hashed: str,
         status: UserStatus,
         role: UserRole,
@@ -49,6 +50,7 @@ class User:
         self.id = uuid.uuid4().hex
         self.username = username
         self.email = email
+        self.name = name
         self.password_hashed = password_hashed
         self.status = status
         self.role = role
@@ -124,14 +126,22 @@ class UserResponse:
         username (str): The username of the user.
         email (str): The email of the user.
         status (UserStatus): The status of the user.
+        name (str): The name of the user.
         role (UserRole): The role of the user.
     """
 
     def __init__(
-        self, id: str, username: str, email: str, status: UserStatus, role: UserRole
+        self,
+        id: str,
+        username: str,
+        email: str,
+        name: str,
+        status: UserStatus,
+        role: UserRole,
     ):
         self.id = id
         self.username = username
         self.email = email
+        self.name = name
         self.status = status
         self.role = role

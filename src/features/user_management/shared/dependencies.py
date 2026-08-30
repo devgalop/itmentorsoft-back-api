@@ -14,6 +14,9 @@ from src.features.user_management.create_user.create_user_handler import (
 from src.features.user_management.get_available_roles.get_available_roles_handler import (
     GetAvailableRolesHandler,
 )
+from src.features.user_management.get_connected_users.get_connected_users_handler import (
+    GetConnectedUsersHandler,
+)
 from src.features.user_management.get_user.get_user_handler import GetUserHandler
 from src.features.user_management.login.login_handler import LoginHandler
 from src.features.user_management.recovery_password.recovery_password_handler import (
@@ -34,6 +37,9 @@ from src.features.user_management.refresh_token.refresh_token_handler import (
     RefreshTokenHandler,
 )
 from sqlalchemy.ext.asyncio import AsyncSession
+from src.features.user_management.update_user_profile.update_user_profile_handler import (
+    UpdateUserProfileHandler,
+)
 from src.features.user_management.update_user_status.update_user_status_handler import (
     UpdateUserStatusHandler,
 )
@@ -242,3 +248,17 @@ def get_update_user_status_handler(
     user_repository: Annotated[UserRepository, Depends(get_user_repository)],
 ) -> UpdateUserStatusHandler:
     return UpdateUserStatusHandler(user_repository)
+
+
+def get_get_connected_users_handler(
+    refresh_token_repository: Annotated[
+        RefreshTokenRepository, Depends(get_refresh_token_repository)
+    ],
+) -> GetConnectedUsersHandler:
+    return GetConnectedUsersHandler(refresh_token_repository)
+
+
+def get_update_user_profile_handler(
+    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+) -> UpdateUserProfileHandler:
+    return UpdateUserProfileHandler(user_repository)

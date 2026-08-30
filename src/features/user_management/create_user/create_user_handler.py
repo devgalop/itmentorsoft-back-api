@@ -36,6 +36,7 @@ class CreateUserHandler:
         user_entity = User(
             username=user_data.username,
             email=user_data.email,
+            name=user_data.name,
             password_hashed=password_hashed,
             status=UserStatus.ACTIVE,
             role=UserRole.STUDENT,

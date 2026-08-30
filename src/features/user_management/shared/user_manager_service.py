@@ -21,10 +21,11 @@ load_dotenv()
 
 
 class CreateUserRequest:
-    def __init__(self, email: str, username: str, password: str, role: str):
+    def __init__(self, email: str, name: str, username: str, password: str, role: str):
         self.email = email
         self.username = username
         self.password = password
+        self.name = name
         self.role = role
 
 
@@ -86,10 +87,12 @@ class UserManagerService:
         user_entity = User(
             username=request.username,
             email=request.email,
+            name=request.name,
             password_hashed=password_hashed,
             status=UserStatus.ACTIVE,
             role=user_role,
         )
+        user_entity.set_role_id(role.role_id)
         await self.user_repository.save(user_entity)
 
         notification_config_builder = NotificationConfigBuilder(

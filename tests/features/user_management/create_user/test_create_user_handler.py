@@ -29,7 +29,10 @@ async def test_when_user_is_valid_should_create_user():
     handler = CreateUserHandler(user_repository, password_hasher, role_repository)
     await handler.handle(
         CreateUserRequest(
-            email="test@example.com", password="StrongPassword123!", username="testuser"
+            email="test@example.com",
+            password="StrongPassword123!",
+            username="testuser",
+            name="Test User",
         )
     )
 
@@ -54,7 +57,10 @@ async def test_when_email_already_exists_should_respond_with_error():
     handler = CreateUserHandler(user_repository, password_hasher, role_repository)
     response = await handler.handle(
         CreateUserRequest(
-            email="test@example.com", password="StrongPassword123!", username="testuser"
+            email="test@example.com",
+            password="StrongPassword123!",
+            username="testuser",
+            name="Test User",
         )
     )
     assert not response.is_success
@@ -82,7 +88,10 @@ async def test_when_username_already_exists_should_respond_with_error():
     handler = CreateUserHandler(user_repository, password_hasher, role_repository)
     response = await handler.handle(
         CreateUserRequest(
-            email="test@example.com", password="StrongPassword123!", username="testuser"
+            email="test@example.com",
+            password="StrongPassword123!",
+            username="testuser",
+            name="Test User",
         )
     )
     assert not response.is_success

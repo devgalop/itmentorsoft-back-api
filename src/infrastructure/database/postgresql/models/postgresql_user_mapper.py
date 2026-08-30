@@ -26,6 +26,7 @@ class PostgresUserMapper:
             id=user_model.id,
             username=user_model.username,
             email=user_model.email,
+            name=user_model.name,
             hashed_password=user_model.password_hashed,
             status=user_model.status.value,
             role_id=user_model.role_id,
@@ -48,6 +49,7 @@ class PostgresUserMapper:
         user = User(
             username=user_entity.username,
             email=user_entity.email,
+            name=user_entity.name,
             password_hashed=user_entity.hashed_password,
             status=UserStatus(user_entity.status),
             role=UserRole(role_value),
@@ -74,6 +76,7 @@ class PostgresUserMapper:
             id=user_entity.id,
             username=user_entity.username,
             email=user_entity.email,
+            name=user_entity.name,
             status=UserStatus(user_entity.status),
             role=UserRole(role_value),
         )

@@ -23,6 +23,7 @@ class GetUserHandler:
                 user_id=user.id,
                 username=user.username,
                 email=user.email,
+                name=user.name,
                 role=user.role.value,
             ),
         )

@@ -3,6 +3,7 @@ import re
 
 EMAIL_PATTERN = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 SPECIAL_CHAR_PATTERN = r'[!@#$%^&*()_+\-=\[\]{}|;\'":,.<>\/?]'
+GENERIC_ERROR_MESSAGE_LOGIN = "Invalid email or password"
 
 
 class LoginRequest(BaseModel):
@@ -12,27 +13,27 @@ class LoginRequest(BaseModel):
     @field_validator("email")
     def validate_email(cls, value: str) -> str:
         if not value:
-            raise ValueError("Email is required")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if len(value) < 5:
-            raise ValueError("Email must be at least 5 characters long")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if len(value) > 255:
-            raise ValueError("Email must be no more than 255 characters long")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if not re.match(EMAIL_PATTERN, value):
-            raise ValueError("Invalid email format")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         return value
 
     @field_validator("password")
     def validate_password(cls, value: str) -> str:
         if not value:
-            raise ValueError("Password is required")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if len(value) < 6:
-            raise ValueError("Password must be at least 6 characters long")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if len(value) > 20:
-            raise ValueError("Password must be no more than 20 characters long")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if not any(char.isdigit() for char in value):
-            raise ValueError("Password must contain at least one digit")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if not any(char.isalpha() for char in value):
-            raise ValueError("Password must contain at least one letter")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         if not re.search(SPECIAL_CHAR_PATTERN, value):
-            raise ValueError("Password must contain at least one special character")
+            raise ValueError(GENERIC_ERROR_MESSAGE_LOGIN)
         return value

@@ -25,15 +25,16 @@ OPENCODE_API_URL = os.getenv("OPENCODE_API_URL", "")
 
 class OpencodeQualifierService(QualifierService):
 
-    def __init__(self):
+    def __init__(self, model_id: str):
         self.client = OpenAI(api_key=OPENCODE_API_KEY, base_url=OPENCODE_API_URL)
         self.generic_prompt: str = self.get_generic_prompt()
         self.batch_generic_prompt: str = self.get_batch_generic_prompt()
+        self.model_id: str = model_id
 
     async def qualify(self, qualifier_prompt: QualifierPrompt) -> QualifierResult:
         completion = await asyncio.to_thread(
             self.client.chat.completions.create,
-            model="minimax-m2.7",
+            model=self.model_id,
             messages=[
                 {"role": "system", "content": self.get_prompt(qualifier_prompt)},
                 {"role": "user", "content": qualifier_prompt.user_answer},
