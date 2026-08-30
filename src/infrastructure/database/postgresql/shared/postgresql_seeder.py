@@ -119,6 +119,7 @@ async def seed_database(
             hashed_password=password_hasher.hash_password(TEACHER_PASSWORD),
             status="active",
             role_id=role_teacher.id,
+            name="Default Teacher",
         )
         session.add(teacher)
         print("Teacher user created")
@@ -131,6 +132,7 @@ async def seed_database(
                 hashed_password=password_hasher.hash_password(STUDENT_PASSWORD),
                 status="active",
                 role_id=role_student.id,
+                name=f"Student {i}",
             )
             session.add(student)
         print("Student users created")
