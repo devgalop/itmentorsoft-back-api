@@ -4,7 +4,7 @@ from typing import Any
 
 from dotenv import load_dotenv
 import os
-from openai import OpenAI
+from openai import OpenAI, APIStatusError, APIConnectionError
 import json
 import asyncio
 from src.features.assessments.shared.qualifier_service import (
@@ -22,6 +22,10 @@ load_dotenv()
 OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY", "")
 OPENCODE_API_URL = os.getenv("OPENCODE_API_URL", "")
 
+_RETRYABLE_STATUS_CODES = {500, 502, 503, 504}
+_MAX_RETRIES = 3
+_INITIAL_BACKOFF_SECONDS = 1.0
+
 
 class OpencodeQualifierService(QualifierService):
 
@@ -31,14 +35,59 @@ class OpencodeQualifierService(QualifierService):
         self.batch_generic_prompt: str = self.get_batch_generic_prompt()
         self.model_id: str = model_id
 
+    async def _call_with_retry(self, messages: list[dict[str, str]]) -> Any:
+        """Call the OpenAI-compatible API with retry logic for transient errors.
+
+        Retries on 500/502/503/504 status codes and connection errors with
+        exponential backoff. Raises the original exception after max retries.
+        """
+        last_exception: Exception | None = None
+        for attempt in range(_MAX_RETRIES):
+            try:
+                return await asyncio.to_thread(
+                    self.client.chat.completions.create,
+                    model=self.model_id,
+                    messages=messages,
+                )
+            except APIStatusError as e:
+                last_exception = e
+                if e.status_code not in _RETRYABLE_STATUS_CODES:
+                    raise
+                logger.warning(
+                    "Retryable API error %d on attempt %d/%d for model %s: %s",
+                    e.status_code,
+                    attempt + 1,
+                    _MAX_RETRIES,
+                    self.model_id,
+                    e.message,
+                )
+            except APIConnectionError as e:
+                last_exception = e
+                logger.warning(
+                    "Connection error on attempt %d/%d for model %s: %s",
+                    attempt + 1,
+                    _MAX_RETRIES,
+                    self.model_id,
+                    e,
+                )
+            if attempt < _MAX_RETRIES - 1:
+                await asyncio.sleep(_INITIAL_BACKOFF_SECONDS * (2**attempt))
+        raise last_exception  # type: ignore[misc]
+
     async def qualify(self, qualifier_prompt: QualifierPrompt) -> QualifierResult:
-        completion = await asyncio.to_thread(
-            self.client.chat.completions.create,
-            model=self.model_id,
-            messages=[
-                {"role": "system", "content": self.get_prompt(qualifier_prompt)},
+        system_prompt = self.get_prompt(qualifier_prompt)
+        logger.debug(
+            "qualify: model=%s question_id=%s system_prompt_chars=%d user_answer_chars=%d",
+            self.model_id,
+            qualifier_prompt.rubric.question_id,
+            len(system_prompt),
+            len(qualifier_prompt.user_answer),
+        )
+        completion = await self._call_with_retry(
+            [
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": qualifier_prompt.user_answer},
-            ],
+            ]
         )
         response = completion.choices[0].message.content
         if not response:
@@ -140,15 +189,24 @@ class OpencodeQualifierService(QualifierService):
         """
         system_prompt = self.get_batch_system_prompt(batch_prompt)
         user_content = self.build_batch_user_content(batch_prompt)
+        logger.debug(
+            "qualify_batch: model=%s rubrics=%d system_prompt_chars=%d user_content_chars=%d",
+            self.model_id,
+            len(batch_prompt.rubrics),
+            len(system_prompt),
+            len(user_content),
+        )
 
-        completion = await asyncio.to_thread(
-            self.client.chat.completions.create,
-            model="minimax-m2.7",
-            messages=[
+        # API call is outside the try block so API errors propagate directly
+        # (allowing the caller to fall back to per-item qualify), while only
+        # JSON parsing errors are wrapped in BatchQualificationError.
+        completion = await self._call_with_retry(
+            [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_content},
-            ],
+            ]
         )
+
         response = completion.choices[0].message.content
         if not response:
             raise ValueError("Received empty response from the qualifier service.")

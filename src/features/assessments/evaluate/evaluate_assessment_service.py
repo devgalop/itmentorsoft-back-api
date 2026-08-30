@@ -13,8 +13,11 @@ from src.features.assessments.shared.classification_service import (
     QuestionAnswerQualification,
 )
 from src.features.assessments.shared.qualifier_service import (
+    AvailableProcesses,
     BatchQualificationError,
     BatchQualifierPrompt,
+    ModelExplorerService,
+    ModelSelectorService,
     QualifierPrompt,
     QualifierResult,
     QualifierService,
@@ -38,6 +41,9 @@ from src.infrastructure.database.postgresql.repository.postgres_questions_reposi
 )
 from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
     AsyncSessionLocal,
+)
+from src.infrastructure.model_manager.opencode_model_manager_proxy import (
+    OpencodeModelsManagerProxy,
 )
 from src.infrastructure.qualifier.opencode_qualifier_service import (
     OpencodeQualifierService,
@@ -85,6 +91,8 @@ class EvaluateAssessmentService:
         self.question_repository: QuestionRepository | None = None
         self.qualifier_service: QualifierService | None = None
         self.classification_service: ClassificationService | None = None
+        self.model_selector_service: ModelSelectorService | None = None
+        self.model_explorer_service: ModelExplorerService | None = None
 
     async def evaluate_answers(
         self, assessment: Assessment
@@ -96,8 +104,21 @@ class EvaluateAssessmentService:
             self.question_repository = PostgresQuestionsRepository(
                 session, PostgresQuestionMapper
             )
-            self.qualifier_service = OpencodeQualifierService()
-            self.classification_service = OpenCodeClassificationService()
+
+            self.model_selector_service = OpencodeModelsManagerProxy()
+            self.model_explorer_service = OpencodeModelsManagerProxy()
+
+            qualifier_model = self.model_selector_service.get_selected_model(
+                AvailableProcesses.QUALIFIER
+            )
+            classifier_model = self.model_selector_service.get_selected_model(
+                AvailableProcesses.CLASSIFIER
+            )
+
+            self.qualifier_service = OpencodeQualifierService(qualifier_model)
+            self.classification_service = OpenCodeClassificationService(
+                classifier_model
+            )
             start_time = time.perf_counter()
             evaluation_results: list[QualifierResult] = await self.qualify_assessment(
                 assessment
