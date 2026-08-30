@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from enum import Enum
 
 from src.features.assessments.shared.assessment import AssessmentAnswer
 from src.features.assessments.shared.question import Question
@@ -117,12 +118,42 @@ class QualifierService(ABC):
         pass
 
 
-class QualifierModelsService(ABC):
+class ModelExplorerService(ABC):
+
     @abstractmethod
     async def get_available_models(self) -> list[str]:
         """Fetches the list of available models from the LLM Provider.
 
         Returns:
             list[str]: A list of model names available for use.
+        """
+        pass
+
+
+class AvailableProcesses(Enum):
+    QUALIFIER = "qualifier"
+    CLASSIFIER = "classifier"
+
+
+class ModelSelectorService(ABC):
+    @abstractmethod
+    def get_selected_model(self, process: AvailableProcesses) -> str:
+        """Fetches the currently selected model from the LLM Provider.
+
+        Args:
+            process (AvailableProcesses): The process for which to get the selected model.
+
+        Returns:
+            str: The name of the currently selected model.
+        """
+        pass
+
+    @abstractmethod
+    async def set_selected_model(self, process: AvailableProcesses, model_name: str):
+        """Sets the currently selected model in the LLM Provider.
+
+        Args:
+            process (AvailableProcesses): The process for which to set the selected model.
+            model_name (str): The name of the model to set as selected.
         """
         pass

@@ -10,7 +10,6 @@ import asyncio
 from src.features.assessments.shared.qualifier_service import (
     BatchQualificationError,
     BatchQualifierPrompt,
-    QualifierModelsService,
     QualifierPrompt,
     QualifierResult,
     QualifierService,
@@ -24,17 +23,18 @@ OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY", "")
 OPENCODE_API_URL = os.getenv("OPENCODE_API_URL", "")
 
 
-class OpencodeQualifierService(QualifierService, QualifierModelsService):
+class OpencodeQualifierService(QualifierService):
 
-    def __init__(self):
+    def __init__(self, model_id: str):
         self.client = OpenAI(api_key=OPENCODE_API_KEY, base_url=OPENCODE_API_URL)
         self.generic_prompt: str = self.get_generic_prompt()
         self.batch_generic_prompt: str = self.get_batch_generic_prompt()
+        self.model_id: str = model_id
 
     async def qualify(self, qualifier_prompt: QualifierPrompt) -> QualifierResult:
         completion = await asyncio.to_thread(
             self.client.chat.completions.create,
-            model="minimax-m2.7",
+            model=self.model_id,
             messages=[
                 {"role": "system", "content": self.get_prompt(qualifier_prompt)},
                 {"role": "user", "content": qualifier_prompt.user_answer},
@@ -211,11 +211,3 @@ class OpencodeQualifierService(QualifierService, QualifierModelsService):
         answer_order = {a.answer_id: i for i, a in enumerate(batch_prompt.answers)}
         results.sort(key=lambda r: answer_order.get(r.answer_id, 999))
         return results
-
-    async def get_available_models(self) -> list[str]:
-        try:
-            response = await asyncio.to_thread(self.client.models.list)
-            models = [model.id for model in response.data]
-            return models
-        except Exception:
-            return []

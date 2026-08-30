@@ -27,6 +27,9 @@ from src.features.assessments.get_assessments_summary.get_assessments_summary_ha
 from src.features.assessments.get_available_models.get_available_models_handler import (
     GetAvailableModelsHandler,
 )
+from src.features.assessments.get_model_selected.get_model_selected_handler import (
+    GetModelSelectedHandler,
+)
 from src.features.assessments.get_pending_approval_questions.get_pending_approval_questions_handler import (
     GetPendingApprovalQuestionsHandler,
 )
@@ -69,7 +72,9 @@ from src.features.assessments.save_assessments_answers.save_assessments_answers_
 )
 from src.features.assessments.shared.assessment_repository import AssessmentRepository
 from src.features.assessments.shared.qualifier_service import (
-    QualifierModelsService,
+    AvailableProcesses,
+    ModelExplorerService,
+    ModelSelectorService,
     QualifierService,
 )
 from src.features.assessments.shared.question_assessment_repository import (
@@ -126,11 +131,11 @@ from src.infrastructure.database.postgresql.shared.postgresql_database_session i
     get_db,
 )
 
+from src.infrastructure.model_manager.opencode_model_manager_proxy import (
+    OpencodeModelsManagerProxy,
+)
 from src.infrastructure.notification.brevo_notification_service import (
     BrevoNotificationService,
-)
-from src.infrastructure.qualifier.opencode_qualifier_models_proxy import (
-    OpencodeQualifierModelsProxy,
 )
 from src.infrastructure.qualifier.opencode_qualifier_service import (
     OpencodeQualifierService,
@@ -261,8 +266,18 @@ def get_get_assessment_handler(
 
 
 @lru_cache()
-def get_qualifier_service() -> QualifierService:
-    return OpencodeQualifierService()
+def get_model_selector_service() -> ModelSelectorService:
+    return OpencodeModelsManagerProxy()
+
+
+@lru_cache()
+def get_qualifier_service(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+) -> QualifierService:
+    model = model_selector_service.get_selected_model(AvailableProcesses.QUALIFIER)
+    return OpencodeQualifierService(model)
 
 
 @lru_cache()
@@ -420,11 +435,19 @@ def get_get_assessments_summary_handler(
 
 
 @lru_cache()
-def get_models_service() -> QualifierModelsService:
-    return OpencodeQualifierModelsProxy()
+def get_models_service() -> ModelExplorerService:
+    return OpencodeModelsManagerProxy()
 
 
 def get_get_available_models_handler(
-    qualifier_service: Annotated[QualifierModelsService, Depends(get_models_service)],
+    explorer_service: Annotated[ModelExplorerService, Depends(get_models_service)],
 ) -> GetAvailableModelsHandler:
-    return GetAvailableModelsHandler(qualifier_service=qualifier_service)
+    return GetAvailableModelsHandler(explorer_service=explorer_service)
+
+
+def get_get_model_selected_handler(
+    model_selector_service: Annotated[
+        ModelSelectorService, Depends(get_model_selector_service)
+    ],
+) -> GetModelSelectedHandler:
+    return GetModelSelectedHandler(model_selector_service=model_selector_service)

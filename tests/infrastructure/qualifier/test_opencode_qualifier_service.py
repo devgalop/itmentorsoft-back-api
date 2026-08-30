@@ -79,7 +79,7 @@ class TestOpencodeBatchQualification:
         ) as mock_openai:
             mock_client = MagicMock()
             mock_openai.return_value = mock_client
-            svc = OpencodeQualifierService()
+            svc = OpencodeQualifierService(model_id="test-model")
             svc.client = mock_client
             return svc
 
