@@ -1,9 +1,6 @@
 import asyncio
-import os
 from logging.config import fileConfig
-
 from alembic import context
-from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
@@ -28,6 +25,7 @@ from src.infrastructure.database.postgresql.models import (
     RecoveryTokenEntity,
     RefreshTokenEntity,
 )
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -35,8 +33,7 @@ config = context.config
 
 # Override sqlalchemy.url with DATABASE_URL from environment.
 # The alembic.ini placeholder is replaced at runtime.
-load_dotenv()
-database_url = os.getenv("DATABASE_URL")
+database_url = EnvironmentVariablesConstants.DATABASE_URL
 if database_url:
     # Escape '%' because ConfigParser treats it as interpolation syntax.
     escaped_database_url = database_url.replace("%", "%%")

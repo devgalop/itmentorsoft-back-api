@@ -1,5 +1,3 @@
-import os
-from dotenv import load_dotenv
 from src.features.assessments.evaluate.evaluate_assessment_contract import (
     EvaluateAssessmentContract,
 )
@@ -19,22 +17,7 @@ from src.infrastructure.broker.aws.services.aws_sqs_consumer_service import (
 from src.infrastructure.broker.aws.services.aws_sqs_creator_service import (
     SqsCreatorService,
 )
-
-load_dotenv()
-
-ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID", "test")
-SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "test")
-REGION = os.getenv("AWS_REGION", "us-east-1")
-BASE_URL = os.getenv("AWS_ENDPOINT_URL", "http://localhost:4566")
-
-AWS_SQS_QUALIFICATION_QUEUE_URL = os.getenv(
-    "AWS_SQS_QUALIFICATION_QUEUE_URL",
-    "http://localhost:4566/000000000000/mq-itmentorsoft-qualify-001",
-)
-AWS_SQS_CLASSIFICATION_QUEUE_URL = os.getenv(
-    "AWS_SQS_CLASSIFICATION_QUEUE_URL",
-    "http://localhost:4566/000000000000/mq-itmentorsoft-classify-001",
-)
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class SqsManagerService:
@@ -49,10 +32,10 @@ class SqsManagerService:
         """
         sqs_connection_factory = SqsConnectionFactoryService(
             connection_request=SqsConnectionRequest(
-                endpoint_url=BASE_URL,
-                access_key=ACCESS_KEY,
-                secret_key=SECRET_KEY,
-                region=REGION,
+                endpoint_url=EnvironmentVariablesConstants.AWS_ENDPOINT_URL,
+                access_key=EnvironmentVariablesConstants.AWS_ACCESS_KEY_ID,
+                secret_key=EnvironmentVariablesConstants.AWS_SECRET_ACCESS_KEY,
+                region=EnvironmentVariablesConstants.AWS_REGION,
             )
         )
         return sqs_connection_factory
@@ -66,7 +49,7 @@ class SqsManagerService:
     def start_consumer_services(self) -> dict[str, SqsConsumerService]:
         # Initialize the SQS connection and configuration
         sqs_config_qualification = SqsConsumerConfig(
-            queue_url=AWS_SQS_QUALIFICATION_QUEUE_URL,
+            queue_url=EnvironmentVariablesConstants.AWS_SQS_QUALIFICATION_QUEUE_URL,
             max_messages=10,
             wait_time_seconds=20,
             is_enabled=True,

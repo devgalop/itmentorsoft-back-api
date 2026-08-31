@@ -1,7 +1,3 @@
-import os
-from dotenv import load_dotenv
-
-
 from src.features.user_management.create_user_from_admin.create_user_from_admin_request import (
     CreateUserFromAdminRequest,
 )
@@ -12,10 +8,7 @@ from src.features.user_management.shared.user_manager_service import (
     CreateUserRequest,
     UserManagerService,
 )
-
-load_dotenv()
-
-DEFAULT_PASSWORD = os.getenv("DEFAULT_USER_PASSWORD", "")
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class CreateUserFromAdminHandler:
@@ -25,6 +18,8 @@ class CreateUserFromAdminHandler:
     async def handle(
         self, request: CreateUserFromAdminRequest
     ) -> CreateUserFromAdminResponse:
+
+        DEFAULT_PASSWORD = EnvironmentVariablesConstants.DEFAULT_USER_PASSWORD
 
         if not DEFAULT_PASSWORD:
             return CreateUserFromAdminResponse(

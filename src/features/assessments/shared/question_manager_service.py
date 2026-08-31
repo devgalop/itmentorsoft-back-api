@@ -1,8 +1,6 @@
 from datetime import datetime
 from typing import Type
 from pydantic import BaseModel
-from dotenv import load_dotenv
-import os
 from src.features.assessments.register_question.register_question_request import (
     RegisterQuestionRequest,
 )
@@ -18,9 +16,7 @@ from src.features.shared.notification_service import (
 )
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.user_repository import UserRepository
-
-load_dotenv()
-REVIEW_URL_BASE = os.getenv("REVIEW_URL_BASE", "")
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class CreateQuestionRequest(BaseModel):
@@ -101,7 +97,10 @@ class QuestionManagerService:
                     .replace("%OBJECT_NAME%", "Pregunta + rubrica de evaluación")
                     .replace("%OBJECT_CODE%", question.question_id)
                     .replace("%CREATED_DATE%", datetime.now().strftime("%Y-%m-%d"))
-                    .replace("%URL_REVIEW%", f"{REVIEW_URL_BASE}?page=0&page_size=10")
+                    .replace(
+                        "%URL_REVIEW%",
+                        f"{EnvironmentVariablesConstants.REVIEW_URL_BASE}?page=0&page_size=10",
+                    )
                 )
 
                 notification_config_builder.set_template(final_html_content)

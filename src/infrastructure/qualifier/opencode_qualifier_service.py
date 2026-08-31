@@ -1,9 +1,7 @@
+import os
 import uuid
 import logging
 from typing import Any
-
-from dotenv import load_dotenv
-import os
 from openai import OpenAI, APIStatusError, APIConnectionError
 import json
 import asyncio
@@ -14,13 +12,9 @@ from src.features.assessments.shared.qualifier_service import (
     QualifierResult,
     QualifierService,
 )
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 logger = logging.getLogger(__name__)
-
-load_dotenv()
-
-OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY", "")
-OPENCODE_API_URL = os.getenv("OPENCODE_API_URL", "")
 
 _RETRYABLE_STATUS_CODES = {500, 502, 503, 504}
 _MAX_RETRIES = 3
@@ -30,7 +24,10 @@ _INITIAL_BACKOFF_SECONDS = 1.0
 class OpencodeQualifierService(QualifierService):
 
     def __init__(self, model_id: str):
-        self.client = OpenAI(api_key=OPENCODE_API_KEY, base_url=OPENCODE_API_URL)
+        self.client = OpenAI(
+            api_key=EnvironmentVariablesConstants.OPENCODE_API_KEY,
+            base_url=EnvironmentVariablesConstants.OPENCODE_API_URL,
+        )
         self.generic_prompt: str = self.get_generic_prompt()
         self.batch_generic_prompt: str = self.get_batch_generic_prompt()
         self.model_id: str = model_id

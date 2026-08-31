@@ -1,18 +1,13 @@
 from time import time
-from dotenv import load_dotenv
-import os
 from src.features.assessments.shared.qualifier_service import (
     AvailableProcesses,
     ModelExplorerService,
     ModelSelectorService,
 )
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 from src.infrastructure.model_manager.opencode_model_manager import (
     OpencodeModelManagerService,
 )
-
-load_dotenv()
-
-OPENCODE_DEFAULT_MODEL = os.getenv("OPENCODE_DEFAULT_MODEL", "")
 
 
 class AvailableModels:
@@ -45,8 +40,10 @@ class OpencodeModelsManagerProxy(ModelExplorerService, ModelSelectorService):
             return self._models_cache[process.value]
 
         # If the selected model is not cached, return the default model
-        self._models_cache[process.value] = OPENCODE_DEFAULT_MODEL
-        return OPENCODE_DEFAULT_MODEL
+        self._models_cache[process.value] = (
+            EnvironmentVariablesConstants.OPENCODE_DEFAULT_MODEL
+        )
+        return EnvironmentVariablesConstants.OPENCODE_DEFAULT_MODEL
 
     async def set_selected_model(self, process: AvailableProcesses, model_name: str):
         models = await self.get_available_models()

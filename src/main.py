@@ -23,11 +23,15 @@ from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
 )
 from src.infrastructure.security.bcrypt_password_hasher import BcryptPasswordHasher
 from src.infrastructure.broker.aws.services.aws_sqs_manager import SqsManagerService
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up the application...")
+    print("Validating mandatory environment variables...")
+    EnvironmentVariablesConstants.validate_mandatory_env_vars()
+    print("Initializing the database...")
     await init_db()
     await seed_database(BcryptPasswordHasher())
     await seed_questions()
@@ -47,7 +51,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(user_management_router, prefix="/users", tags=["users"])
-app.include_router(content_management_router, prefix="/content", tags=["content"])
-app.include_router(assessments_router, prefix="/assessments", tags=["assessments"])
-app.include_router(reports_router, prefix="/reports", tags=["reports"])
+app.include_router(user_management_router, prefix="/users", tags=["Users"])
+app.include_router(content_management_router, prefix="/content", tags=["Content"])
+app.include_router(assessments_router, prefix="/assessments", tags=["Assessments"])
+app.include_router(reports_router, prefix="/reports", tags=["Reports"])

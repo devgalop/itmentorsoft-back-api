@@ -1,14 +1,10 @@
-import os
 from urllib.parse import urlparse, urlunparse
 
 import asyncpg
-from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
-load_dotenv()
-
-DATABASE_URL: str = os.getenv("DATABASE_URL", "")
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 def _get_database_name(url: str) -> str:
@@ -32,8 +28,8 @@ def _get_admin_url(url: str) -> str:
 
 async def ensure_database_exists():
     """Ensure the target database exists, create it if it doesn't."""
-    db_name = _get_database_name(DATABASE_URL)
-    admin_url = _get_admin_url(DATABASE_URL)
+    db_name = _get_database_name(EnvironmentVariablesConstants.DATABASE_URL)
+    admin_url = _get_admin_url(EnvironmentVariablesConstants.DATABASE_URL)
 
     conn = await asyncpg.connect(admin_url)
     try:
@@ -48,12 +44,12 @@ async def ensure_database_exists():
 
 
 engine = create_async_engine(
-    DATABASE_URL,
-    pool_size=int(os.getenv("DB_POOL_SIZE", "5")),
-    max_overflow=int(os.getenv("DB_MAX_OVERFLOW", "10")),
-    pool_timeout=int(os.getenv("DB_POOL_TIMEOUT", "30")),
+    EnvironmentVariablesConstants.DATABASE_URL,
+    pool_size=int(EnvironmentVariablesConstants.DB_POOL_SIZE),
+    max_overflow=int(EnvironmentVariablesConstants.DB_MAX_OVERFLOW),
+    pool_timeout=int(EnvironmentVariablesConstants.DB_POOL_TIMEOUT),
     pool_pre_ping=True,
-    pool_recycle=int(os.getenv("DB_POOL_RECYCLE", "3600")),
+    pool_recycle=int(EnvironmentVariablesConstants.DB_POOL_RECYCLE),
 )
 
 AsyncSessionLocal = async_sessionmaker(

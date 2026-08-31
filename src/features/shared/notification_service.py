@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
 import uuid
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class NotificationConfig:
@@ -22,7 +20,11 @@ class NotificationConfigBuilder:
     """Class to build notification configuration with a fluent interface"""
 
     def __init__(self, destination: str, subject: str):
-        default_sender = os.getenv("EMAIL_DEFAULT_SENDER", "")
+        default_sender = EnvironmentVariablesConstants.EMAIL_DEFAULT_SENDER
+        if not default_sender:
+            raise ValueError(
+                "EMAIL_DEFAULT_SENDER environment variable is not set. Please set it to a valid email address."
+            )
         self.config = NotificationConfig(default_sender, destination, subject)
 
     def set_template(self, template: str) -> "NotificationConfigBuilder":

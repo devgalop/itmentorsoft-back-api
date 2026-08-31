@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 import os
 from openai import OpenAI
 import json
@@ -10,16 +9,15 @@ from src.features.assessments.shared.classification_service import (
     ClassificationService,
     QuestionAnswerQualification,
 )
-
-load_dotenv()
-
-OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY", "")
-OPENCODE_API_URL = os.getenv("OPENCODE_API_URL", "")
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class OpenCodeClassificationService(ClassificationService):
     def __init__(self, model_id: str):
-        self.client = OpenAI(api_key=OPENCODE_API_KEY, base_url=OPENCODE_API_URL)
+        self.client = OpenAI(
+            api_key=EnvironmentVariablesConstants.OPENCODE_API_KEY,
+            base_url=EnvironmentVariablesConstants.OPENCODE_API_URL,
+        )
         self.generic_prompt: str = self.get_generic_prompt()
         self.model_id: str = model_id
 

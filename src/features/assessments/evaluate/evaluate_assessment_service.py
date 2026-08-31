@@ -1,8 +1,6 @@
 import logging
-import os
 import time
 from collections import defaultdict
-from dotenv import load_dotenv
 
 from src.features.assessments.shared.assessment import Assessment
 from src.features.assessments.shared.assessment_repository import AssessmentRepository
@@ -42,6 +40,7 @@ from src.infrastructure.database.postgresql.repository.postgres_questions_reposi
 from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
     AsyncSessionLocal,
 )
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 from src.infrastructure.model_manager.opencode_model_manager_proxy import (
     OpencodeModelsManagerProxy,
 )
@@ -50,8 +49,6 @@ from src.infrastructure.qualifier.opencode_qualifier_service import (
 )
 
 logger = logging.getLogger(__name__)
-
-EVALUATION_MODE = "normal"
 
 
 def _validate_chunk_size(raw_value: str | None) -> int:
@@ -79,9 +76,9 @@ def _validate_chunk_size(raw_value: str | None) -> int:
         )
 
 
-load_dotenv()
-_raw_chunk_size = os.getenv("ASSESSMENT_QUALIFICATION_CHUNK_SIZE")
-ASSESSMENT_QUALIFICATION_CHUNK_SIZE = _validate_chunk_size(_raw_chunk_size)
+ASSESSMENT_QUALIFICATION_CHUNK_SIZE = _validate_chunk_size(
+    EnvironmentVariablesConstants.ASSESSMENT_QUALIFICATION_CHUNK_SIZE
+)
 
 
 class EvaluateAssessmentService:
@@ -196,7 +193,7 @@ class EvaluateAssessmentService:
                 batch_prompt = BatchQualifierPrompt(
                     rubrics=chunk_rubrics,
                     answers=chunk_answers,
-                    qualifier_mode=EVALUATION_MODE,
+                    qualifier_mode=EnvironmentVariablesConstants.EVALUATION_MODE,
                     user_id=assessment.user_id,
                     assessment_id=assessment.assessment_id,
                 )
@@ -213,7 +210,7 @@ class EvaluateAssessmentService:
                         await self.qualifier_service.qualify(
                             QualifierPrompt(
                                 rubric=rubric,
-                                qualifier_mode=EVALUATION_MODE,
+                                qualifier_mode=EnvironmentVariablesConstants.EVALUATION_MODE,
                                 user_id=assessment.user_id,
                                 user_answer=answer.answer,
                                 assessment_id=assessment.assessment_id,

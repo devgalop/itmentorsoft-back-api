@@ -1,8 +1,4 @@
-import os
 import time
-
-from dotenv import load_dotenv
-
 from src.features.user_management.refresh_token.refresh_token_request import (
     RefreshTokenRequest,
 )
@@ -19,12 +15,25 @@ from src.features.user_management.shared.user_repository import UserRepository
 from src.features.user_management.refresh_token.refresh_token_response import (
     RefreshTokenResponse,
 )
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
-load_dotenv()
 
-REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS = int(
-    os.getenv("REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS", "604800")
-)
+def _get_refresh_token_expiration_delta_seconds() -> int:
+    """Get the refresh token expiration delta seconds from environment variables.
+
+    Returns:
+        int: The refresh token expiration delta seconds.
+    """
+    value = EnvironmentVariablesConstants.REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS
+    if not value:
+        return 604800  # Default to 7 days if not set
+    try:
+        return int(value)
+    except ValueError:
+        return 604800  # Default to 7 days if not set
+
+
+REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS = _get_refresh_token_expiration_delta_seconds()
 
 
 class RefreshTokenHandler:

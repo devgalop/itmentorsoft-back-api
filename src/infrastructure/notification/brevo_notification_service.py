@@ -2,18 +2,11 @@ import json
 from typing import List
 
 import aiohttp
-from dotenv import load_dotenv
-import os
-
 from src.features.shared.notification_service import (
     NotificationConfig,
     NotificationService,
 )
-
-load_dotenv()
-
-BREVO_API_KEY = os.getenv("BREVO_API_KEY", "")
-BREVO_BASE_API_URL = os.getenv("BREVO_BASE_API_URL", "")
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class BrevoNotificationUser:
@@ -59,12 +52,22 @@ class BrevoNotificationService(NotificationService):
         Returns:
             bool: True if the notification was sent successfully, False otherwise.
         """
+        API_KEY = EnvironmentVariablesConstants.BREVO_API_KEY
+        if not API_KEY:
+            raise EnvironmentError(
+                "Mandatory environment variable 'BREVO_API_KEY' is not set."
+            )
         headers: dict[str, str] = {
-            "api-key": BREVO_API_KEY,
+            "api-key": API_KEY,
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
-        API_URL = f"{BREVO_BASE_API_URL}/smtp/email"
+        API_URL = EnvironmentVariablesConstants.BREVO_BASE_API_URL
+        if not API_URL:
+            raise EnvironmentError(
+                "Mandatory environment variable 'BREVO_BASE_API_URL' is not set."
+            )
+        API_URL = f"{API_URL}/smtp/email"
         payload = json.loads(
             json.dumps(
                 self.to_brevo_payload(notification_config), default=lambda o: o.__dict__
