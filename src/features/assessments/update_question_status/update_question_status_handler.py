@@ -1,4 +1,4 @@
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import QuestionRepository
 from src.features.assessments.update_question_status.update_question_status_request import (
     UpdateQuestionStatusRequest,
 )

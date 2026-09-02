@@ -3,7 +3,7 @@ from src.features.assessments.get_questions_by_category.get_questions_by_categor
 )
 import pytest
 
-from src.features.assessments.shared.question import QUESTION_CATEGORIES
+from src.features.assessments.shared.question_categories import QUESTION_CATEGORIES
 
 
 def test_when_request_is_valid_then_exception_is_not_raised():

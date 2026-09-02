@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.reports.shared.category_report import CategorySummary
 from src.features.reports.shared.report_repository import ReportRepository
 from src.features.reports.shared.student_report import (

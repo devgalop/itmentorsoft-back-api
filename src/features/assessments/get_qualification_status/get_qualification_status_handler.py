@@ -4,7 +4,7 @@ from src.features.assessments.get_qualification_status.get_qualification_status_
 from src.features.assessments.get_qualification_status.get_qualification_status_response import (
     GetQualificationStatusResponse,
 )
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 
 
 class GetQualificationStatusHandler:

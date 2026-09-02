@@ -12,8 +12,8 @@ from src.features.assessments.shared.get_assessment_service import (
     GetAssessmentService,
     GetRandomQuestionsByTopicRequest,
 )
-from src.features.assessments.shared.assessment import AssessmentQuiz
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import AssessmentQuiz
+from itmentorsoft_persistence.dto import (
     EvaluativeQuestion,
     QuestionDifficulty,
 )

@@ -1,7 +1,7 @@
 from src.features.assessments.get_questions_topics.get_questions_topics_response import (
     GetQuestionsTopicsResponse,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import QuestionRepository
 
 
 class GetQuestionsTopicsHandler:

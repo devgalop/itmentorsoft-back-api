@@ -5,7 +5,7 @@ from src.features.assessments.get_questions_by_category.get_questions_by_categor
     GetQuestionsByCategoryResponse,
     QuestionByCategoryData,
 )
-from src.features.assessments.shared.question_assessment_repository import (
+from itmentorsoft_persistence.repositories import (
     QuestionAssessmentRepository,
 )
 

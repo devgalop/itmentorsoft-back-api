@@ -2,7 +2,7 @@ from fastapi.params import Depends
 from typing import Annotated
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.assessments.shared.dependencies import get_assessment_repository
 from src.features.reports.get_all_students.get_all_students_handler import (
     GetAllStudentsHandler,

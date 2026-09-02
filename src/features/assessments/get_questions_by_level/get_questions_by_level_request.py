@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
 
-from src.features.assessments.shared.question import QuestionDifficulty
+from itmentorsoft_persistence.dto import QuestionDifficulty
 
 
 class GetQuestionsByLevelRequest(BaseModel):

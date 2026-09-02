@@ -4,7 +4,7 @@ from src.features.assessments.get_pending_approval_questions.get_pending_approva
 from src.features.assessments.get_pending_approval_questions.get_pending_approval_questions_response import (
     GetPendingApprovalQuestionsResponse,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import QuestionRepository
 
 
 class GetPendingApprovalQuestionsHandler:

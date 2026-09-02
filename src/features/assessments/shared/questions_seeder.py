@@ -5,7 +5,7 @@ import uuid
 import aiofiles
 from sqlalchemy import select
 
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     Question,
     QuestionBuilder,
     QuestionDifficulty,

@@ -70,14 +70,14 @@ from src.features.assessments.save_assessments_answers.save_assessments_answers_
 from src.features.assessments.save_assessments_answers.save_assessments_answers_service import (
     SaveAssessmentsAnswersService,
 )
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.assessments.shared.qualifier_service import (
     AvailableProcesses,
     ModelExplorerService,
     ModelSelectorService,
     QualifierService,
 )
-from src.features.assessments.shared.question_assessment_repository import (
+from itmentorsoft_persistence.repositories import (
     QuestionAssessmentRepository,
 )
 from src.features.assessments.shared.question_manager_service import (
@@ -95,8 +95,8 @@ from src.features.assessments.update_model.update_model_handler import (
 from src.features.assessments.update_question.update_question_handler import (
     UpdateQuestionHandler,
 )
-from src.features.assessments.shared.question import QuestionBuilder
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.dto import QuestionBuilder
+from itmentorsoft_persistence.repositories import QuestionRepository
 from src.features.assessments.update_question_status.update_question_status_handler import (
     UpdateQuestionStatusHandler,
 )

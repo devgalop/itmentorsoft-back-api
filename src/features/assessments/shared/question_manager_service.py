@@ -4,12 +4,12 @@ from pydantic import BaseModel
 from src.features.assessments.register_question.register_question_request import (
     RegisterQuestionRequest,
 )
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     Question,
     QuestionBuilder,
     QuestionRubricScore,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import QuestionRepository
 from src.features.shared.notification_service import (
     NotificationConfigBuilder,
     NotificationService,

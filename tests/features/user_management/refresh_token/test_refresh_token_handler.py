@@ -8,7 +8,7 @@ from src.features.user_management.refresh_token.refresh_token_handler import (
 from src.features.user_management.refresh_token.refresh_token_request import (
     RefreshTokenRequest,
 )
-from src.features.user_management.shared.refresh_token_repository import (
+from itmentorsoft_persistence.repositories import (
     RefreshTokenData,
     RefreshTokenInfo,
 )

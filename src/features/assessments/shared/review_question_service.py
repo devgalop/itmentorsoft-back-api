@@ -6,8 +6,8 @@ from src.features.assessments.save_review_question.save_review_question_request 
 from src.features.assessments.save_review_question.save_review_question_response import (
     SaveReviewQuestionResponse,
 )
-from src.features.assessments.shared.question import QuestionReview
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.dto import QuestionReview
+from itmentorsoft_persistence.repositories import QuestionRepository
 from src.features.user_management.shared.user_repository import UserRepository
 
 

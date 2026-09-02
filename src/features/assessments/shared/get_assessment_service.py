@@ -16,15 +16,16 @@ from src.features.assessments.get_assessment_by_topic.get_assessment_by_topic_re
     EvaluativeQuestionDataByTopic,
     GetAssessmentByTopicResponse,
 )
-from src.features.assessments.shared.assessment import AssessmentQuiz
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
+    AssessmentQuiz,
     EvaluativeQuestion,
     QuestionDifficulty,
 )
-from src.features.assessments.shared.question_assessment_repository import (
+from itmentorsoft_persistence.repositories import (
+    AssessmentRepository,
     QuestionAssessmentRepository,
 )
+
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 _rng = SystemRandom()

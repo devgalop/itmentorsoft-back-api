@@ -2,9 +2,7 @@ import logging
 import time
 from collections import defaultdict
 
-from itmentorsoft_persistence.dto import (
-    Assessment,
-)
+from itmentorsoft_persistence.dto import Assessment, TopicResult
 from src.features.assessments.shared.classification_service import (
     ClassificationPrompt,
     ClassificationService,
@@ -12,7 +10,6 @@ from src.features.assessments.shared.classification_service import (
     QuestionAnswerQualification,
 )
 from src.features.assessments.shared.qualifier_service import (
-    TopicResult,
     QualifierResult,
     AvailableProcesses,
     BatchQualificationError,
