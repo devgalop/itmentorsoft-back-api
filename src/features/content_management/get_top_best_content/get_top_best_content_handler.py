@@ -5,8 +5,8 @@ from src.features.content_management.get_top_best_content.get_top_best_content_r
     GetTopBestContentResponse,
     TopBestContentItem,
 )
-from src.features.content_management.shared.content import TopContentOrder
-from src.features.content_management.shared.content_repository import (
+from itmentorsoft_persistence.dto import TopContentOrder
+from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
 

@@ -7,7 +7,7 @@ from src.features.content_management.update_resource_content.update_resource_con
 from src.features.content_management.update_resource_content.update_resource_content_request import (
     UpdateResourceContentRequest,
 )
-from src.features.content_management.shared.content import ContentCategory
+from itmentorsoft_persistence.dto import ContentCategory
 
 CONTENT_ID = "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
 
@@ -55,9 +55,15 @@ async def test_when_update_is_valid_then_should_call_repository_with_correct_par
     request = make_request()
     await handler.handle(CONTENT_ID, request)
 
-    content_repository.update_resource_content.assert_called_once_with(
-        CONTENT_ID, request
-    )
+    content_repository.update_resource_content.assert_called_once()
+    call_args = content_repository.update_resource_content.call_args
+    assert call_args[0][0] == CONTENT_ID
+    dto = call_args[0][1]
+    assert dto.title == request.title
+    assert dto.description == request.description
+    assert dto.url == request.url
+    assert dto.category == request.category
+    assert dto.related_topic == request.related_topic
 
 
 @pytest.mark.asyncio

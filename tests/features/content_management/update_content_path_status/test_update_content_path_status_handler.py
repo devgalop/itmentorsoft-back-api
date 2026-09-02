@@ -7,7 +7,7 @@ from src.features.content_management.update_content_path_status.update_content_p
 from src.features.content_management.update_content_path_status.update_content_path_status_request import (
     UpdateContentPathStatusRequest,
 )
-from src.features.content_management.shared.learning_path import (
+from itmentorsoft_persistence.dto import (
     LearningPathProgress,
     LearningPathProgressResponse,
 )

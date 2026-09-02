@@ -7,7 +7,7 @@ from src.features.content_management.register_content.register_content_handler i
 from src.features.content_management.register_content.register_content_request import (
     RegisterContentRequest,
 )
-from src.features.content_management.shared.content import (
+from itmentorsoft_persistence.dto import (
     ContentCategory,
     PaginatedResourceContentResult,
     ResourceContent,

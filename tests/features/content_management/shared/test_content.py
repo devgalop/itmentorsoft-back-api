@@ -1,4 +1,4 @@
-from src.features.content_management.shared.content import (
+from itmentorsoft_persistence.dto import (
     ResourceContent,
     ResourceContentBuilder,
     ContentCategory,

@@ -38,11 +38,11 @@ from src.features.content_management.rate_content.rate_content_handler import (
 from src.features.content_management.register_content.register_content_handler import (
     RegisterContentHandler,
 )
-from src.features.content_management.shared.content import ResourceContentBuilder
-from src.features.content_management.shared.content_repository import (
+from itmentorsoft_persistence.dto import ResourceContentBuilder
+from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
-from src.features.content_management.shared.learning_path_repository import (
+from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
 )
 from src.features.content_management.update_content_path_status.update_content_path_status_handler import (
