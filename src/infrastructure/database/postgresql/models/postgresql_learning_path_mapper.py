@@ -1,3 +1,5 @@
+import uuid
+
 from src.features.content_management.shared.learning_path import (
     LearningPath,
 )
@@ -25,7 +27,7 @@ class PostgresLearningPathMapper:
     ) -> list[LearningPathContentEntity]:
         return [
             LearningPathContentEntity(
-                id=content.content_id,
+                id=uuid.uuid4().hex,
                 learning_path_id=model.path_id,
                 content_id=content.content_id,
                 is_completed=False,
