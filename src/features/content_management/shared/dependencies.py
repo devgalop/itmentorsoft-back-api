@@ -54,13 +54,9 @@ from src.features.content_management.update_resource_content.update_resource_con
 from src.features.content_management.update_resource_status.update_resource_status_handler import (
     UpdateResourceStatusHandler,
 )
-from src.infrastructure.database.postgresql.models.postgresql_content_rating_mapper import (
+from itmentorsoft_persistence.mappers import (
     RateContentMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_learning_path_mapper import (
     PostgresLearningPathMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_resource_content_mapper import (
     ResourceContentMapper,
 )
 from src.infrastructure.database.postgresql.repository.postgres_learning_path_repository import (
@@ -69,9 +65,7 @@ from src.infrastructure.database.postgresql.repository.postgres_learning_path_re
 from src.infrastructure.database.postgresql.repository.postgres_resource_content_repository import (
     PostgresResourceContentRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    get_db,
-)
+from itmentorsoft_persistence import get_db
 
 
 def get_resource_content_repository(

@@ -1,7 +1,7 @@
 from src.features.user_management.get_connected_users.get_connected_users_response import (
     GetConnectedUsersResponse,
 )
-from src.features.user_management.shared.refresh_token_repository import (
+from itmentorsoft_persistence.repositories import (
     RefreshTokenRepository,
 )
 

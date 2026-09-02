@@ -1,9 +1,9 @@
 from time import time
 
-from src.features.assessments.shared.question_assessment_repository import (
+from itmentorsoft_persistence.repositories import (
     QuestionAssessmentRepository,
 )
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     EvaluativeQuestion,
     QuestionDifficulty,
 )

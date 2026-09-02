@@ -2,42 +2,45 @@ import logging
 import time
 from collections import defaultdict
 
-from src.features.assessments.shared.assessment import Assessment
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.dto import (
+    Assessment,
+)
 from src.features.assessments.shared.classification_service import (
     ClassificationPrompt,
-    ClassificationResult,
     ClassificationService,
+    ClassificationResult,
     QuestionAnswerQualification,
 )
 from src.features.assessments.shared.qualifier_service import (
+    TopicResult,
+    QualifierResult,
     AvailableProcesses,
     BatchQualificationError,
     BatchQualifierPrompt,
     ModelExplorerService,
     ModelSelectorService,
     QualifierPrompt,
-    QualifierResult,
     QualifierService,
-    TopicResult,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import (
+    QuestionRepository,
+    AssessmentRepository,
+)
 from src.infrastructure.classifier.opencode_classifier_service import (
     OpenCodeClassificationService,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_mapper import (
+from itmentorsoft_persistence.mappers import (
     PostgresAssessmentMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_question_mapper import (
     PostgresQuestionMapper,
 )
+
 from src.infrastructure.database.postgresql.repository.postgres_assessment_repository import (
     PostgresAssessmentRepository,
 )
 from src.infrastructure.database.postgresql.repository.postgres_questions_repository import (
     PostgresQuestionsRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
+from itmentorsoft_persistence import (
     AsyncSessionLocal,
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants

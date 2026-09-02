@@ -5,9 +5,15 @@ from src.features.user_management.create_user.create_user_response import (
     CreateUserResponse,
 )
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.role_repository import RoleRepository
-from src.features.user_management.shared.user import User, UserRole, UserStatus
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import (
+    RoleRepository,
+    UserRepository,
+)
+from itmentorsoft_persistence.dto import (
+    User,
+    UserRole,
+    UserStatus,
+)
 
 
 class CreateUserHandler:

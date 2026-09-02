@@ -3,16 +3,16 @@ from typing import Type
 from sqlalchemy import func, select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.features.reports.shared.category_report import CategorySummary
-from src.features.reports.shared.report_repository import ReportRepository
-from src.features.reports.shared.student_report import (
+from itmentorsoft_persistence.dto import (
+    CategorySummary,
     PaginatedStudentSummary,
     StudentBasicSummary,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_model import (
+from itmentorsoft_persistence.repositories import ReportRepository
+from itmentorsoft_persistence.models import (
     ClassificationResultEntity,
 )
-from src.infrastructure.database.postgresql.models.postgresql_report_mapper import (
+from itmentorsoft_persistence.mappers import (
     PostgresReportMapper,
 )
 

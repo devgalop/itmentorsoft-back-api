@@ -115,10 +115,8 @@ from src.infrastructure.broker.aws.services.aws_sqs_publisher_service import (
 from src.infrastructure.classifier.opencode_classifier_service import (
     OpenCodeClassificationService,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_mapper import (
+from itmentorsoft_persistence.mappers import (
     PostgresAssessmentMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_question_mapper import (
     PostgresQuestionMapper,
 )
 from src.infrastructure.database.postgresql.repository.postgres_assessment_repository import (
@@ -130,9 +128,7 @@ from src.infrastructure.database.postgresql.repository.postgres_questions_assess
 from src.infrastructure.database.postgresql.repository.postgres_questions_repository import (
     PostgresQuestionsRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    get_db,
-)
+from itmentorsoft_persistence import get_db
 
 from src.infrastructure.model_manager.opencode_model_manager_proxy import (
     OpencodeModelsManagerProxy,

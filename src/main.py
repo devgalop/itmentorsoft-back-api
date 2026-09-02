@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from src.features.assessments.evaluate.evaluate_assessment_handler import (
     EvaluateAssessmentHandler,
 )
@@ -13,9 +14,7 @@ from src.features.content_management.shared.init import (
 )
 from src.features.assessments.shared.init import router as assessments_router
 from src.features.reports.shared.init import router as reports_router
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    init_db,
-)
+from itmentorsoft_persistence import init_db
 from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
     seed_assessments,
     seed_contents,
@@ -55,3 +54,15 @@ app.include_router(user_management_router, prefix="/users", tags=["Users"])
 app.include_router(content_management_router, prefix="/content", tags=["Content"])
 app.include_router(assessments_router, prefix="/assessments", tags=["Assessments"])
 app.include_router(reports_router, prefix="/reports", tags=["Reports"])
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={
+            "status": 500,
+            "message": "An unexpected error occurred",
+            "path": request.url.path,
+        },
+    )

@@ -6,9 +6,9 @@ from src.features.shared.notification_service import (
 )
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.role_repository import RoleRepository
-from src.features.user_management.shared.user_repository import UserRepository
-from src.features.user_management.shared.user import (
+from itmentorsoft_persistence.repositories import RoleRepository
+from itmentorsoft_persistence.repositories import UserRepository
+from itmentorsoft_persistence.dto import (
     User,
     UserResponse,
     UserRole,

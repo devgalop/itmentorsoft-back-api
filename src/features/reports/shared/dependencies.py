@@ -30,15 +30,11 @@ from src.features.user_management.shared.dependencies import (
 )
 from src.features.user_management.shared.user_manager_service import UserManagerService
 from src.features.user_management.shared.user_repository import UserRepository
-from src.infrastructure.database.postgresql.models.postgresql_report_mapper import (
-    PostgresReportMapper,
-)
+from itmentorsoft_persistence.mappers import PostgresReportMapper
 from src.infrastructure.database.postgresql.repository.postgres_report_repository import (
     PostgresReportRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    get_db,
-)
+from itmentorsoft_persistence import get_db
 
 
 def get_report_repository(

@@ -5,8 +5,7 @@ from src.features.user_management.assign_role.assign_role_request import (
 from src.features.user_management.assign_role.assign_role_response import (
     AssignRoleResponse,
 )
-from src.features.user_management.shared.role_repository import RoleRepository
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import RoleRepository, UserRepository
 
 
 class AssignRoleHandler:
