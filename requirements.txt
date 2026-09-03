@@ -101,4 +101,3 @@ virtualenv==21.2.4
 watchfiles==1.1.1
 websockets==16.0
 yarl==1.23.0
-itmentorsoft-persistence
