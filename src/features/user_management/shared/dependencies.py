@@ -1,3 +1,4 @@
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated
 from fastapi.params import Depends
 
@@ -23,37 +24,33 @@ from src.features.user_management.recovery_password.recovery_password_handler im
     RecoveryPasswordHandler,
 )
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.role_repository import RoleRepository
-from src.features.user_management.shared.token_generator import TokenGenerator
-from src.features.user_management.shared.user_manager_service import UserManagerService
-from src.features.user_management.shared.user_recovery_token_repository import (
+from itmentorsoft_persistence.repositories import (
+    RoleRepository,
     UserRecoveryTokenRepository,
-)
-from src.features.user_management.shared.user_repository import UserRepository
-from src.features.user_management.shared.refresh_token_repository import (
+    UserRepository,
     RefreshTokenRepository,
 )
+from src.features.user_management.shared.token_generator import TokenGenerator
+from src.features.user_management.shared.user_manager_service import UserManagerService
 from src.features.user_management.refresh_token.refresh_token_handler import (
     RefreshTokenHandler,
 )
-from sqlalchemy.ext.asyncio import AsyncSession
+
 from src.features.user_management.update_user_profile.update_user_profile_handler import (
     UpdateUserProfileHandler,
 )
 from src.features.user_management.update_user_status.update_user_status_handler import (
     UpdateUserStatusHandler,
 )
-from src.infrastructure.database.postgresql.models.postgresql_role_mapper import (
+from itmentorsoft_persistence.mappers import (
     PostgresRoleMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_user_mapper import (
     PostgresUserMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_user_recovery_token_mapper import (
     PostgresRecoveryTokenMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_user_refresh_token_mapper import (
     PostgresRefreshTokenMapper,
+)
+
+from itmentorsoft_persistence import (
+    get_db,
 )
 from src.infrastructure.database.postgresql.repository.postgres_role_repository import (
     PostgresRoleRepository,
@@ -61,14 +58,11 @@ from src.infrastructure.database.postgresql.repository.postgres_role_repository 
 from src.infrastructure.database.postgresql.repository.postgres_user_recovery_token_repository import (
     PostgresUserRecoveryTokenRepository,
 )
-from src.infrastructure.database.postgresql.repository.postgres_user_repository import (
-    PostgresUserRepository,
-)
 from src.infrastructure.database.postgresql.repository.postgres_user_refresh_token_repository import (
     PostgresUserRefreshTokenRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    get_db,
+from src.infrastructure.database.postgresql.repository.postgres_user_repository import (
+    PostgresUserRepository,
 )
 from src.infrastructure.notification.brevo_notification_service import (
     BrevoNotificationService,

@@ -6,7 +6,7 @@ from src.features.content_management.get_recommended_content.get_recommended_con
     GetRecommendedContentResponse,
     TopicSummary,
 )
-from src.features.content_management.shared.learning_path_repository import (
+from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
 )
 

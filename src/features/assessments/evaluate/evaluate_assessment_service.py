@@ -1,51 +1,54 @@
 import logging
-import os
 import time
 from collections import defaultdict
-from dotenv import load_dotenv
 
-from src.features.assessments.shared.assessment import Assessment
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.dto import Assessment, TopicResult
 from src.features.assessments.shared.classification_service import (
     ClassificationPrompt,
-    ClassificationResult,
     ClassificationService,
+    ClassificationResult,
     QuestionAnswerQualification,
 )
 from src.features.assessments.shared.qualifier_service import (
+    QualifierResult,
+    AvailableProcesses,
     BatchQualificationError,
     BatchQualifierPrompt,
+    ModelExplorerService,
+    ModelSelectorService,
     QualifierPrompt,
-    QualifierResult,
     QualifierService,
-    TopicResult,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import (
+    QuestionRepository,
+    AssessmentRepository,
+)
 from src.infrastructure.classifier.opencode_classifier_service import (
     OpenCodeClassificationService,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_mapper import (
+from itmentorsoft_persistence.mappers import (
     PostgresAssessmentMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_question_mapper import (
     PostgresQuestionMapper,
 )
+
 from src.infrastructure.database.postgresql.repository.postgres_assessment_repository import (
     PostgresAssessmentRepository,
 )
 from src.infrastructure.database.postgresql.repository.postgres_questions_repository import (
     PostgresQuestionsRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
+from itmentorsoft_persistence import (
     AsyncSessionLocal,
+)
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.infrastructure.model_manager.opencode_model_manager_proxy import (
+    OpencodeModelsManagerProxy,
 )
 from src.infrastructure.qualifier.opencode_qualifier_service import (
     OpencodeQualifierService,
 )
 
 logger = logging.getLogger(__name__)
-
-EVALUATION_MODE = "normal"
 
 
 def _validate_chunk_size(raw_value: str | None) -> int:
@@ -73,9 +76,9 @@ def _validate_chunk_size(raw_value: str | None) -> int:
         )
 
 
-load_dotenv()
-_raw_chunk_size = os.getenv("ASSESSMENT_QUALIFICATION_CHUNK_SIZE")
-ASSESSMENT_QUALIFICATION_CHUNK_SIZE = _validate_chunk_size(_raw_chunk_size)
+ASSESSMENT_QUALIFICATION_CHUNK_SIZE = _validate_chunk_size(
+    EnvironmentVariablesConstants.ASSESSMENT_QUALIFICATION_CHUNK_SIZE
+)
 
 
 class EvaluateAssessmentService:
@@ -85,6 +88,8 @@ class EvaluateAssessmentService:
         self.question_repository: QuestionRepository | None = None
         self.qualifier_service: QualifierService | None = None
         self.classification_service: ClassificationService | None = None
+        self.model_selector_service: ModelSelectorService | None = None
+        self.model_explorer_service: ModelExplorerService | None = None
 
     async def evaluate_answers(
         self, assessment: Assessment
@@ -96,8 +101,21 @@ class EvaluateAssessmentService:
             self.question_repository = PostgresQuestionsRepository(
                 session, PostgresQuestionMapper
             )
-            self.qualifier_service = OpencodeQualifierService()
-            self.classification_service = OpenCodeClassificationService()
+
+            self.model_selector_service = OpencodeModelsManagerProxy()
+            self.model_explorer_service = OpencodeModelsManagerProxy()
+
+            qualifier_model = self.model_selector_service.get_selected_model(
+                AvailableProcesses.QUALIFIER
+            )
+            classifier_model = self.model_selector_service.get_selected_model(
+                AvailableProcesses.CLASSIFIER
+            )
+
+            self.qualifier_service = OpencodeQualifierService(qualifier_model)
+            self.classification_service = OpenCodeClassificationService(
+                classifier_model
+            )
             start_time = time.perf_counter()
             evaluation_results: list[QualifierResult] = await self.qualify_assessment(
                 assessment
@@ -175,7 +193,7 @@ class EvaluateAssessmentService:
                 batch_prompt = BatchQualifierPrompt(
                     rubrics=chunk_rubrics,
                     answers=chunk_answers,
-                    qualifier_mode=EVALUATION_MODE,
+                    qualifier_mode=EnvironmentVariablesConstants.EVALUATION_MODE,
                     user_id=assessment.user_id,
                     assessment_id=assessment.assessment_id,
                 )
@@ -192,7 +210,7 @@ class EvaluateAssessmentService:
                         await self.qualifier_service.qualify(
                             QualifierPrompt(
                                 rubric=rubric,
-                                qualifier_mode=EVALUATION_MODE,
+                                qualifier_mode=EnvironmentVariablesConstants.EVALUATION_MODE,
                                 user_id=assessment.user_id,
                                 user_answer=answer.answer,
                                 assessment_id=assessment.assessment_id,

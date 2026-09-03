@@ -1,4 +1,4 @@
-from src.features.content_management.shared.content_repository import (
+from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
 from src.features.content_management.update_resource_status.update_resource_status_request import (

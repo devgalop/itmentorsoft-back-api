@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from src.features.user_management.shared.user import (
+from itmentorsoft_persistence.dto import (
     CompleteUserResponse,
     UserRole,
     UserStatus,

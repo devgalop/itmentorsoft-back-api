@@ -1,9 +1,6 @@
 from datetime import datetime
 from secrets import SystemRandom
 import uuid
-import os
-from dotenv import load_dotenv
-
 
 from src.features.assessments.get_assessment.get_assessment_request import (
     GetAssessmentRequest,
@@ -19,20 +16,46 @@ from src.features.assessments.get_assessment_by_topic.get_assessment_by_topic_re
     EvaluativeQuestionDataByTopic,
     GetAssessmentByTopicResponse,
 )
-from src.features.assessments.shared.assessment import AssessmentQuiz
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
+    AssessmentQuiz,
     EvaluativeQuestion,
     QuestionDifficulty,
 )
-from src.features.assessments.shared.question_assessment_repository import (
+from itmentorsoft_persistence.repositories import (
+    AssessmentRepository,
     QuestionAssessmentRepository,
 )
 
-load_dotenv()
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+
 _rng = SystemRandom()
 
-NUMBER_OF_QUESTIONS = int(os.getenv("ASSESSMENT_MAX_QUESTIONS_NUMBER", 10))
+
+def _get_number_of_questions() -> int:
+    """Get the number of questions to be used in assessments from environment variables.
+
+    Returns:
+        int: The number of questions to be used in assessments.
+
+    Raises:
+        ValueError: If the ASSESSMENT_MAX_QUESTIONS_NUMBER environment variable is not set or is not a valid integer.
+    """
+    if EnvironmentVariablesConstants.ASSESSMENT_MAX_QUESTIONS_NUMBER is None:
+        raise ValueError(
+            "ASSESSMENT_MAX_QUESTIONS_NUMBER environment variable is not set."
+        )
+
+    try:
+        value = int(EnvironmentVariablesConstants.ASSESSMENT_MAX_QUESTIONS_NUMBER)
+    except ValueError:
+        raise ValueError(
+            f"ASSESSMENT_MAX_QUESTIONS_NUMBER must be a valid integer, got: {EnvironmentVariablesConstants.ASSESSMENT_MAX_QUESTIONS_NUMBER}"
+        )
+
+    return value
+
+
+NUMBER_OF_QUESTIONS = _get_number_of_questions()
 
 
 class GetRandomQuestionsRequest:

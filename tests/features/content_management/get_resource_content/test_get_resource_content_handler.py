@@ -7,7 +7,7 @@ from src.features.content_management.get_resource_content.get_resource_content_h
 from src.features.content_management.get_resource_content.get_resource_content_request import (
     GetResourceRequest,
 )
-from src.features.content_management.shared.content import (
+from itmentorsoft_persistence.dto import (
     ContentCategory,
     ResourceContentResponse,
 )

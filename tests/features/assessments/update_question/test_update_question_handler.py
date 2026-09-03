@@ -7,7 +7,7 @@ from src.features.assessments.update_question.update_question_handler import (
 from src.features.assessments.update_question.update_question_request import (
     UpdateQuestionRequest,
 )
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     Question,
     QuestionRubricScore,
     QuestionStatus,

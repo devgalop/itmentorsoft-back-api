@@ -20,7 +20,7 @@ async def test_when_user_is_valid_should_create_user():
     )
 
     with patch(
-        "src.features.user_management.create_user_from_admin.create_user_from_admin_handler.DEFAULT_PASSWORD",
+        "src.infrastructure.env_manager.env_manager.EnvironmentVariablesConstants.DEFAULT_USER_PASSWORD",
         "default_password",
     ):
         handler = CreateUserFromAdminHandler(user_manager_service)
@@ -46,7 +46,7 @@ async def test_when_default_password_is_not_set_should_return_error():
     handler = CreateUserFromAdminHandler(user_manager_service)
 
     with patch(
-        "src.features.user_management.create_user_from_admin.create_user_from_admin_handler.DEFAULT_PASSWORD",
+        "src.infrastructure.env_manager.env_manager.EnvironmentVariablesConstants.DEFAULT_USER_PASSWORD",
         "",
     ):
         response = await handler.handle(
@@ -73,7 +73,7 @@ async def test_when_email_already_exists_should_return_error():
     )
 
     with patch(
-        "src.features.user_management.create_user_from_admin.create_user_from_admin_handler.DEFAULT_PASSWORD",
+        "src.infrastructure.env_manager.env_manager.EnvironmentVariablesConstants.DEFAULT_USER_PASSWORD",
         "default_password",
     ):
 
@@ -102,7 +102,7 @@ async def test_when_username_already_exists_should_return_error():
     )
 
     with patch(
-        "src.features.user_management.create_user_from_admin.create_user_from_admin_handler.DEFAULT_PASSWORD",
+        "src.infrastructure.env_manager.env_manager.EnvironmentVariablesConstants.DEFAULT_USER_PASSWORD",
         "default_password",
     ):
         handler = CreateUserFromAdminHandler(user_manager_service)
@@ -129,7 +129,7 @@ async def test_when_role_is_invalid_should_return_error():
         )
     )
     with patch(
-        "src.features.user_management.create_user_from_admin.create_user_from_admin_handler.DEFAULT_PASSWORD",
+        "src.infrastructure.env_manager.env_manager.EnvironmentVariablesConstants.DEFAULT_USER_PASSWORD",
         "default_password",
     ):
 

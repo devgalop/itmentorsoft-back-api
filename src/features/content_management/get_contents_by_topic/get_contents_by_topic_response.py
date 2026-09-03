@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.features.content_management.shared.content import ResourceContentResponse
+from itmentorsoft_persistence.dto import ResourceContentResponse
 
 
 class GetContentsByTopicResponse(BaseModel):

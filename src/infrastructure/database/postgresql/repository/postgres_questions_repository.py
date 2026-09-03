@@ -2,18 +2,18 @@ from typing import Type
 from sqlalchemy import func, select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     EvaluativeQuestion,
     PaginatedQuestionsResult,
     Question,
     QuestionReview,
     QuestionStatus,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
-from src.infrastructure.database.postgresql.models.postgresql_question_mapper import (
+from itmentorsoft_persistence.repositories import QuestionRepository
+from itmentorsoft_persistence.mappers import (
     PostgresQuestionMapper,
 )
-from src.infrastructure.database.postgresql.models.postgresql_question_model import (
+from itmentorsoft_persistence.models import (
     QuestionEntity,
 )
 

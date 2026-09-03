@@ -1,5 +1,3 @@
-import os
-from dotenv import load_dotenv
 from src.features.shared.publisher_service import (
     PublishMessageRequest,
     PublishMessageResponse,
@@ -8,17 +6,7 @@ from src.features.shared.publisher_service import (
 from src.infrastructure.broker.aws.services.aws_sqs_connection_factory import (
     SqsConnection,
 )
-
-load_dotenv()
-
-QUALIFICATION_QUEUE_URL = os.getenv(
-    "AWS_SQS_QUALIFICATION_QUEUE_URL",
-    "http://localhost:4566/000000000000/mq-itmentorsoft-evaluate-001",
-)
-CLASSIFICATION_QUEUE_URL = os.getenv(
-    "AWS_SQS_CLASSIFICATION_QUEUE_URL",
-    "http://localhost:4566/000000000000/mq-itmentorsoft-classify-001",
-)
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class SqsPublishMessageRequest:
@@ -68,7 +56,8 @@ class EvaluateAssessmentPublishAdapter(PublisherService):
             sqs_service = SqsPublisherService(sqs_client=self.sqs_client)
             response = sqs_service.publish(
                 request=SqsPublishMessageRequest(
-                    queue_url=QUALIFICATION_QUEUE_URL, message=request.get_message()
+                    queue_url=EnvironmentVariablesConstants.AWS_SQS_QUALIFICATION_QUEUE_URL,
+                    message=request.get_message(),
                 )
             )
 
@@ -103,7 +92,8 @@ class ClassificateStudentPublishAdapter(PublisherService):
             sqs_service = SqsPublisherService(sqs_client=self.sqs_client)
             response = sqs_service.publish(
                 request=SqsPublishMessageRequest(
-                    queue_url=CLASSIFICATION_QUEUE_URL, message=request.get_message()
+                    queue_url=EnvironmentVariablesConstants.AWS_SQS_CLASSIFICATION_QUEUE_URL,
+                    message=request.get_message(),
                 )
             )
 

@@ -1,5 +1,5 @@
-from src.features.user_management.shared.user import UserStatus
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.dto import UserStatus
+from itmentorsoft_persistence.repositories import UserRepository
 from src.features.user_management.update_user_status.update_user_status_request import (
     UpdateUserStatusRequest,
 )

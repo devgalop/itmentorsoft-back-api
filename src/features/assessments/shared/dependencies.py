@@ -70,14 +70,14 @@ from src.features.assessments.save_assessments_answers.save_assessments_answers_
 from src.features.assessments.save_assessments_answers.save_assessments_answers_service import (
     SaveAssessmentsAnswersService,
 )
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.assessments.shared.qualifier_service import (
     AvailableProcesses,
     ModelExplorerService,
     ModelSelectorService,
     QualifierService,
 )
-from src.features.assessments.shared.question_assessment_repository import (
+from itmentorsoft_persistence.repositories import (
     QuestionAssessmentRepository,
 )
 from src.features.assessments.shared.question_manager_service import (
@@ -95,8 +95,8 @@ from src.features.assessments.update_model.update_model_handler import (
 from src.features.assessments.update_question.update_question_handler import (
     UpdateQuestionHandler,
 )
-from src.features.assessments.shared.question import QuestionBuilder
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.dto import QuestionBuilder
+from itmentorsoft_persistence.repositories import QuestionRepository
 from src.features.assessments.update_question_status.update_question_status_handler import (
     UpdateQuestionStatusHandler,
 )
@@ -104,7 +104,7 @@ from src.features.shared.notification_service import NotificationService
 from src.features.shared.publisher_service import PublisherService
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.dependencies import get_user_repository
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 from src.infrastructure.broker.aws.services.aws_sqs_connection_factory import (
     SqsConnection,
 )
@@ -115,10 +115,8 @@ from src.infrastructure.broker.aws.services.aws_sqs_publisher_service import (
 from src.infrastructure.classifier.opencode_classifier_service import (
     OpenCodeClassificationService,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_mapper import (
+from itmentorsoft_persistence.mappers import (
     PostgresAssessmentMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_question_mapper import (
     PostgresQuestionMapper,
 )
 from src.infrastructure.database.postgresql.repository.postgres_assessment_repository import (
@@ -130,9 +128,7 @@ from src.infrastructure.database.postgresql.repository.postgres_questions_assess
 from src.infrastructure.database.postgresql.repository.postgres_questions_repository import (
     PostgresQuestionsRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    get_db,
-)
+from itmentorsoft_persistence import get_db
 
 from src.infrastructure.model_manager.opencode_model_manager_proxy import (
     OpencodeModelsManagerProxy,

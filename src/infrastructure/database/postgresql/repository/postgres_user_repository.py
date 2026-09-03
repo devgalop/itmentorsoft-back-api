@@ -2,25 +2,21 @@ from typing import Type
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
-from src.features.user_management.assign_role.assign_role_request import (
+from itmentorsoft_persistence.dto import (
     AssignRoleToUserCommand,
-)
-from src.features.user_management.shared.user import (
     CompleteUserResponse,
     User,
     UserResponse,
     UserRole,
     UserStatus,
 )
-from src.features.user_management.shared.user_repository import UserRepository
-from src.infrastructure.database.postgresql.models.postgresql_role_model import (
+from itmentorsoft_persistence.repositories import UserRepository
+from itmentorsoft_persistence.models import (
     RoleEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_user_mapper import (
-    PostgresUserMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_user_model import (
     UserEntity,
+)
+from itmentorsoft_persistence.mappers import (
+    PostgresUserMapper,
 )
 
 

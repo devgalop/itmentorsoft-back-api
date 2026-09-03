@@ -1,4 +1,3 @@
-import os
 from unittest.mock import patch
 
 from src.features.shared.notification_service import (
@@ -35,7 +34,10 @@ def test_set_template_assigns_template_to_config():
 
 
 def test_notification_config_builder_full_chain():
-    with patch.dict(os.environ, {"EMAIL_DEFAULT_SENDER": "sender@example.com"}):
+    with patch(
+        "src.features.shared.notification_service.EnvironmentVariablesConstants.EMAIL_DEFAULT_SENDER",
+        "sender@example.com",
+    ):
         config = (
             NotificationConfigBuilder("dest@example.com", "Welcome")
             .set_template("<html>Hello</html>")

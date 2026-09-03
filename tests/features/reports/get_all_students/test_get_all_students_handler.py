@@ -10,7 +10,7 @@ from src.features.reports.get_all_students.get_all_students_request import (
 from src.features.reports.get_all_students.get_all_students_response import (
     GetAllStudentsResponse,
 )
-from src.features.reports.shared.student_report import (
+from itmentorsoft_persistence.dto import (
     PaginatedStudentSummary,
     StudentBasicSummary,
 )

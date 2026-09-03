@@ -7,7 +7,7 @@ from src.features.assessments.get_assessments_summary.get_assessments_summary_ha
 from src.features.assessments.get_assessments_summary.get_assessments_summary_request import (
     GetAssessmentsSummaryRequest,
 )
-from src.features.assessments.shared.assessment import (
+from itmentorsoft_persistence.dto import (
     AssessmentSummary,
     PaginatedAssessmentSummary,
 )

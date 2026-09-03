@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.features.assessments.shared.question_details import QuestionDetails
+from itmentorsoft_persistence.dto import QuestionDetails
 
 
 class GetPendingApprovalQuestionsResponse(BaseModel):

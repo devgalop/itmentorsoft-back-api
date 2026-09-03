@@ -5,7 +5,7 @@ from src.features.assessments.get_assessments_summary.get_assessments_summary_re
     AssessmentSummary,
     GetAssessmentsSummaryResponse,
 )
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 
 
 class GetAssessmentsSummaryHandler:

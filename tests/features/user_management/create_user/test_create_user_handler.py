@@ -7,7 +7,7 @@ from src.features.user_management.create_user.create_user_handler import (
 from src.features.user_management.create_user.create_user_request import (
     CreateUserRequest,
 )
-from src.features.user_management.shared.role import Role
+from itmentorsoft_persistence.dto import Role
 
 
 @pytest.mark.asyncio

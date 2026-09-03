@@ -1,7 +1,7 @@
 from src.features.user_management.get_available_roles.get_available_roles_response import (
     GetAvailableRolesResponse,
 )
-from src.features.user_management.shared.role_repository import RoleRepository
+from itmentorsoft_persistence.repositories import RoleRepository
 
 
 class GetAvailableRolesHandler:

@@ -4,9 +4,7 @@ import pytest
 from src.features.user_management.get_connected_users.get_connected_users_handler import (
     GetConnectedUsersHandler,
 )
-from src.features.user_management.shared.refresh_token_repository import (
-    TotalActiveUsers,
-)
+from itmentorsoft_persistence import TotalActiveUsers
 
 
 @pytest.mark.asyncio

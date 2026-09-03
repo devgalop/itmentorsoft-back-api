@@ -1,10 +1,9 @@
-from dotenv import load_dotenv
-import os
-
 from src.features.user_management.shared.password_hasher import PasswordHasher
 from src.features.user_management.shared.token_generator import TokenGenerator
-from src.features.user_management.shared.user_recovery_token_repository import (
+from itmentorsoft_persistence.dto import (
     RecoveryTokenInfo,
+)
+from itmentorsoft_persistence.repositories import (
     UserRecoveryTokenRepository,
 )
 from src.features.shared.template_loader import TemplateLoader
@@ -18,13 +17,11 @@ from src.features.user_management.recovery_password.recovery_password_request im
 from src.features.user_management.recovery_password.recovery_password_response import (
     RecoveryPasswordResponse,
 )
-from src.features.user_management.shared.user_repository import UserRepository
-
-load_dotenv()
-
+from itmentorsoft_persistence.repositories import UserRepository
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 EMAIL_RECOVERY_SUBJECT = "Recovery Password Instructions"
-RECOVERY_URL_BASE = os.getenv("RECOVERY_URL_BASE", "")
+RECOVERY_URL_BASE = EnvironmentVariablesConstants.RECOVERY_URL_BASE
 
 
 class RecoveryPasswordHandler:
@@ -48,6 +45,10 @@ class RecoveryPasswordHandler:
         self, request: RecoveryPasswordRequest
     ) -> RecoveryPasswordResponse:
 
+        if not RECOVERY_URL_BASE:
+            return RecoveryPasswordResponse(
+                message="Recovery URL base is not set in environment variables"
+            )
         response_message = "If the email exists in our system, you will receive a password recovery email shortly."
         user = await self.user_repository.get_user_response_by_email(request.email)
         if not user:

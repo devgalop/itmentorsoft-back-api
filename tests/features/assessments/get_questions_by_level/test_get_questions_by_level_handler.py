@@ -7,7 +7,7 @@ from src.features.assessments.get_questions_by_level.get_questions_by_level_hand
 from src.features.assessments.get_questions_by_level.get_questions_by_level_request import (
     GetQuestionsByLevelRequest,
 )
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     EvaluativeQuestion,
     QuestionDifficulty,
 )

@@ -1,5 +1,3 @@
-import os
-from dotenv import load_dotenv
 from datetime import datetime
 
 from src.features.shared.notification_service import (
@@ -8,16 +6,15 @@ from src.features.shared.notification_service import (
 )
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.role_repository import RoleRepository
-from src.features.user_management.shared.user_repository import UserRepository
-from src.features.user_management.shared.user import (
+from itmentorsoft_persistence.repositories import RoleRepository
+from itmentorsoft_persistence.repositories import UserRepository
+from itmentorsoft_persistence.dto import (
     User,
     UserResponse,
     UserRole,
     UserStatus,
 )
-
-load_dotenv()
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class CreateUserRequest:
@@ -41,9 +38,6 @@ class GetUsersByRoleResponse:
         self.is_success = is_success
         self.message = message
         self.users = users
-
-
-LOGIN_URL_BASE = os.getenv("LOGIN_URL_BASE", "")
 
 
 class UserManagerService:
@@ -70,6 +64,12 @@ class UserManagerService:
         Returns:
             CreateUserResponse: Response object containing the result of the user creation process
         """
+        if not EnvironmentVariablesConstants.LOGIN_URL_BASE:
+            return CreateUserResponse(
+                is_success=False,
+                message="Login URL base is not set in environment variables",
+            )
+
         if await self.user_repository.get_user_by_email(request.email):
             return CreateUserResponse(is_success=False, message="Email already in use")
 
@@ -108,7 +108,7 @@ class UserManagerService:
                 .replace(
                     "%REGISTER_DATE%", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 )
-                .replace("%LOGIN_URL%", LOGIN_URL_BASE)
+                .replace("%LOGIN_URL%", EnvironmentVariablesConstants.LOGIN_URL_BASE)
             )
             notification_config_builder.set_template(html_content)
             notification_config = notification_config_builder.build()

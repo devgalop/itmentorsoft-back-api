@@ -2,30 +2,24 @@ from typing import Type
 import uuid
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.features.content_management.shared.learning_path import (
+from itmentorsoft_persistence.dto import (
     ContentByTopic,
     LearningPath,
     LearningPathProgress,
     LearningPathProgressResponse,
     LearningPathResponse,
 )
-from src.features.content_management.shared.learning_path_repository import (
+from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_model import (
+from itmentorsoft_persistence.models import (
     TopicResultEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_content_rating import (
     ContentRating,
-)
-from src.infrastructure.database.postgresql.models.postgresql_learning_path_mapper import (
-    PostgresLearningPathMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_learning_path_model import (
     LearningPathContentEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_resource_content import (
     ResourceContentEntity,
+)
+from itmentorsoft_persistence.mappers import (
+    PostgresLearningPathMapper,
 )
 
 

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import json
+from itmentorsoft_persistence.dto import ClassificationResult
 
 
 class QuestionAnswerQualification:
@@ -49,16 +50,6 @@ class QuestionAnswerQualification:
 class ClassificationPrompt:
     def __init__(self, qualifications: list[QuestionAnswerQualification]):
         self.qualifications = qualifications
-
-
-class ClassificationResult:
-    def __init__(
-        self, user_id: str, assessment_id: str, classification: str, feedback: str
-    ):
-        self.user_id = user_id
-        self.assessment_id = assessment_id
-        self.classification = classification
-        self.feedback = feedback
 
 
 class ClassificationError(Exception):

@@ -1,8 +1,7 @@
-import os
 import uuid
 import jwt
 from datetime import datetime, timedelta, timezone
-from dotenv import load_dotenv
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 from src.features.user_management.shared.token_generator import (
     InvalidTokenError,
@@ -11,17 +10,6 @@ from src.features.user_management.shared.token_generator import (
     TokenRequest,
     TokenResponse,
 )
-
-load_dotenv()
-
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-JWT_ALGORITHM = os.getenv("JWT_ALGORITHM")
-JWT_EXPIRATION_DELTA_SECONDS = os.getenv(
-    "JWT_EXPIRATION_DELTA_SECONDS", "300"
-)  # Default to 5 minutes if not set
-RANDOM_TOKEN_EXPIRATION_DELTA_SECONDS = os.getenv(
-    "RANDOM_TOKEN_EXPIRATION_DELTA_SECONDS", "180"
-)  # Default to 3 minutes if not set
 
 
 class TokenPayload:
@@ -38,14 +26,16 @@ class JWTTokenGenerator(TokenGenerator):
 
     def generate_token(self, request: TokenRequest) -> TokenResponse:
         expiration_time = datetime.now(tz=timezone.utc) + timedelta(
-            seconds=int(JWT_EXPIRATION_DELTA_SECONDS)
+            seconds=int(EnvironmentVariablesConstants.JWT_EXPIRATION_DELTA_SECONDS)
         )
         token_payload = TokenPayload(
             user_name=request.user_name, role=request.role, exp=expiration_time
         ).to_dict()
         return TokenResponse(
             token=jwt.encode(
-                token_payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM
+                token_payload,
+                EnvironmentVariablesConstants.JWT_SECRET_KEY,
+                algorithm=EnvironmentVariablesConstants.JWT_ALGORITHM,
             ),  # pyright: ignore[reportUnknownMemberType]
             expiration_time=expiration_time.timestamp(),
         )
@@ -54,8 +44,8 @@ class JWTTokenGenerator(TokenGenerator):
         try:
             payload = jwt.decode(
                 token,
-                JWT_SECRET_KEY,
-                algorithms=JWT_ALGORITHM,
+                EnvironmentVariablesConstants.JWT_SECRET_KEY,
+                algorithms=EnvironmentVariablesConstants.JWT_ALGORITHM,
                 options={"verify_exp": verify_exp},
             )  # pyright: ignore[reportUnknownMemberType]
             return TokenData(user_name=payload["user_name"], role=payload["role"])
@@ -65,7 +55,9 @@ class JWTTokenGenerator(TokenGenerator):
     def generate_random_token(self) -> TokenResponse:
         uuid_token = uuid.uuid4().hex
         expiration_time = datetime.now(tz=timezone.utc) + timedelta(
-            seconds=int(RANDOM_TOKEN_EXPIRATION_DELTA_SECONDS)
+            seconds=int(
+                EnvironmentVariablesConstants.RANDOM_TOKEN_EXPIRATION_DELTA_SECONDS
+            )
         )
         return TokenResponse(
             token=uuid_token, expiration_time=expiration_time.timestamp()

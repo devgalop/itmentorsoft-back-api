@@ -7,7 +7,7 @@ from src.features.assessments.get_assessment_result.get_assessment_result_handle
 from src.features.assessments.get_assessment_result.get_assessment_result_request import (
     GetAssessmentResultRequest,
 )
-from src.features.reports.shared.student_report import (
+from itmentorsoft_persistence.dto import (
     StudentAnswerScore,
     StudentAssessmentResult,
 )

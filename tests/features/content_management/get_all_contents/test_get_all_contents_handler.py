@@ -7,7 +7,7 @@ from src.features.content_management.get_all_contents.get_all_contents_handler i
 from src.features.content_management.get_all_contents.get_all_contents_request import (
     GetAllContentsRequest,
 )
-from src.features.content_management.shared.content import (
+from itmentorsoft_persistence.dto import (
     ContentCategory,
     PaginatedResourceContentResult,
     ResourceContentResponse,

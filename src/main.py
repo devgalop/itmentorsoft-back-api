@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from src.features.assessments.evaluate.evaluate_assessment_handler import (
     EvaluateAssessmentHandler,
 )
@@ -13,9 +14,7 @@ from src.features.content_management.shared.init import (
 )
 from src.features.assessments.shared.init import router as assessments_router
 from src.features.reports.shared.init import router as reports_router
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    init_db,
-)
+from itmentorsoft_persistence import init_db
 from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
     seed_assessments,
     seed_contents,
@@ -23,11 +22,15 @@ from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
 )
 from src.infrastructure.security.bcrypt_password_hasher import BcryptPasswordHasher
 from src.infrastructure.broker.aws.services.aws_sqs_manager import SqsManagerService
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Starting up the application...")
+    print("Validating mandatory environment variables...")
+    EnvironmentVariablesConstants.validate_mandatory_env_vars()
+    print("Initializing the database...")
     await init_db()
     await seed_database(BcryptPasswordHasher())
     await seed_questions()
@@ -47,7 +50,19 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(user_management_router, prefix="/users", tags=["users"])
-app.include_router(content_management_router, prefix="/content", tags=["content"])
-app.include_router(assessments_router, prefix="/assessments", tags=["assessments"])
-app.include_router(reports_router, prefix="/reports", tags=["reports"])
+app.include_router(user_management_router, prefix="/users", tags=["Users"])
+app.include_router(content_management_router, prefix="/content", tags=["Content"])
+app.include_router(assessments_router, prefix="/assessments", tags=["Assessments"])
+app.include_router(reports_router, prefix="/reports", tags=["Reports"])
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={
+            "status": 500,
+            "message": "An unexpected error occurred",
+            "path": request.url.path,
+        },
+    )

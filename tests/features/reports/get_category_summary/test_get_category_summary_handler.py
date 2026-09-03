@@ -10,7 +10,7 @@ from src.features.reports.get_category_summary.get_category_summary_request impo
 from src.features.reports.get_category_summary.get_category_summary_response import (
     GetCategorySummaryResponse,
 )
-from src.features.reports.shared.category_report import (
+from itmentorsoft_persistence.dto import (
     CategorySummary as DomainCategorySummary,
 )
 from src.features.reports.shared.student_report_service import (

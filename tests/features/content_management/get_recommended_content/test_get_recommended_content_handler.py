@@ -7,7 +7,7 @@ from src.features.content_management.get_recommended_content.get_recommended_con
 from src.features.content_management.get_recommended_content.get_recommended_content_request import (
     GetRecommendedContentRequest,
 )
-from src.features.content_management.shared.learning_path import (
+from itmentorsoft_persistence.dto import (
     ContentByTopic,
     LearningPath,
     LearningPathResponse,

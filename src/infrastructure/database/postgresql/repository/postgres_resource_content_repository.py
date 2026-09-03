@@ -1,43 +1,28 @@
 from typing import Type
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.features.content_management.get_contents_by_category.get_contents_by_category_request import (
+from itmentorsoft_persistence.dto import (
     GetContentsByCategoryPaginationRequest,
-)
-from src.features.content_management.get_contents_by_category_topic.get_contents_by_category_topic_request import (
     GetContentsByCategoryTopicPaginationRequest,
-)
-from src.features.content_management.get_contents_by_title.get_contents_by_title_request import (
     GetContentsByTitlePaginationRequest,
-)
-from src.features.content_management.get_contents_by_topic.get_contents_by_topic_request import (
     GetContentsByTopicPaginationRequest,
-)
-from src.features.content_management.rate_content.rate_content_request import (
     RateContent,
-)
-from src.features.content_management.shared.content import (
     PaginatedResourceContentResult,
     ResourceContent,
     ResourceContentRating,
     ResourceContentResponse,
-)
-from src.features.content_management.shared.content_repository import (
-    ResourceContentRepository,
-)
-from src.features.content_management.update_resource_content.update_resource_content_request import (
     UpdateResourceContentRequest,
 )
-from src.infrastructure.database.postgresql.models.postgresql_content_rating import (
+
+from itmentorsoft_persistence.repositories import (
+    ResourceContentRepository,
+)
+from itmentorsoft_persistence.models import (
     ContentRating,
-)
-from src.infrastructure.database.postgresql.models.postgresql_content_rating_mapper import (
-    RateContentMapper,
-)
-from src.infrastructure.database.postgresql.models.postgresql_resource_content import (
     ResourceContentEntity,
 )
-from src.infrastructure.database.postgresql.models.postgresql_resource_content_mapper import (
+from itmentorsoft_persistence.mappers import (
+    RateContentMapper,
     ResourceContentMapper,
 )
 

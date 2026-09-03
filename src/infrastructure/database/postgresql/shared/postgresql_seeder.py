@@ -4,58 +4,39 @@ from fastapi import Depends
 from sqlalchemy import select
 from datetime import datetime
 import secrets
-import os
-from dotenv import load_dotenv
 from src.features.user_management.shared.dependencies import get_password_hasher
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.infrastructure.database.postgresql.models.postgresql_assessment_model import (
+from itmentorsoft_persistence.models import (
     AssessmentAnswerEntity,
     AssessmentEntity,
     AssessmentQuizEntity,
     ClassificationResultEntity,
     TopicResultEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_content_rating import (
     ContentRating,
-)
-from src.infrastructure.database.postgresql.models.postgresql_question_model import (
     QuestionEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_resource_content import (
     ResourceContentEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_role_model import (
     RoleEntity,
-)
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    AsyncSessionLocal,
-)
-from src.infrastructure.database.postgresql.models.postgresql_user_model import (
     UserEntity,
 )
 
-load_dotenv()
-
-ADMIN_USERNAME: str = os.getenv("DATABASE_ADMIN_USERNAME", "")
-ADMIN_PASSWORD: str = os.getenv("DATABASE_ADMIN_PASSWORD", "")
-ADMIN_EMAIL: str = os.getenv("DATABASE_ADMIN_EMAIL", "")
-
-TEACHER_PASSWORD: str = os.getenv("DEFAULT_TEACHER_PASSWORD", "")
-STUDENT_PASSWORD: str = os.getenv("DEFAULT_STUDENT_PASSWORD", "")
+from itmentorsoft_persistence import (
+    AsyncSessionLocal,
+)
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 def check_env_variables():
     """Check if the required environment variables are set."""
     missing_vars: list[str] = []
-    if not ADMIN_USERNAME:
+    if not EnvironmentVariablesConstants.ADMIN_USERNAME:
         missing_vars.append("DATABASE_ADMIN_USERNAME")
-    if not ADMIN_PASSWORD:
+    if not EnvironmentVariablesConstants.ADMIN_PASSWORD:
         missing_vars.append("DATABASE_ADMIN_PASSWORD")
-    if not ADMIN_EMAIL:
+    if not EnvironmentVariablesConstants.ADMIN_EMAIL:
         missing_vars.append("DATABASE_ADMIN_EMAIL")
-    if not TEACHER_PASSWORD:
+    if not EnvironmentVariablesConstants.TEACHER_PASSWORD:
         missing_vars.append("DEFAULT_TEACHER_PASSWORD")
-    if not STUDENT_PASSWORD:
+    if not EnvironmentVariablesConstants.STUDENT_PASSWORD:
         missing_vars.append("DEFAULT_STUDENT_PASSWORD")
 
     if missing_vars:
@@ -103,11 +84,14 @@ async def seed_database(
         session.add(role_user)
         admin = UserEntity(
             id=uuid.uuid4().hex,
-            username=ADMIN_USERNAME,
-            email=ADMIN_EMAIL,
-            hashed_password=password_hasher.hash_password(ADMIN_PASSWORD),
+            username=EnvironmentVariablesConstants.ADMIN_USERNAME,
+            email=EnvironmentVariablesConstants.ADMIN_EMAIL,
+            hashed_password=password_hasher.hash_password(
+                EnvironmentVariablesConstants.ADMIN_PASSWORD
+            ),
             status="active",
             role_id=role_admin.id,
+            name="Admin User",
         )
         session.add(admin)
         print("Admin user created")
@@ -116,9 +100,12 @@ async def seed_database(
             id=uuid.uuid4().hex,
             username="default_teacher",
             email="default_teacher@example.com",
-            hashed_password=password_hasher.hash_password(TEACHER_PASSWORD),
+            hashed_password=password_hasher.hash_password(
+                EnvironmentVariablesConstants.TEACHER_PASSWORD
+            ),
             status="active",
             role_id=role_teacher.id,
+            name="Default Teacher",
         )
         session.add(teacher)
         print("Teacher user created")
@@ -128,9 +115,12 @@ async def seed_database(
                 id=uuid.uuid4().hex,
                 username=f"student{i}",
                 email=f"student{i}@example.com",
-                hashed_password=password_hasher.hash_password(STUDENT_PASSWORD),
+                hashed_password=password_hasher.hash_password(
+                    EnvironmentVariablesConstants.STUDENT_PASSWORD
+                ),
                 status="active",
                 role_id=role_student.id,
+                name=f"Student {i}",
             )
             session.add(student)
         print("Student users created")

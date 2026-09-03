@@ -5,8 +5,8 @@ from src.features.assessments.get_questions_by_level.get_questions_by_level_resp
     EvaluativeQuestionData,
     GetQuestionsByLevelResponse,
 )
-from src.features.assessments.shared.question import QuestionDifficulty
-from src.features.assessments.shared.question_assessment_repository import (
+from itmentorsoft_persistence.dto import QuestionDifficulty
+from itmentorsoft_persistence.repositories import (
     QuestionAssessmentRepository,
 )
 

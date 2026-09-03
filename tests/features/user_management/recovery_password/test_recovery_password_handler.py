@@ -14,10 +14,8 @@ from src.features.shared.notification_service import NotificationService
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.token_generator import TokenGenerator
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.user_recovery_token_repository import (
-    UserRecoveryTokenRepository,
-)
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRecoveryTokenRepository
+from itmentorsoft_persistence.repositories import UserRepository
 
 
 @pytest.mark.asyncio

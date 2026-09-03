@@ -1,5 +1,5 @@
 import json
-from src.features.assessments.shared.assessment import Assessment
+from itmentorsoft_persistence.dto import Assessment
 from src.features.shared.publisher_service import PublishMessageRequest
 
 

@@ -4,7 +4,7 @@ from src.features.assessments.get_quantity_of_assessments.get_quantity_of_assess
 from src.features.assessments.get_quantity_of_assessments.get_quantity_of_assessments_response import (
     GetQuantityOfAssessmentsResponse,
 )
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 
 
 class GetQuantityOfAssessmentsHandler:

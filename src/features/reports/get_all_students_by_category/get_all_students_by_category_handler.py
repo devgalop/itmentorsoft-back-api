@@ -6,8 +6,8 @@ from src.features.reports.get_all_students_by_category.get_all_students_by_categ
     PaginatedStudentResult,
     StudentClassification,
 )
-from src.features.reports.shared.report_repository import ReportRepository
-from src.features.reports.shared.student_report import PaginatedStudentSummary
+from itmentorsoft_persistence.repositories import ReportRepository
+from itmentorsoft_persistence.dto import PaginatedStudentSummary
 
 
 class GetStudentsByCategoryHandler:
