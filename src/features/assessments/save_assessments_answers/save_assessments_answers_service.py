@@ -18,7 +18,7 @@ from itmentorsoft_persistence.dto import (
 )
 from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.shared.publisher_service import PublisherService
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 
 
 class SaveAssessmentsAnswersService:

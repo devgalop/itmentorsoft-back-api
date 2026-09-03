@@ -104,7 +104,7 @@ from src.features.shared.notification_service import NotificationService
 from src.features.shared.publisher_service import PublisherService
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.dependencies import get_user_repository
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 from src.infrastructure.broker.aws.services.aws_sqs_connection_factory import (
     SqsConnection,
 )
