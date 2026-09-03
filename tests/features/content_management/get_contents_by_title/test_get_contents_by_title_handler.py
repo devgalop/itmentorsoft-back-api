@@ -7,7 +7,7 @@ from src.features.content_management.get_contents_by_title.get_contents_by_title
 from src.features.content_management.get_contents_by_title.get_contents_by_title_request import (
     GetContentsByTitlePaginationRequest,
 )
-from src.features.content_management.shared.content import (
+from itmentorsoft_persistence.dto import (
     ContentCategory,
     PaginatedResourceContentResult,
     ResourceContentResponse,
@@ -39,7 +39,11 @@ async def test_get_contents_by_title_when_repository_returns_items_then_should_r
     assert response.message == "Contents retrieved successfully"
     assert len(response.items) == 1
     assert response.total == 1
-    content_repository.get_resource_contents_by_title.assert_called_once_with(request)
+    content_repository.get_resource_contents_by_title.assert_called_once()
+    call_args = content_repository.get_resource_contents_by_title.call_args[0][0]
+    assert call_args.title == request.title
+    assert call_args.page == request.page
+    assert call_args.page_size == request.page_size
 
 
 @pytest.mark.asyncio
@@ -57,7 +61,11 @@ async def test_get_contents_by_title_when_repository_returns_empty_then_should_r
     assert response.message == "Contents retrieved successfully"
     assert response.items == []
     assert response.total == 0
-    content_repository.get_resource_contents_by_title.assert_called_once_with(request)
+    content_repository.get_resource_contents_by_title.assert_called_once()
+    call_args = content_repository.get_resource_contents_by_title.call_args[0][0]
+    assert call_args.title == request.title
+    assert call_args.page == request.page
+    assert call_args.page_size == request.page_size
 
 
 @pytest.mark.asyncio
@@ -71,7 +79,11 @@ async def test_get_contents_by_title_when_custom_pagination_then_should_forward_
     request = GetContentsByTitlePaginationRequest(title="Test", page=3, page_size=25)
     await handler.handle(request)
 
-    content_repository.get_resource_contents_by_title.assert_called_once_with(request)
+    content_repository.get_resource_contents_by_title.assert_called_once()
+    call_args = content_repository.get_resource_contents_by_title.call_args[0][0]
+    assert call_args.title == request.title
+    assert call_args.page == request.page
+    assert call_args.page_size == request.page_size
 
 
 @pytest.mark.asyncio
@@ -99,4 +111,8 @@ async def test_get_contents_by_title_when_multiple_items_then_should_return_corr
     assert response.is_success
     assert len(response.items) == 5
     assert response.total == 50
-    content_repository.get_resource_contents_by_title.assert_called_once_with(request)
+    content_repository.get_resource_contents_by_title.assert_called_once()
+    call_args = content_repository.get_resource_contents_by_title.call_args[0][0]
+    assert call_args.title == request.title
+    assert call_args.page == request.page
+    assert call_args.page_size == request.page_size

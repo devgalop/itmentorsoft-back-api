@@ -6,30 +6,21 @@ from datetime import datetime
 import secrets
 from src.features.user_management.shared.dependencies import get_password_hasher
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.infrastructure.database.postgresql.models.postgresql_assessment_model import (
+from itmentorsoft_persistence.models import (
     AssessmentAnswerEntity,
     AssessmentEntity,
     AssessmentQuizEntity,
     ClassificationResultEntity,
     TopicResultEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_content_rating import (
     ContentRating,
-)
-from src.infrastructure.database.postgresql.models.postgresql_question_model import (
     QuestionEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_resource_content import (
     ResourceContentEntity,
-)
-from src.infrastructure.database.postgresql.models.postgresql_role_model import (
     RoleEntity,
-)
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    AsyncSessionLocal,
-)
-from src.infrastructure.database.postgresql.models.postgresql_user_model import (
     UserEntity,
+)
+
+from itmentorsoft_persistence import (
+    AsyncSessionLocal,
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
@@ -100,6 +91,7 @@ async def seed_database(
             ),
             status="active",
             role_id=role_admin.id,
+            name="Admin User",
         )
         session.add(admin)
         print("Admin user created")

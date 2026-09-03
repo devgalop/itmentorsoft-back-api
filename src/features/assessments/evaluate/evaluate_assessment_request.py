@@ -1,4 +1,4 @@
-from src.features.assessments.shared.assessment import Assessment
+from itmentorsoft_persistence.dto import Assessment
 
 
 class EvaluateAssessmentRequest:

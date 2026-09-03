@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
 
-from src.features.assessments.shared.question import QUESTION_CATEGORIES
+from src.features.assessments.shared.question_categories import QUESTION_CATEGORIES
 
 
 class GetQuestionsByCategoryRequest(BaseModel):

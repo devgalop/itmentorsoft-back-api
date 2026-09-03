@@ -7,8 +7,8 @@ from src.features.assessments.get_pending_approval_questions.get_pending_approva
 from src.features.assessments.get_pending_approval_questions.get_pending_approval_questions_request import (
     GetPendingApprovalQuestionsRequest,
 )
-from src.features.assessments.shared.question import PaginatedQuestionsResult
-from src.features.assessments.shared.question_details import QuestionDetails
+from itmentorsoft_persistence.dto import PaginatedQuestionsResult
+from itmentorsoft_persistence.dto import QuestionDetails
 
 PAGE = 0
 PAGE_SIZE = 10

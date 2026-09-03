@@ -7,7 +7,7 @@ from src.features.content_management.get_learning_path_progress.get_learning_pat
 from src.features.content_management.get_learning_path_progress.get_learning_path_progress_request import (
     GetLearningPathProgressRequest,
 )
-from src.features.content_management.shared.learning_path import (
+from itmentorsoft_persistence.dto import (
     LearningPathProgress,
     LearningPathProgressResponse,
 )

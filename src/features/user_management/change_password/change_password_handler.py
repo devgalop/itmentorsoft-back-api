@@ -7,10 +7,10 @@ from src.features.user_management.change_password.change_password_response impor
     ChangePasswordResponse,
 )
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.user_recovery_token_repository import (
+from itmentorsoft_persistence.repositories import (
     UserRecoveryTokenRepository,
+    UserRepository,
 )
-from src.features.user_management.shared.user_repository import UserRepository
 
 
 class ChangePasswordHandler:

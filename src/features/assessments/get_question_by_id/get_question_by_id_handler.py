@@ -6,7 +6,7 @@ from src.features.assessments.get_question_by_id.get_question_by_id_response imp
     QuestionData,
     QuestionRubricScoreData,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import QuestionRepository
 
 
 class GetQuestionByIdHandler:

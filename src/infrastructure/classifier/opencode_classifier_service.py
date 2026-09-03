@@ -2,13 +2,15 @@ import os
 from openai import OpenAI
 import json
 import asyncio
+from itmentorsoft_persistence.dto import (
+    ClassificationResult,
+)
 from src.features.assessments.shared.classification_service import (
     ClassificationError,
     ClassificationPrompt,
-    ClassificationResult,
-    ClassificationService,
     QuestionAnswerQualification,
 )
+from src.features.assessments.shared.classification_service import ClassificationService
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 

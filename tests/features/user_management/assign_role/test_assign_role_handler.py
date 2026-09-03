@@ -7,7 +7,7 @@ from src.features.user_management.assign_role.assign_role_handler import (
 from src.features.user_management.assign_role.assign_role_request import (
     AssignRoleRequest,
 )
-from src.features.user_management.shared.role import Role
+from itmentorsoft_persistence.dto import Role
 
 
 @pytest.mark.asyncio

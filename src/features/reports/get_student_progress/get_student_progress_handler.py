@@ -6,7 +6,7 @@ from src.features.reports.get_student_progress.get_student_progress_response imp
     KnowledgeProfile,
     ProgressResponse,
 )
-from src.features.reports.shared.student_report import StudentProgress
+from itmentorsoft_persistence.dto import StudentProgress
 from src.features.reports.shared.student_report_service import StudentReportService
 
 

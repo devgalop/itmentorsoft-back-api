@@ -7,7 +7,7 @@ from src.features.content_management.get_top_worse_content.get_top_worse_content
 from src.features.content_management.get_top_worse_content.get_top_worse_content_request import (
     GetTopWorseContentRequest,
 )
-from src.features.content_management.shared.content import ResourceContentRating
+from itmentorsoft_persistence.dto import ResourceContentRating
 
 
 @pytest.mark.asyncio

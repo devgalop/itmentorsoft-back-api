@@ -1,4 +1,4 @@
-from src.features.content_management.shared.learning_path_repository import (
+from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
 )
 from src.features.content_management.update_content_path_status.update_content_path_status_request import (

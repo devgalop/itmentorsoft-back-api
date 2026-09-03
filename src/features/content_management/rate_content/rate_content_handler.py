@@ -1,13 +1,13 @@
 import uuid
 
 from src.features.content_management.rate_content.rate_content_request import (
-    RateContent,
     RateContentRequest,
 )
+from itmentorsoft_persistence.dto import RateContent as RateContentDTO
 from src.features.content_management.rate_content.rate_content_response import (
     RateContentResponse,
 )
-from src.features.content_management.shared.content_repository import (
+from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
 
@@ -25,7 +25,7 @@ class RateContentHandler:
                 is_success=False,
                 message=f"Content with ID {request.content_id} not found.",
             )
-        rate_content = RateContent(
+        rate_content = RateContentDTO(
             id=uuid.uuid4().hex,
             content_id=request.content_id,
             user_id=request.user_id,

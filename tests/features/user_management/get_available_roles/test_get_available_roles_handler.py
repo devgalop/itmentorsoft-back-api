@@ -4,7 +4,7 @@ import pytest
 from src.features.user_management.get_available_roles.get_available_roles_handler import (
     GetAvailableRolesHandler,
 )
-from src.features.user_management.shared.role import Role
+from itmentorsoft_persistence.dto import Role
 
 
 @pytest.mark.asyncio

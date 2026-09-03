@@ -1,9 +1,12 @@
-from src.features.content_management.shared.content import ContentCategory
-from src.features.content_management.shared.content_repository import (
+from itmentorsoft_persistence.dto import ContentCategory
+from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
 from src.features.content_management.update_resource_content.update_resource_content_request import (
     UpdateResourceContentRequest,
+)
+from itmentorsoft_persistence.dto import (
+    UpdateResourceContentRequest as UpdateResourceContentRequestDTO,
 )
 from src.features.content_management.update_resource_content.update_resource_content_response import (
     UpdateResourceContentResponse,
@@ -30,7 +33,17 @@ class UpdateResourceContentHandler:
             if not request.related_topic:
                 request.related_topic = []
 
-            await self.content_repository.update_resource_content(content_id, request)
+            request_dto = UpdateResourceContentRequestDTO(
+                title=request.title,
+                description=request.description,
+                url=request.url,
+                category=request.category,
+                related_topic=request.related_topic,
+            )
+
+            await self.content_repository.update_resource_content(
+                content_id, request_dto
+            )
 
             return UpdateResourceContentResponse(
                 is_success=True,

@@ -11,14 +11,14 @@ from src.features.assessments.save_assessments_answers.save_assessments_answers_
 from src.features.assessments.save_assessments_answers.save_assessments_answers_response import (
     SaveAssessmentsAnswersResponse,
 )
-from src.features.assessments.shared.assessment import (
+from itmentorsoft_persistence.dto import (
     Assessment,
     AssessmentAnswer,
     AssessmentQuiz,
 )
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.shared.publisher_service import PublisherService
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 
 
 class SaveAssessmentsAnswersService:

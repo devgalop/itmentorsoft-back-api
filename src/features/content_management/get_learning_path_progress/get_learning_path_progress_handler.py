@@ -4,7 +4,7 @@ from src.features.content_management.get_learning_path_progress.get_learning_pat
 from src.features.content_management.get_learning_path_progress.get_learning_path_progress_response import (
     GetLearningPathProgressResponse,
 )
-from src.features.content_management.shared.learning_path_repository import (
+from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
 )
 

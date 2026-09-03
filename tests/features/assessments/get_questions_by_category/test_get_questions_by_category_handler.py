@@ -7,7 +7,7 @@ from src.features.assessments.get_questions_by_category.get_questions_by_categor
 from src.features.assessments.get_questions_by_category.get_questions_by_category_request import (
     GetQuestionsByCategoryRequest,
 )
-from src.features.assessments.shared.question import EvaluativeQuestion
+from itmentorsoft_persistence.dto import EvaluativeQuestion
 
 CATEGORY = "Fundamentos y paradigmas"
 

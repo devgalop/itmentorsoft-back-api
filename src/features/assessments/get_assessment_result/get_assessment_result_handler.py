@@ -6,7 +6,7 @@ from src.features.assessments.get_assessment_result.get_assessment_result_respon
     GetAssessmentResultResponse,
     StudentAssessmentResult,
 )
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 
 
 class GetAssessmentResultHandler:

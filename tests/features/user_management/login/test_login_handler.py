@@ -4,7 +4,7 @@ import pytest
 from src.features.user_management.login.login_handler import LoginHandler
 from src.features.user_management.login.login_request import LoginRequest
 from src.features.user_management.shared.token_generator import TokenResponse
-from src.features.user_management.shared.user import (
+from itmentorsoft_persistence.dto import (
     CompleteUserResponse,
     UserRole,
     UserStatus,

@@ -1,15 +1,17 @@
 from typing import Type
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.features.user_management.shared.user_recovery_token_repository import (
+from itmentorsoft_persistence.dto import (
     RecoveryTokenInfo,
-    UserRecoveryTokenRepository,
     UserRecoveryTokenResponse,
 )
-from src.infrastructure.database.postgresql.models.postgresql_user_recovery_token_mapper import (
+from itmentorsoft_persistence.repositories import (
+    UserRecoveryTokenRepository,
+)
+from itmentorsoft_persistence.mappers import (
     PostgresRecoveryTokenMapper,
 )
-from src.infrastructure.database.postgresql.models.postgresql_user_recovery_token_model import (
+from itmentorsoft_persistence.models import (
     RecoveryTokenEntity,
 )
 

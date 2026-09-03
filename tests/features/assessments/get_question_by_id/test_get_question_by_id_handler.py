@@ -7,7 +7,7 @@ from src.features.assessments.get_question_by_id.get_question_by_id_handler impo
 from src.features.assessments.get_question_by_id.get_question_by_id_request import (
     GetQuestionByIdRequest,
 )
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     Question,
     QuestionRubricScore,
     QuestionStatus,

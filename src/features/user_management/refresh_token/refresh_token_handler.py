@@ -3,7 +3,7 @@ from src.features.user_management.refresh_token.refresh_token_request import (
     RefreshTokenRequest,
 )
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.refresh_token_repository import (
+from itmentorsoft_persistence.repositories import (
     RefreshTokenInfo,
     RefreshTokenRepository,
 )
@@ -11,7 +11,7 @@ from src.features.user_management.shared.token_generator import (
     TokenGenerator,
     TokenRequest,
 )
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 from src.features.user_management.refresh_token.refresh_token_response import (
     RefreshTokenResponse,
 )

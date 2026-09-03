@@ -1,26 +1,29 @@
-name: Python Tests
+name: Tests
 
 on:
+  push:
+    branches: [main, develop]
   pull_request:
-    branches: [ master ]
+    branches: [main, develop]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python 3.13
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: "3.13"
 
       - name: Install dependencies
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          pip install -r requirements.txt
-          pip install pytest
+          python -m pip install --upgrade pip
+          pip install --extra-index-url https://devgalop:${{ secrets.GITHUB_TOKEN }}@npm.pkg.github.com/devgalop/ -r requirements.txt
 
       - name: Run tests
         run: pytest

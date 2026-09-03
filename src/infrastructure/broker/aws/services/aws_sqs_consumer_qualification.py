@@ -5,7 +5,7 @@ from src.features.assessments.evaluate.evaluate_assessment_contract import (
 from src.features.assessments.evaluate.evaluate_assessment_request import (
     EvaluateAssessmentRequest,
 )
-from src.features.assessments.shared.assessment import Assessment, AssessmentAnswer
+from itmentorsoft_persistence.dto import Assessment, AssessmentAnswer
 from src.infrastructure.broker.aws.models.aws_sqs_messages import SqsMessageReceived
 from src.infrastructure.broker.aws.services.aws_sqs_connection_factory import (
     SqsConnection,

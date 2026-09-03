@@ -4,7 +4,7 @@ from src.features.content_management.get_all_contents.get_all_contents_request i
 from src.features.content_management.get_all_contents.get_all_contents_response import (
     GetAllContentsResponse,
 )
-from src.features.content_management.shared.content_repository import (
+from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
 

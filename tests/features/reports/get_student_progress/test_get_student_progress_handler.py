@@ -10,7 +10,7 @@ from src.features.reports.get_student_progress.get_student_progress_request impo
 from src.features.reports.get_student_progress.get_student_progress_response import (
     GetStudentProgressResponse,
 )
-from src.features.reports.shared.student_report import (
+from itmentorsoft_persistence.dto import (
     HistoricalResult,
     StudentProgress,
     StudentProgressDetail,

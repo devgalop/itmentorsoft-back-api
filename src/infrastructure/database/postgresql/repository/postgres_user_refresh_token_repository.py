@@ -3,16 +3,16 @@ from typing import Type
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.features.user_management.shared.refresh_token_repository import (
+from itmentorsoft_persistence.repositories import (
+    RefreshTokenRepository,
     RefreshTokenData,
     RefreshTokenInfo,
-    RefreshTokenRepository,
     TotalActiveUsers,
 )
-from src.infrastructure.database.postgresql.models.postgresql_user_refresh_token_mapper import (
+from itmentorsoft_persistence.mappers import (
     PostgresRefreshTokenMapper,
 )
-from src.infrastructure.database.postgresql.models.postgresql_user_refresh_token_model import (
+from itmentorsoft_persistence.models import (
     RefreshTokenEntity,
 )
 

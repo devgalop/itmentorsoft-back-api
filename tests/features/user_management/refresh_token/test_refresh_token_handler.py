@@ -8,12 +8,12 @@ from src.features.user_management.refresh_token.refresh_token_handler import (
 from src.features.user_management.refresh_token.refresh_token_request import (
     RefreshTokenRequest,
 )
-from src.features.user_management.shared.refresh_token_repository import (
+from itmentorsoft_persistence.repositories import (
     RefreshTokenData,
     RefreshTokenInfo,
 )
 from src.features.user_management.shared.token_generator import TokenResponse
-from src.features.user_management.shared.user import (
+from itmentorsoft_persistence.dto import (
     CompleteUserResponse,
     UserRole,
     UserStatus,

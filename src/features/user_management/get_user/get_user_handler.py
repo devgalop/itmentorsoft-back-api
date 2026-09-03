@@ -3,7 +3,7 @@ from src.features.user_management.get_user.get_user_response import (
     GetUserResponse,
     UserResponse,
 )
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 
 
 class GetUserHandler:

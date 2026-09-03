@@ -2,7 +2,7 @@ from fastapi.params import Depends
 from typing import Annotated
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
+from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.assessments.shared.dependencies import get_assessment_repository
 from src.features.reports.get_all_students.get_all_students_handler import (
     GetAllStudentsHandler,
@@ -22,23 +22,19 @@ from src.features.reports.get_student_summary.get_student_summary_handler import
 from src.features.reports.get_users_by_role.get_users_by_role_handler import (
     GetUsersByRoleHandler,
 )
-from src.features.reports.shared.report_repository import ReportRepository
+from itmentorsoft_persistence.repositories import ReportRepository
 from src.features.reports.shared.student_report_service import StudentReportService
 from src.features.user_management.shared.dependencies import (
     get_user_manager_service,
     get_user_repository,
 )
 from src.features.user_management.shared.user_manager_service import UserManagerService
-from src.features.user_management.shared.user_repository import UserRepository
-from src.infrastructure.database.postgresql.models.postgresql_report_mapper import (
-    PostgresReportMapper,
-)
+from itmentorsoft_persistence.repositories import UserRepository
+from itmentorsoft_persistence.mappers import PostgresReportMapper
 from src.infrastructure.database.postgresql.repository.postgres_report_repository import (
     PostgresReportRepository,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    get_db,
-)
+from itmentorsoft_persistence import get_db
 
 
 def get_report_repository(

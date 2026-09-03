@@ -4,28 +4,26 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.features.assessments.shared.assessment import (
+from itmentorsoft_persistence.dto import (
     Assessment,
     AssessmentQuiz,
     PaginatedAssessmentSummary,
-)
-from src.features.assessments.shared.assessment_repository import AssessmentRepository
-from src.features.assessments.shared.classification_service import ClassificationResult
-from src.features.assessments.shared.qualifier_service import (
+    ClassificationResult,
     QualifierResult,
     TopicResult,
-)
-from src.features.reports.shared.student_report import (
     HistoricalResult,
     StudentAssessmentResult,
     StudentProgress,
     StudentProgressDetail,
     StudentSummary,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_mapper import (
+from itmentorsoft_persistence.repositories import (
+    AssessmentRepository,
+)
+from itmentorsoft_persistence.mappers import (
     PostgresAssessmentMapper,
 )
-from src.infrastructure.database.postgresql.models.postgresql_assessment_model import (
+from itmentorsoft_persistence.models import (
     AssessmentAnswerEntity,
     AssessmentEntity,
     AssessmentQualificationEntity,

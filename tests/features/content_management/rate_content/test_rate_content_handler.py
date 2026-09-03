@@ -10,10 +10,8 @@ from src.features.content_management.rate_content.rate_content_request import (
 from src.features.content_management.rate_content.rate_content_response import (
     RateContentResponse,
 )
-from src.features.content_management.rate_content.rate_content_request import (
-    RateContent,
-)
-from src.features.content_management.shared.content import (
+from itmentorsoft_persistence.dto import RateContent
+from itmentorsoft_persistence.dto import (
     ResourceContent,
 )
 

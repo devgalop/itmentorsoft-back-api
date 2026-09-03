@@ -1,12 +1,12 @@
 import pytest
 
-from src.features.assessments.shared.assessment import AssessmentAnswer
+from itmentorsoft_persistence.dto import AssessmentAnswer
 from src.features.assessments.shared.qualifier_service import (
     BatchQualificationError,
     BatchQualifierPrompt,
     QualifierService,
 )
-from src.features.assessments.shared.question import Question, QuestionBuilder
+from itmentorsoft_persistence.dto import Question, QuestionBuilder
 
 
 def _make_rubric(question_id: str) -> Question:

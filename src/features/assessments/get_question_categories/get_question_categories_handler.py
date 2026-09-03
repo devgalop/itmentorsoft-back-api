@@ -4,7 +4,7 @@ from src.features.assessments.get_question_categories.get_question_categories_re
 from src.features.assessments.get_question_categories.get_question_categories_response import (
     GetQuestionCategoriesResponse,
 )
-from src.features.assessments.shared.questions_repository import QuestionRepository
+from itmentorsoft_persistence.repositories import QuestionRepository
 
 
 class GetQuestionCategoriesHandler:

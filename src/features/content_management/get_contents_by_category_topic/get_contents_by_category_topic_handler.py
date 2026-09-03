@@ -1,10 +1,13 @@
 from src.features.content_management.get_contents_by_category_topic.get_contents_by_category_topic_request import (
     GetContentsByCategoryTopicPaginationRequest,
 )
+from itmentorsoft_persistence.dto import (
+    GetContentsByCategoryTopicPaginationRequest as req,
+)
 from src.features.content_management.get_contents_by_category_topic.get_contents_by_category_topic_response import (
     GetContentsByCategoryTopicResponse,
 )
-from src.features.content_management.shared.content_repository import (
+from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
 
@@ -16,8 +19,15 @@ class GetContentsByCategoryTopicHandler:
     async def handle(
         self, request: GetContentsByCategoryTopicPaginationRequest
     ) -> GetContentsByCategoryTopicResponse:
+
+        request_mapped = req(
+            category=request.category,
+            topic=request.topic,
+            page=request.page,
+            page_size=request.page_size,
+        )
         result = await self.content_repository.get_resource_contents_by_category_and_related_topic(
-            request
+            request_mapped
         )
         return GetContentsByCategoryTopicResponse(
             is_success=True,

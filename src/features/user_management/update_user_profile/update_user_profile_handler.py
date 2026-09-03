@@ -1,4 +1,4 @@
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 from src.features.user_management.update_user_profile.update_user_profile_request import (
     UpdateUserProfileRequest,
 )

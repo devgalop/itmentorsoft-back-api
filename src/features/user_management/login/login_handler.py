@@ -1,7 +1,7 @@
 from src.features.user_management.login.login_request import LoginRequest
 from src.features.user_management.login.login_response import LoginResponse
 from src.features.user_management.shared.password_hasher import PasswordHasher
-from src.features.user_management.shared.refresh_token_repository import (
+from itmentorsoft_persistence.repositories import (
     RefreshTokenInfo,
     RefreshTokenRepository,
 )
@@ -9,7 +9,7 @@ from src.features.user_management.shared.token_generator import (
     TokenGenerator,
     TokenRequest,
 )
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 
 
 class LoginHandler:

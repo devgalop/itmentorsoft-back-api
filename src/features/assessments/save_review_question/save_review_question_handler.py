@@ -4,7 +4,7 @@ from src.features.assessments.save_review_question.save_review_question_request 
 from src.features.assessments.save_review_question.save_review_question_response import (
     SaveReviewQuestionResponse,
 )
-from src.features.assessments.shared.question import QuestionStatus
+from itmentorsoft_persistence.dto import QuestionStatus
 from src.features.assessments.shared.review_question_service import (
     ReviewQuestionService,
 )

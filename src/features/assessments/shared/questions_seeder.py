@@ -5,20 +5,18 @@ import uuid
 import aiofiles
 from sqlalchemy import select
 
-from src.features.assessments.shared.question import (
+from itmentorsoft_persistence.dto import (
     Question,
     QuestionBuilder,
     QuestionDifficulty,
     QuestionRubricScore,
     QuestionStatus,
 )
-from src.infrastructure.database.postgresql.models.postgresql_question_model import (
+from itmentorsoft_persistence.models import (
     QuestionEntity,
     QuestionRubricScoreEntity,
 )
-from src.infrastructure.database.postgresql.shared.postgresql_database_session import (
-    AsyncSessionLocal,
-)
+from itmentorsoft_persistence import AsyncSessionLocal
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
 _QUESTIONS_FILE = _PROJECT_ROOT / "docs" / "resources" / "sample_questions.json"

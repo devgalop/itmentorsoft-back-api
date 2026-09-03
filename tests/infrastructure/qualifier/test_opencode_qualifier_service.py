@@ -3,12 +3,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.features.assessments.shared.assessment import AssessmentAnswer
+from itmentorsoft_persistence.dto import AssessmentAnswer
 from src.features.assessments.shared.qualifier_service import (
     BatchQualificationError,
     BatchQualifierPrompt,
 )
-from src.features.assessments.shared.question import QuestionBuilder
+from itmentorsoft_persistence.dto import QuestionBuilder
 from src.infrastructure.qualifier.opencode_qualifier_service import (
     OpencodeQualifierService,
 )
