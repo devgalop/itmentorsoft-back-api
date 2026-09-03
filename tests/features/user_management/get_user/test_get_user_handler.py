@@ -4,7 +4,7 @@ import pytest
 from src.features.user_management.get_user.get_user_handler import GetUserHandler
 from src.features.user_management.get_user.get_user_request import GetUserRequest
 from src.features.user_management.get_user.get_user_response import GetUserResponse
-from src.features.user_management.shared.user import UserResponse, UserRole, UserStatus
+from itmentorsoft_persistence.dto import UserResponse, UserRole, UserStatus
 
 
 @pytest.mark.asyncio

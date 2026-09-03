@@ -1,9 +1,11 @@
 from src.features.user_management.assign_role.assign_role_request import (
     AssignRoleRequest,
-    AssignRoleToUserCommand,
 )
 from src.features.user_management.assign_role.assign_role_response import (
     AssignRoleResponse,
+)
+from itmentorsoft_persistence.dto import (
+    AssignRoleToUserCommand as AssignRoleToUserCommandDTO,
 )
 from itmentorsoft_persistence.repositories import RoleRepository, UserRepository
 
@@ -33,7 +35,7 @@ class AssignRoleHandler:
             role_selected = available_roles[
                 [role.name for role in available_roles].index(request.role)
             ]
-            assign_role_command = AssignRoleToUserCommand(
+            assign_role_command = AssignRoleToUserCommandDTO(
                 user_id=request.user_id, role_id=role_selected.role_id
             )
             await self.user_repository.assign_role_to_user(assign_role_command)

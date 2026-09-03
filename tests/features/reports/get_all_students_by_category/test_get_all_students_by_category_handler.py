@@ -10,8 +10,8 @@ from src.features.reports.get_all_students_by_category.get_all_students_by_categ
 from src.features.reports.get_all_students_by_category.get_all_students_by_category_response import (
     GetStudentsByCategoryResponse,
 )
-from src.features.reports.shared.report_repository import ReportRepository
-from src.features.reports.shared.student_report import (
+from itmentorsoft_persistence.repositories import ReportRepository
+from itmentorsoft_persistence.dto import (
     PaginatedStudentSummary,
     StudentBasicSummary,
 )

@@ -6,7 +6,7 @@ from src.features.reports.get_student_summary.get_student_summary_response impor
     KnowledgeProfile,
     SummaryResponse,
 )
-from src.features.reports.shared.student_report import StudentSummary
+from itmentorsoft_persistence.dto import StudentSummary
 from src.features.reports.shared.student_report_service import StudentReportService
 
 

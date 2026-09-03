@@ -8,7 +8,7 @@ from src.features.user_management.update_user_profile.update_user_profile_handle
 from src.features.user_management.update_user_profile.update_user_profile_request import (
     UpdateUserProfileRequest,
 )
-from src.features.user_management.shared.user import (
+from itmentorsoft_persistence.dto import (
     CompleteUserResponse,
     UserRole,
     UserStatus,

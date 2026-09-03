@@ -10,7 +10,7 @@ from src.features.reports.get_users_by_role.get_users_by_role_request import (
 from src.features.reports.get_users_by_role.get_users_by_role_response import (
     GetUsersByRoleResponse,
 )
-from src.features.user_management.shared.user import UserResponse, UserRole, UserStatus
+from itmentorsoft_persistence.dto import UserResponse, UserRole, UserStatus
 from src.features.user_management.shared.user_manager_service import (
     GetUsersByRoleResponse as ServiceGetUsersByRoleResponse,
     UserManagerService,

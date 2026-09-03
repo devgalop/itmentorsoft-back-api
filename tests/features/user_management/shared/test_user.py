@@ -1,6 +1,6 @@
 import pytest
 
-from src.features.user_management.shared.user import User, UserStatus, UserRole
+from itmentorsoft_persistence.dto import User, UserStatus, UserRole
 
 
 @pytest.fixture

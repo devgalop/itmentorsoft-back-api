@@ -13,7 +13,7 @@ from itmentorsoft_persistence.repositories import (
     RefreshTokenInfo,
 )
 from src.features.user_management.shared.token_generator import TokenResponse
-from src.features.user_management.shared.user import (
+from itmentorsoft_persistence.dto import (
     CompleteUserResponse,
     UserRole,
     UserStatus,

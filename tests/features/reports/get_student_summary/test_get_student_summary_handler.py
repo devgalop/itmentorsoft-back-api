@@ -7,7 +7,7 @@ from src.features.reports.get_student_summary.get_student_summary_handler import
 from src.features.reports.get_student_summary.get_student_summary_request import (
     GetStudentSummaryRequest,
 )
-from src.features.reports.shared.student_report import (
+from itmentorsoft_persistence.dto import (
     StudentKnowledgeProfile,
     StudentSummary,
 )

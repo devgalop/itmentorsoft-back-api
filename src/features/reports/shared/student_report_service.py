@@ -1,13 +1,15 @@
 from pydantic import BaseModel
-from itmentorsoft_persistence.repositories import AssessmentRepository
-from src.features.reports.shared.category_report import CategorySummary
-from src.features.reports.shared.report_repository import ReportRepository
-from src.features.reports.shared.student_report import (
+from itmentorsoft_persistence.repositories import (
+    AssessmentRepository,
+    ReportRepository,
+)
+from itmentorsoft_persistence.dto import (
+    CategorySummary,
     PaginatedStudentSummary,
     StudentProgress,
     StudentSummary,
 )
-from src.features.user_management.shared.user_repository import UserRepository
+from itmentorsoft_persistence.repositories import UserRepository
 
 
 class GetSummaryResponse(BaseModel):
