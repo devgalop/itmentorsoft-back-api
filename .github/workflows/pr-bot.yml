@@ -34,6 +34,17 @@ jobs:
       - name: Run tests
         id: tests
         run: pytest
+        env:
+          DATABASE_URL: postgresql+asyncpg://test:test@localhost:5432/test
+          JWT_SECRET_KEY: test-secret-key
+          JWT_ALGORITHM: HS256
+          JWT_EXPIRATION_DELTA_SECONDS: "1800"
+          RANDOM_TOKEN_EXPIRATION_DELTA_SECONDS: "1800"
+          REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS: "604800"
+          DB_POOL_SIZE: "5"
+          DB_MAX_OVERFLOW: "10"
+          DB_POOL_TIMEOUT: "30"
+          DB_POOL_RECYCLE: "3600"
         continue-on-error: true
 
       # 🧹 Lint con Ruff
