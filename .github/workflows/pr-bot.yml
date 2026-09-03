@@ -45,6 +45,7 @@ jobs:
           DB_MAX_OVERFLOW: "10"
           DB_POOL_TIMEOUT: "30"
           DB_POOL_RECYCLE: "3600"
+          ASSESSMENT_MAX_QUESTIONS_NUMBER: "5"
         continue-on-error: true
 
       # 🧹 Lint con Ruff

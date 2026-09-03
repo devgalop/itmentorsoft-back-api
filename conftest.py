@@ -14,6 +14,7 @@ _TEST_ENV_DEFAULTS = {
     "DB_MAX_OVERFLOW": "10",
     "DB_POOL_TIMEOUT": "30",
     "DB_POOL_RECYCLE": "3600",
+    "ASSESSMENT_MAX_QUESTIONS_NUMBER": "10",
 }
 
 for key, value in _TEST_ENV_DEFAULTS.items():
