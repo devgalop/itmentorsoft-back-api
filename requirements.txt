@@ -101,3 +101,4 @@ virtualenv==21.2.4
 watchfiles==1.1.1
 websockets==16.0
 yarl==1.23.0
+git+https://github.com/devgalop/itmentorsoft-persistence.git@master

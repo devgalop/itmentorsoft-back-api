@@ -1,13 +1,16 @@
-FROM python:3.10.21-alpine3.24
+FROM python:3.12-alpine3.20
 
 WORKDIR /app
+
+# Install git (required to clone dependencies from requirements.txt)
+RUN apk add --no-cache git
 
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
-COPY alembic.ini .
+COPY docs/resources/sample_questions.json ./docs/resources/
 
 EXPOSE 8000
 
