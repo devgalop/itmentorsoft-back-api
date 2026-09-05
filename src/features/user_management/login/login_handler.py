@@ -48,7 +48,7 @@ class LoginHandler:
             )  # nosec
 
         token_response = self.token_generator.generate_token(
-            TokenRequest(user_name=user.username, role=user.role.value)
+            TokenRequest(user_id=user.id, user_name=user.username, role=user.role.value)
         )
 
         refresh_token_response = self.token_generator.generate_random_token()
