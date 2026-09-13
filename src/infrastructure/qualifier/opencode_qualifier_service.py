@@ -27,6 +27,7 @@ class OpencodeQualifierService(QualifierService):
         self.client = OpenAI(
             api_key=EnvironmentVariablesConstants.OPENCODE_API_KEY,
             base_url=EnvironmentVariablesConstants.OPENCODE_API_URL,
+            default_headers={"x-opencode-session": uuid.uuid4().hex},
         )
         self.generic_prompt: str = self.get_generic_prompt()
         self.batch_generic_prompt: str = self.get_batch_generic_prompt()
