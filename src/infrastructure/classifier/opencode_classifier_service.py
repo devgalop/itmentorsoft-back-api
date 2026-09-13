@@ -1,4 +1,5 @@
 import os
+import uuid
 from openai import OpenAI
 import json
 import asyncio
@@ -19,6 +20,7 @@ class OpenCodeClassificationService(ClassificationService):
         self.client = OpenAI(
             api_key=EnvironmentVariablesConstants.OPENCODE_API_KEY,
             base_url=EnvironmentVariablesConstants.OPENCODE_API_URL,
+            default_headers={"x-opencode-session": uuid.uuid4().hex},
         )
         self.generic_prompt: str = self.get_generic_prompt()
         self.model_id: str = model_id
@@ -49,13 +51,13 @@ class OpenCodeClassificationService(ClassificationService):
                 message=f"Failed to parse batch classification response as JSON: {response[:200]}",
             )
 
-        if not isinstance(parsed, list):
+        if not isinstance(parsed, dict):
             raise ClassificationError(
                 raw_response=response,
-                message=f"Expected a JSON array for classification result, got: {type(parsed).__name__}",
+                message=f"Expected a JSON object for classification result, got: {type(parsed).__name__}",
             )
 
-        response_data = parsed[0] if parsed else {}
+        response_data = parsed
 
         if "classification" not in response_data or "feedback" not in response_data:
             raise ClassificationError(

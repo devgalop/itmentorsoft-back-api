@@ -1,4 +1,5 @@
 import asyncio
+import uuid
 from openai import OpenAI
 
 from src.features.assessments.shared.qualifier_service import ModelExplorerService
@@ -11,6 +12,7 @@ class OpencodeModelManagerService(ModelExplorerService):
         self.client = OpenAI(
             api_key=EnvironmentVariablesConstants.OPENCODE_API_KEY,
             base_url=EnvironmentVariablesConstants.OPENCODE_API_URL,
+            default_headers={"x-opencode-session": uuid.uuid4().hex},
         )
 
     async def get_available_models(self) -> list[str]:
