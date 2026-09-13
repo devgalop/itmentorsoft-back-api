@@ -26,6 +26,7 @@ from src.features.user_management.login.login_handler import LoginHandler
 from src.features.user_management.recovery_password.recovery_password_handler import (
     RecoveryPasswordHandler,
 )
+from src.features.user_management.resend_otp.resend_otp_handler import ResendOTPHandler
 from src.features.user_management.shared.otp_generator import OTPGenerator
 from src.features.user_management.shared.password_hasher import PasswordHasher
 from itmentorsoft_persistence.repositories import (
@@ -154,10 +155,32 @@ def get_template_loader() -> TemplateLoader:
     return TemplateLoader()
 
 
+def get_user_manager_service(
+    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    password_hasher: Annotated[PasswordHasher, Depends(get_password_hasher)],
+    role_repository: Annotated[RoleRepository, Depends(get_role_repository)],
+    notification_service: Annotated[
+        NotificationService, Depends(get_notification_service)
+    ],
+    template_loader: Annotated[TemplateLoader, Depends(get_template_loader)],
+    otp_generator: Annotated[OTPGenerator, Depends(get_otp_generator)],
+) -> UserManagerService:
+    return UserManagerService(
+        user_repository,
+        password_hasher,
+        role_repository,
+        notification_service,
+        template_loader,
+        otp_generator,
+    )
+
+
 def get_login_handler(
     user_repository: Annotated[UserRepository, Depends(get_user_repository)],
     password_hasher: Annotated[PasswordHasher, Depends(get_password_hasher)],
-    otp_generator: Annotated[OTPGenerator, Depends(get_otp_generator)],
+    user_manager_service: Annotated[
+        UserManagerService, Depends(get_user_manager_service)
+    ],
     notification_service: Annotated[
         NotificationService, Depends(get_notification_service)
     ],
@@ -166,9 +189,9 @@ def get_login_handler(
     return LoginHandler(
         user_repository,
         password_hasher,
-        otp_generator,
         notification_service,
         template_loader,
+        user_manager_service,
     )
 
 
@@ -238,24 +261,6 @@ def get_refresh_token_handler(
     )
 
 
-def get_user_manager_service(
-    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
-    password_hasher: Annotated[PasswordHasher, Depends(get_password_hasher)],
-    role_repository: Annotated[RoleRepository, Depends(get_role_repository)],
-    notification_service: Annotated[
-        NotificationService, Depends(get_notification_service)
-    ],
-    template_loader: Annotated[TemplateLoader, Depends(get_template_loader)],
-) -> UserManagerService:
-    return UserManagerService(
-        user_repository,
-        password_hasher,
-        role_repository,
-        notification_service,
-        template_loader,
-    )
-
-
 def get_create_user_from_admin_handler(
     user_manager_service: Annotated[
         UserManagerService, Depends(get_user_manager_service)
@@ -283,3 +288,12 @@ def get_update_user_profile_handler(
     user_repository: Annotated[UserRepository, Depends(get_user_repository)],
 ) -> UpdateUserProfileHandler:
     return UpdateUserProfileHandler(user_repository)
+
+
+def get_resend_otp_handler(
+    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    user_manager_service: Annotated[
+        UserManagerService, Depends(get_user_manager_service)
+    ],
+) -> ResendOTPHandler:
+    return ResendOTPHandler(user_repository, user_manager_service)

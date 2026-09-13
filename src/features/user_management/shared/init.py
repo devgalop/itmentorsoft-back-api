@@ -37,6 +37,9 @@ from src.features.user_management.update_user_profile.update_user_profile_endpoi
 from src.features.user_management.confirm_otp.confirm_otp_endpoint import (
     router as confirm_otp_router,
 )
+from src.features.user_management.resend_otp.resend_otp_endpoint import (
+    router as resend_otp_router,
+)
 
 router = APIRouter()
 router.include_router(create_user_router)
@@ -52,3 +55,4 @@ router.include_router(update_user_status_router)
 router.include_router(get_connected_users_router)
 router.include_router(update_user_profile_router)
 router.include_router(confirm_otp_router)
+router.include_router(resend_otp_router)
