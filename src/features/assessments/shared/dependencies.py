@@ -231,8 +231,14 @@ def get_update_question_handler(
     question_repository: Annotated[
         QuestionRepository, Depends(get_question_repository)
     ],
+    question_manager_service: Annotated[
+        QuestionManagerService, Depends(get_question_manager_service)
+    ],
 ) -> UpdateQuestionHandler:
-    return UpdateQuestionHandler(question_repository=question_repository)
+    return UpdateQuestionHandler(
+        question_repository=question_repository,
+        question_manager_service=question_manager_service,
+    )
 
 
 def get_get_questions_by_level_handler(

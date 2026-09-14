@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Type
+from itmentorsoft_persistence import QuestionStatus
 from pydantic import BaseModel
 from src.features.assessments.register_question.register_question_request import (
     RegisterQuestionRequest,
@@ -71,43 +72,16 @@ class QuestionManagerService:
                 .add_common_misconceptions(request.model.common_misconception)
                 .add_semantic_keywords(request.model.semantic_keywords)
                 .add_rubrics(rubric_scores)
+                .set_version(request.model.version)
                 .build()
             )
             await self.question_repository.save_question(question)
 
-            admin_users = await self.user_repository.get_admin_users()
-            if not admin_users:
-                print("No admin users found to notify.")
-                return CreateQuestionResponse(
-                    is_success=True,
-                    message="Question was created successfully, but no admin users found to notify.",
-                    question_id=question.question_id,
-                )
-
-            html_content = self.template_loader.load("item_created")
-            for admin_user in admin_users:
-                notification_config_builder = NotificationConfigBuilder(
-                    admin_user.email, "New Question Registered"
-                )
-
-                final_html_content = (
-                    html_content.replace("%REVIEWER%", admin_user.username)
-                    .replace("%CREATED_BY%", request.user_name)
-                    .replace("%OBJECT_NAME%", "Pregunta + rubrica de evaluación")
-                    .replace("%OBJECT_CODE%", question.question_id)
-                    .replace("%CREATED_DATE%", datetime.now().strftime("%Y-%m-%d"))
-                    .replace(
-                        "%URL_REVIEW%",
-                        f"{EnvironmentVariablesConstants.REVIEW_URL_BASE}?page=0&page_size=10",
-                    )
-                )
-
-                notification_config_builder.set_template(final_html_content)
-                notification_config = notification_config_builder.build()
-
-                _ = await self.notification_service.send_notification(
-                    notification_config
-                )
+            is_sent = await self.send_item_created_notification(
+                question, request.user_name
+            )
+            if not is_sent:
+                print("Failed to send item created notifications.")
 
             return CreateQuestionResponse(
                 is_success=True,
@@ -119,3 +93,55 @@ class QuestionManagerService:
             return CreateQuestionResponse(
                 is_success=False, message="Error creating question"
             )
+
+    async def update_question(self, question: Question):
+        """Archived the previous version of the question before updating it.
+
+        Args:
+            question (Question): The question object to be archived.
+        """
+        question.update_status(QuestionStatus.ARCHIVED)
+        await self.question_repository.update_question(question)
+
+    async def send_item_created_notification(
+        self, question: Question, author_user_name: str
+    ) -> bool:
+        """
+        Sends a notification to all admin users when a new question is created.
+
+        Args:
+            question (Question): The question object that was created.
+            author_user_name (str): The username of the author who created the question.
+
+        Returns:
+            bool: True if the notification was sent successfully, False otherwise.
+        """
+        SUBJECT = "New Question Registered"
+        OBJECT_NAME = "Pregunta + rubrica de evaluación"
+        admin_users = await self.user_repository.get_admin_users()
+        if not admin_users:
+            print("No admin users found to notify.")
+            return False
+        html_content = self.template_loader.load("item_created")
+        for admin_user in admin_users:
+            notification_config_builder = NotificationConfigBuilder(
+                admin_user.email, SUBJECT
+            )
+
+            final_html_content = (
+                html_content.replace("%REVIEWER%", admin_user.username)
+                .replace("%CREATED_BY%", author_user_name)
+                .replace("%OBJECT_NAME%", OBJECT_NAME)
+                .replace("%OBJECT_CODE%", f"{question.question_id}-v{question.version}")
+                .replace("%CREATED_DATE%", datetime.now().strftime("%Y-%m-%d"))
+                .replace(
+                    "%URL_REVIEW%",
+                    f"{EnvironmentVariablesConstants.REVIEW_URL_BASE}?page=0&page_size=10",
+                )
+            )
+
+            notification_config_builder.set_template(final_html_content)
+            notification_config = notification_config_builder.build()
+
+            _ = await self.notification_service.send_notification(notification_config)
+        return True

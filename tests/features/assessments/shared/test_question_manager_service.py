@@ -41,6 +41,7 @@ def _make_mock_builder_instance(question_id: str = "q-123"):
     mock_builder.add_common_misconceptions.return_value = mock_builder
     mock_builder.add_semantic_keywords.return_value = mock_builder
     mock_builder.add_rubrics.return_value = mock_builder
+    mock_builder.set_version.return_value = mock_builder
     mock_builder.build.return_value = mock_question
 
     return mock_builder, mock_question
@@ -104,7 +105,7 @@ async def test_create_question_happy_path_with_admin_users():
 
 @pytest.mark.asyncio
 async def test_create_question_happy_path_without_admin_users():
-    """Question saved, no notifications sent, returns success with 'no admin users' message."""
+    """Question saved, no notifications sent, returns success."""
     # Arrange
     question_repository = AsyncMock()
     question_repository.save_question = AsyncMock()
@@ -137,7 +138,7 @@ async def test_create_question_happy_path_without_admin_users():
     # Assert
     assert response.is_success is True
     assert response.question_id == "q-456"
-    assert "no admin users found to notify" in response.message
+    assert response.message == "Question created successfully"
 
     question_repository.save_question.assert_called_once()
     user_repository.get_admin_users.assert_called_once()

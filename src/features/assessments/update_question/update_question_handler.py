@@ -1,5 +1,12 @@
-from itmentorsoft_persistence.dto import QuestionRubricScore
 from itmentorsoft_persistence.repositories import QuestionRepository
+from src.features.assessments.register_question.register_question_request import (
+    QuestionRubric,
+    RegisterQuestionRequest,
+)
+from src.features.assessments.shared.question_manager_service import (
+    CreateQuestionRequest,
+    QuestionManagerService,
+)
 from src.features.assessments.update_question.update_question_request import (
     UpdateQuestionRequest,
 )
@@ -9,11 +16,16 @@ from src.features.assessments.update_question.update_question_response import (
 
 
 class UpdateQuestionHandler:
-    def __init__(self, question_repository: QuestionRepository):
+    def __init__(
+        self,
+        question_manager_service: QuestionManagerService,
+        question_repository: QuestionRepository,
+    ):
+        self.question_manager_service = question_manager_service
         self.question_repository = question_repository
 
     async def handle(
-        self, question_id: str, request: UpdateQuestionRequest
+        self, question_id: str, request: UpdateQuestionRequest, user_name: str
     ) -> UpdateQuestionResponse:
         try:
             question = await self.question_repository.get_question_rubric(question_id)
@@ -23,20 +35,29 @@ class UpdateQuestionHandler:
                     message="Question not found",
                 )
 
-            question.update_text_to_evaluate(request.text)
-            question.update_concept(request.concept)
-            question.update_definition(request.definition)
-            question.update_simple_explanation(request.simple_explanation)
-            question.update_correct_sample(request.correct_sample)
-            question.update_wrong_sample(request.wrong_sample)
-            question.common_misconception = request.common_misconception
-            question.semantic_keywords = request.semantic_keywords
-            question.rubric = [
-                QuestionRubricScore(score=r.score, explanation=r.criteria)
-                for r in request.rubric
-            ]
+            await self.question_manager_service.update_question(question)
 
-            await self.question_repository.update_question(question)
+            new_version = question.version + 1
+            creation_request = RegisterQuestionRequest(
+                text=request.text,
+                concept=request.concept,
+                definition=request.definition,
+                simple_explanation=request.simple_explanation,
+                correct_sample=request.correct_sample,
+                wrong_sample=request.wrong_sample,
+                common_misconception=request.common_misconception,
+                semantic_keywords=request.semantic_keywords,
+                rubric=[
+                    QuestionRubric(score=r.score, criteria=r.criteria)
+                    for r in request.rubric
+                ],
+                version=new_version,
+            )
+
+            await self.question_manager_service.create_question(
+                CreateQuestionRequest(model=creation_request, user_name=user_name)
+            )
+
             return UpdateQuestionResponse(
                 is_success=True,
                 message="Question updated successfully",

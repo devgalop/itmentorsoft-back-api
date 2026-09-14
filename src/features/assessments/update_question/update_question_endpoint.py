@@ -76,9 +76,9 @@ async def update_question(
     question_id: Annotated[str, Path(description="The ID of the question to update")],
     request: UpdateQuestionRequest,
     handler: Annotated[UpdateQuestionHandler, Depends(get_update_question_handler)],
-    _: Annotated[TokenData, Depends(require_roles(["admin", "teacher"]))],
+    token_data: Annotated[TokenData, Depends(require_roles(["admin", "teacher"]))],
 ) -> UpdateQuestionResponse:
-    response = await handler.handle(question_id, request)
+    response = await handler.handle(question_id, request, token_data.user_name)
     if not response.is_success:
         raise HTTPException(status_code=400, detail=response.model_dump())
     return response

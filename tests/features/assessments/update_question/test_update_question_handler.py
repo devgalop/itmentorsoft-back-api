@@ -56,27 +56,28 @@ def make_question(question_id=QUESTION_ID):
 @pytest.mark.asyncio
 async def test_when_question_exists_then_should_update_successfully():
     question_repository = AsyncMock()
+    question_manager_service = AsyncMock()
     question_repository.get_question_rubric = AsyncMock(return_value=make_question())
-    question_repository.update_question = AsyncMock()
 
-    handler = UpdateQuestionHandler(question_repository)
+    handler = UpdateQuestionHandler(question_manager_service, question_repository)
 
     request = UpdateQuestionRequest(**VALID_UPDATE_REQUEST)
-    response = await handler.handle(QUESTION_ID, request)
+    response = await handler.handle(QUESTION_ID, request, "user")
 
     assert response.is_success is True
-    question_repository.update_question.assert_called_once()
+    question_manager_service.update_question.assert_called_once()
 
 
 @pytest.mark.asyncio
 async def test_when_question_does_not_exist_then_should_return_failure():
     question_repository = AsyncMock()
+    question_manager_service = AsyncMock()
     question_repository.get_question_rubric = AsyncMock(return_value=None)
 
-    handler = UpdateQuestionHandler(question_repository)
+    handler = UpdateQuestionHandler(question_manager_service, question_repository)
 
     request = UpdateQuestionRequest(**VALID_UPDATE_REQUEST)
-    response = await handler.handle(QUESTION_ID, request)
+    response = await handler.handle(QUESTION_ID, request, "user")
 
     assert response.is_success is False
     assert response.message == "Question not found"
@@ -86,13 +87,14 @@ async def test_when_question_does_not_exist_then_should_return_failure():
 @pytest.mark.asyncio
 async def test_when_update_is_successful_then_should_return_success_message():
     question_repository = AsyncMock()
+    question_manager_service = AsyncMock()
     question_repository.get_question_rubric = AsyncMock(return_value=make_question())
     question_repository.update_question = AsyncMock()
 
-    handler = UpdateQuestionHandler(question_repository)
+    handler = UpdateQuestionHandler(question_manager_service, question_repository)
 
     request = UpdateQuestionRequest(**VALID_UPDATE_REQUEST)
-    response = await handler.handle(QUESTION_ID, request)
+    response = await handler.handle(QUESTION_ID, request, "user")
 
     assert response.is_success is True
     assert response.message == "Question updated successfully"
@@ -101,14 +103,15 @@ async def test_when_update_is_successful_then_should_return_success_message():
 @pytest.mark.asyncio
 async def test_when_repository_raises_exception_then_should_return_failure():
     question_repository = AsyncMock()
+    question_manager_service = AsyncMock()
     question_repository.get_question_rubric = AsyncMock(
         side_effect=Exception("DB error")
     )
 
-    handler = UpdateQuestionHandler(question_repository)
+    handler = UpdateQuestionHandler(question_manager_service, question_repository)
 
     request = UpdateQuestionRequest(**VALID_UPDATE_REQUEST)
-    response = await handler.handle(QUESTION_ID, request)
+    response = await handler.handle(QUESTION_ID, request, "user")
 
     assert response.is_success is False
     assert "Failed to update question" in response.message
@@ -117,36 +120,38 @@ async def test_when_repository_raises_exception_then_should_return_failure():
 @pytest.mark.asyncio
 async def test_calls_update_question_with_updated_fields():
     question_repository = AsyncMock()
+    question_manager_service = AsyncMock()
     question_repository.get_question_rubric = AsyncMock(return_value=make_question())
-    question_repository.update_question = AsyncMock()
 
-    handler = UpdateQuestionHandler(question_repository)
+    handler = UpdateQuestionHandler(question_manager_service, question_repository)
 
     request = UpdateQuestionRequest(**VALID_UPDATE_REQUEST)
-    await handler.handle(QUESTION_ID, request)
+    await handler.handle(QUESTION_ID, request, "user")
 
-    call_args = question_repository.update_question.call_args
-    updated_question = call_args[0][0]
+    # Verify create_question was called with the updated fields
+    create_call_args = question_manager_service.create_question.call_args
+    create_request = create_call_args[0][0]
 
-    assert updated_question.text_to_evaluate == VALID_UPDATE_REQUEST["text"]
-    assert updated_question.concept == VALID_UPDATE_REQUEST["concept"]
-    assert updated_question.definition == VALID_UPDATE_REQUEST["definition"]
+    assert create_request.model.text == VALID_UPDATE_REQUEST["text"]
+    assert create_request.model.concept == VALID_UPDATE_REQUEST["concept"]
+    assert create_request.model.definition == VALID_UPDATE_REQUEST["definition"]
     assert (
-        updated_question.simple_explanation
+        create_request.model.simple_explanation
         == VALID_UPDATE_REQUEST["simple_explanation"]
     )
-    assert updated_question.correct_sample == VALID_UPDATE_REQUEST["correct_sample"]
-    assert updated_question.wrong_sample == VALID_UPDATE_REQUEST["wrong_sample"]
+    assert create_request.model.correct_sample == VALID_UPDATE_REQUEST["correct_sample"]
+    assert create_request.model.wrong_sample == VALID_UPDATE_REQUEST["wrong_sample"]
     assert (
-        updated_question.common_misconception
+        create_request.model.common_misconception
         == VALID_UPDATE_REQUEST["common_misconception"]
     )
     assert (
-        updated_question.semantic_keywords == VALID_UPDATE_REQUEST["semantic_keywords"]
+        create_request.model.semantic_keywords
+        == VALID_UPDATE_REQUEST["semantic_keywords"]
     )
-    assert len(updated_question.rubric) == 1
-    assert updated_question.rubric[0].score == 3
+    assert len(create_request.model.rubric) == 1
+    assert create_request.model.rubric[0].score == 3
     assert (
-        updated_question.rubric[0].explanation
+        create_request.model.rubric[0].criteria
         == VALID_UPDATE_REQUEST["rubric"][0]["criteria"]
     )
