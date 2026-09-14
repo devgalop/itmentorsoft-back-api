@@ -285,3 +285,14 @@ class PostgresUserRepository(UserRepository):
             login_try_counter_found.is_temporarily_blocked = False
             login_try_counter_found.temporary_block_expiration = 0
             await self.session_factory.commit()
+
+    async def revoke_otp_codes(self, user_id: str):
+        stmt = select(UserOTPEntity).where(
+            UserOTPEntity.user_id == user_id,
+            UserOTPEntity.status == UserOTPStatus.PENDING.value,
+        )
+        result = await self.session_factory.execute(stmt)
+        otp_codes = result.scalars().all()
+        for otp_code in otp_codes:
+            otp_code.status = UserOTPStatus.EXPIRED.value
+        await self.session_factory.commit()

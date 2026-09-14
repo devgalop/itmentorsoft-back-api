@@ -48,6 +48,8 @@ class ConfirmOTPHandler:
         if request.otp != user_otp.otp:
             return ConfirmOTPResponse(is_successful=False, message="Invalid OTP")
 
+        await self.user_repository.revoke_otp_codes(request.user_id)
+
         token_response = self.token_generator.generate_token(
             TokenRequest(user_id=user.id, user_name=user.username, role=user.role.value)
         )
