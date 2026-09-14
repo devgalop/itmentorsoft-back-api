@@ -32,6 +32,7 @@ class RegisterQuestionRequest(BaseModel):
     common_misconception: list[str]
     rubric: list[QuestionRubric]
     semantic_keywords: list[str]
+    version: int = 1
 
     @field_validator("text")
     def validate_text(cls, value: str) -> str:

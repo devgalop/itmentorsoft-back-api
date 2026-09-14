@@ -44,7 +44,7 @@ class PostgresQuestionsRepository(QuestionRepository):
         return self.mapper.to_evaluative_model(question_entity)
 
     async def get_all_questions(self) -> list[EvaluativeQuestion]:
-        smt = select(QuestionEntity)
+        smt = select(QuestionEntity).where(QuestionEntity.is_enabled)
         result = await self.session_factory.execute(smt)
         question_entities = result.scalars().all()
         return [self.mapper.to_evaluative_model(entity) for entity in question_entities]
@@ -85,23 +85,8 @@ class PostgresQuestionsRepository(QuestionRepository):
         entity = result.scalars().first()
         if not entity:
             return
-        entity.text = question.text_to_evaluate
-        entity.concept = question.concept
-        entity.definition = question.definition
-        entity.simple_explanation = question.simple_explanation
-        entity.correct_sample = question.correct_sample
-        entity.wrong_sample = question.wrong_sample
-        entity.common_misconceptions = "|".join(question.common_misconception)
-        entity.semantic_keywords = "|".join(question.semantic_keywords)
         entity.status = question.status.value
-        # Replace rubric: delete old, insert new
-        for rubric in entity.rubric:
-            await self.session_factory.delete(rubric)
-        new_rubric_entities = self.mapper.to_rubric_score_entities(
-            question.question_id, question.rubric
-        )
-        for rubric_entity in new_rubric_entities:
-            self.session_factory.add(rubric_entity)
+        entity.is_enabled = False
         await self.session_factory.commit()
 
     async def get_question_categories(self, version: int) -> list[str]:
@@ -122,7 +107,11 @@ class PostgresQuestionsRepository(QuestionRepository):
     async def get_all_questions_paginated(
         self, page: int, page_size: int
     ) -> PaginatedQuestionsResult:
-        count_smt = select(func.count()).select_from(QuestionEntity)
+        count_smt = (
+            select(func.count())
+            .select_from(QuestionEntity)
+            .where(QuestionEntity.is_enabled)
+        )
         total_result = await self.session_factory.execute(count_smt)
         total = total_result.scalar()
         if not total:
@@ -131,6 +120,7 @@ class PostgresQuestionsRepository(QuestionRepository):
         smt = (
             select(QuestionEntity)
             .options(selectinload(QuestionEntity.rubric))
+            .where(QuestionEntity.is_enabled)
             .offset(page * page_size)
             .limit(page_size)
         )
@@ -188,7 +178,10 @@ class PostgresQuestionsRepository(QuestionRepository):
         smt = (
             select(QuestionEntity.classification)
             .distinct()
-            .where(QuestionEntity.status == QuestionStatus.PUBLISHED.value)
+            .where(
+                QuestionEntity.status == QuestionStatus.PUBLISHED.value,
+                QuestionEntity.is_enabled,
+            )
         )
         result = await self.session_factory.execute(smt)
         topics = result.scalars().all()
