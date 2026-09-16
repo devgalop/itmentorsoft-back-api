@@ -1,3 +1,4 @@
+from itmentorsoft_persistence import QuestionDifficulty
 from itmentorsoft_persistence.repositories import QuestionRepository
 from src.features.assessments.register_question.register_question_request import (
     QuestionRubric,
@@ -28,6 +29,15 @@ class UpdateQuestionHandler:
         self, question_id: str, request: UpdateQuestionRequest, user_name: str
     ) -> UpdateQuestionResponse:
         try:
+
+            if request.difficulty not in [
+                difficulty.value for difficulty in QuestionDifficulty
+            ]:
+                return UpdateQuestionResponse(
+                    is_success=False,
+                    message=f"Failed to update question: Invalid difficulty '{request.difficulty}'",
+                )
+
             question = await self.question_repository.get_question_rubric(question_id)
             if question is None:
                 return UpdateQuestionResponse(
@@ -52,6 +62,8 @@ class UpdateQuestionHandler:
                     for r in request.rubric
                 ],
                 version=new_version,
+                difficulty=request.difficulty,
+                topic=request.topic,
             )
 
             await self.question_manager_service.create_question(

@@ -1,3 +1,5 @@
+from itmentorsoft_persistence import QuestionDifficulty
+
 from src.features.assessments.register_question.register_question_request import (
     RegisterQuestionRequest,
 )
@@ -21,6 +23,15 @@ class RegisterQuestionHandler:
         self, request: RegisterQuestionRequest, user_name: str
     ) -> RegisterQuestionResponse:
         try:
+
+            if request.difficulty not in [
+                difficulty.value for difficulty in QuestionDifficulty
+            ]:
+                return RegisterQuestionResponse(
+                    is_success=False,
+                    message=f"Failed to register question: Invalid difficulty '{request.difficulty}'",
+                )
+
             response = await self.question_service.create_question(
                 CreateQuestionRequest(model=request, user_name=user_name)
             )

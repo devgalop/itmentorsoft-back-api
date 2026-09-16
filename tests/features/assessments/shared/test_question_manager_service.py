@@ -22,6 +22,8 @@ VALID_REGISTER_REQUEST = dict(
     ],
     rubric=[{"score": 3, "criteria": "Complete and correct answer with examples"}],
     semantic_keywords=["OOP", "abstraction"],
+    difficulty="intermedio",
+    topic="Object Oriented Programming",
 )
 
 
@@ -42,6 +44,8 @@ def _make_mock_builder_instance(question_id: str = "q-123"):
     mock_builder.add_semantic_keywords.return_value = mock_builder
     mock_builder.add_rubrics.return_value = mock_builder
     mock_builder.set_version.return_value = mock_builder
+    mock_builder.set_classification.return_value = mock_builder
+    mock_builder.set_difficulty.return_value = mock_builder
     mock_builder.build.return_value = mock_question
 
     return mock_builder, mock_question

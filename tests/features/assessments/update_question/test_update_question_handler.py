@@ -30,6 +30,8 @@ VALID_UPDATE_REQUEST = dict(
         {"score": 3, "criteria": "Complete and correct answer with clear examples"}
     ],
     semantic_keywords=["OOP", "polymorphism"],
+    difficulty="intermedio",
+    topic="Polymorphism",
 )
 
 
