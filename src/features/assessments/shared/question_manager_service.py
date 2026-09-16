@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Type
-from itmentorsoft_persistence import QuestionStatus
+from itmentorsoft_persistence import QuestionDifficulty, QuestionStatus
 from pydantic import BaseModel
 from src.features.assessments.register_question.register_question_request import (
     RegisterQuestionRequest,
@@ -61,6 +61,9 @@ class QuestionManagerService:
                 QuestionRubricScore(score=r.score, explanation=r.criteria)
                 for r in request.model.rubric
             ]
+            difficulty = QuestionDifficulty.EASY
+            if request.model.difficulty:
+                difficulty = QuestionDifficulty(request.model.difficulty)
             question: Question = (
                 self.question_builder()
                 .set_text_to_evaluate(request.model.text)
@@ -73,6 +76,8 @@ class QuestionManagerService:
                 .add_semantic_keywords(request.model.semantic_keywords)
                 .add_rubrics(rubric_scores)
                 .set_version(request.model.version)
+                .set_classification(request.model.topic)
+                .set_difficulty(difficulty)
                 .build()
             )
             await self.question_repository.save_question(question)

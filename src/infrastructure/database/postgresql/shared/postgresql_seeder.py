@@ -99,7 +99,7 @@ async def seed_database(
         teacher = UserEntity(
             id=uuid.uuid4().hex,
             username="default_teacher",
-            email="default_teacher@example.com",
+            email="default_teacher@yopmail.com",
             hashed_password=password_hasher.hash_password(
                 EnvironmentVariablesConstants.TEACHER_PASSWORD
             ),
@@ -114,7 +114,7 @@ async def seed_database(
             student = UserEntity(
                 id=uuid.uuid4().hex,
                 username=f"student{i}",
-                email=f"student{i}@example.com",
+                email=f"student{i}@yopmail.com",
                 hashed_password=password_hasher.hash_password(
                     EnvironmentVariablesConstants.STUDENT_PASSWORD
                 ),

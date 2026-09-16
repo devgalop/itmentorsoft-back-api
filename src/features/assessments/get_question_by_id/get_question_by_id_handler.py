@@ -40,6 +40,8 @@ class GetQuestionByIdHandler:
                 ],
                 semantic_keywords=question.semantic_keywords,
                 status=question.status.value,
+                difficulty=question.difficulty.value,
+                topic=question.classification,
             )
             return GetQuestionByIdResponse(
                 is_success=True,

@@ -26,6 +26,8 @@ VALID_REGISTER_REQUEST = dict(
     ],
     rubric=[{"score": 3, "criteria": "Complete and correct answer with examples"}],
     semantic_keywords=["OOP", "abstraction"],
+    difficulty="intermedio",
+    topic="Object Oriented Programming",
 )
 
 

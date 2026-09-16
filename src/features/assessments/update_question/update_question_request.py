@@ -32,6 +32,8 @@ class UpdateQuestionRequest(BaseModel):
     common_misconception: list[str]
     rubric: list[UpdateQuestionRubric]
     semantic_keywords: list[str]
+    difficulty: str
+    topic: str
 
     @field_validator("text")
     def validate_text(cls, value: str) -> str:
@@ -125,4 +127,24 @@ class UpdateQuestionRequest(BaseModel):
                 raise ValueError(
                     "Each semantic keyword must be at least 2 characters long"
                 )
+        return value
+
+    @field_validator("difficulty")
+    def validate_difficulty(cls, value: str) -> str:
+        if not value:
+            raise ValueError("Difficulty cannot be empty")
+        if len(value) > 30:
+            raise ValueError("Difficulty cannot be longer than 30 characters")
+        if len(value) < 4:
+            raise ValueError("Difficulty must be at least 4 characters long")
+        return value
+
+    @field_validator("topic")
+    def validate_topic(cls, value: str) -> str:
+        if not value:
+            raise ValueError("Topic cannot be empty")
+        if len(value) > 100:
+            raise ValueError("Topic cannot be longer than 100 characters")
+        if len(value) < 2:
+            raise ValueError("Topic must be at least 2 characters long")
         return value

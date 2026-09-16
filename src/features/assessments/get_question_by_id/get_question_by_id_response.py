@@ -18,6 +18,8 @@ class QuestionData(BaseModel):
     rubric: list[QuestionRubricScoreData]
     semantic_keywords: list[str]
     status: str
+    difficulty: str
+    topic: str
 
 
 class GetQuestionByIdResponse(BaseModel):
