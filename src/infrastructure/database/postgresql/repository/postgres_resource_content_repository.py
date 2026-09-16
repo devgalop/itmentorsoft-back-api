@@ -89,7 +89,7 @@ class PostgresResourceContentRepository(ResourceContentRepository):
         count_smt = (
             select(func.count())
             .select_from(ResourceContentEntity)
-            .where(ResourceContentEntity.related_topics.like(f"%{request.topic}%"))
+            .where(ResourceContentEntity.related_topics.ilike(f"%{request.topic}%"))
             .where(ResourceContentEntity.is_enabled)
         )
         total_result = await self.session_factory.execute(count_smt)
@@ -99,7 +99,7 @@ class PostgresResourceContentRepository(ResourceContentRepository):
 
         smt = (
             select(ResourceContentEntity)
-            .where(ResourceContentEntity.related_topics.like(f"%{request.topic}%"))
+            .where(ResourceContentEntity.related_topics.ilike(f"%{request.topic}%"))
             .where(ResourceContentEntity.is_enabled)
             .offset(request.page * request.page_size)
             .limit(request.page_size)
@@ -117,7 +117,7 @@ class PostgresResourceContentRepository(ResourceContentRepository):
         count_smt = (
             select(func.count())
             .select_from(ResourceContentEntity)
-            .where(ResourceContentEntity.title.like(f"%{request.title}%"))
+            .where(ResourceContentEntity.title.ilike(f"%{request.title}%"))
             .where(ResourceContentEntity.is_enabled)
         )
         total_result = await self.session_factory.execute(count_smt)
@@ -126,7 +126,7 @@ class PostgresResourceContentRepository(ResourceContentRepository):
             return PaginatedResourceContentResult(items=[], total=0)
         smt = (
             select(ResourceContentEntity)
-            .where(ResourceContentEntity.title.like(f"%{request.title}%"))
+            .where(ResourceContentEntity.title.ilike(f"%{request.title}%"))
             .where(ResourceContentEntity.is_enabled)
             .offset(request.page * request.page_size)
             .limit(request.page_size)
@@ -145,7 +145,7 @@ class PostgresResourceContentRepository(ResourceContentRepository):
             select(func.count())
             .select_from(ResourceContentEntity)
             .where(ResourceContentEntity.category == request.category)
-            .where(ResourceContentEntity.related_topics.like(f"%{request.topic}%"))
+            .where(ResourceContentEntity.related_topics.ilike(f"%{request.topic}%"))
             .where(ResourceContentEntity.is_enabled)
         )
         total_result = await self.session_factory.execute(count_smt)
@@ -155,7 +155,7 @@ class PostgresResourceContentRepository(ResourceContentRepository):
         smt = (
             select(ResourceContentEntity)
             .where(ResourceContentEntity.category == request.category)
-            .where(ResourceContentEntity.related_topics.like(f"%{request.topic}%"))
+            .where(ResourceContentEntity.related_topics.ilike(f"%{request.topic}%"))
             .where(ResourceContentEntity.is_enabled)
             .offset(request.page * request.page_size)
             .limit(request.page_size)
