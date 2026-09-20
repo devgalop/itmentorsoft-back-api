@@ -165,9 +165,28 @@ class PostgresAssessmentRepository(AssessmentRepository):
             else "Unknown Student"
         )
 
-        # For demonstration purposes, we will use placeholder values for knowledge classification and feedback.
-        knowledge_classification = "This classification will be determined based on the student's knowledge profile."
-        feedback = "This feedback will be generated based on the student's performance and knowledge profile."
+        smt_classification = (
+            select(ClassificationResultEntity)
+            .where(
+                ClassificationResultEntity.user_id == user_id,
+                ClassificationResultEntity.is_enabled,
+            )
+            .order_by(ClassificationResultEntity.created_at.desc())
+            .limit(1)
+        )
+        classification_result = await self.session_factory.execute(smt_classification)
+        classification_result = classification_result.scalars().first()
+
+        knowledge_classification = (
+            classification_result.classification
+            if classification_result
+            else "No classification available"
+        )
+        feedback = (
+            classification_result.feedback
+            if classification_result
+            else "No feedback available"
+        )
 
         return StudentSummary(
             student_id=user_id,
