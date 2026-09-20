@@ -66,6 +66,15 @@ from src.infrastructure.database.postgresql.repository.postgres_resource_content
     PostgresResourceContentRepository,
 )
 from itmentorsoft_persistence import get_db
+from src.features.content_management.get_rating_by_user.get_rating_by_user_handler import (
+    GetContentRatingByUserHandler,
+)
+from src.features.content_management.get_content_rating_by_user.get_content_rating_by_user_handler import (
+    GetContentRatingByUserHandler as GetSpecificContentRatingByUserHandler,
+)
+from src.features.content_management.update_rating.update_rating_handler import (
+    UpdateRatingHandler,
+)
 
 
 def get_resource_content_repository(
@@ -205,3 +214,27 @@ def get_get_top_worse_content_handler(
     ],
 ) -> GetTopWorseContentHandler:
     return GetTopWorseContentHandler(content_repository)
+
+
+def get_get_rating_by_user_handler(
+    content_repository: Annotated[
+        ResourceContentRepository, Depends(get_resource_content_repository)
+    ],
+) -> GetContentRatingByUserHandler:
+    return GetContentRatingByUserHandler(content_repository)
+
+
+def get_get_content_rating_by_user_handler(
+    content_repository: Annotated[
+        ResourceContentRepository, Depends(get_resource_content_repository)
+    ],
+) -> GetSpecificContentRatingByUserHandler:
+    return GetSpecificContentRatingByUserHandler(content_repository)
+
+
+def get_update_rating_handler(
+    content_repository: Annotated[
+        ResourceContentRepository, Depends(get_resource_content_repository)
+    ],
+) -> UpdateRatingHandler:
+    return UpdateRatingHandler(content_repository)

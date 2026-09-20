@@ -45,6 +45,15 @@ from src.features.content_management.get_top_best_content.get_top_best_content_e
 from src.features.content_management.get_top_worse_content.get_top_worse_content_endpoint import (
     router as get_top_worse_content_router,
 )
+from src.features.content_management.get_rating_by_user.get_rating_by_user_endpoint import (
+    router as get_rating_by_user_router,
+)
+from src.features.content_management.get_content_rating_by_user.get_content_rating_by_user_endpoint import (
+    router as get_content_rating_by_user_router,
+)
+from src.features.content_management.update_rating.update_rating_endpoint import (
+    router as update_rating_router,
+)
 
 router = APIRouter()
 router.include_router(get_all_contents_router)
@@ -62,3 +71,6 @@ router.include_router(update_content_path_status_router)
 router.include_router(get_learning_path_progress_router)
 router.include_router(get_top_best_content_router)
 router.include_router(get_top_worse_content_router)
+router.include_router(get_rating_by_user_router)
+router.include_router(get_content_rating_by_user_router)
+router.include_router(update_rating_router)
