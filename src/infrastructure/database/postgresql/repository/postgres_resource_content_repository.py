@@ -12,6 +12,7 @@ from itmentorsoft_persistence.dto import (
     ResourceContentRating,
     ResourceContentResponse,
     UpdateResourceContentRequest,
+    ResourceContentRatingByStudent,
 )
 
 from itmentorsoft_persistence.repositories import (
@@ -25,6 +26,7 @@ from itmentorsoft_persistence.mappers import (
     RateContentMapper,
     ResourceContentMapper,
 )
+from sqlalchemy.orm import selectinload
 
 
 class PostgresResourceContentRepository(ResourceContentRepository):
@@ -254,3 +256,61 @@ class PostgresResourceContentRepository(ResourceContentRepository):
             )
             for entity, avg_rating in content_entities
         ]
+
+    async def get_ratings_by_user(
+        self, user_id: str
+    ) -> list[ResourceContentRatingByStudent]:
+        smt = (
+            select(ContentRating)
+            .options(selectinload(ContentRating.content))
+            .where(ContentRating.user_id == user_id)
+        )
+        result = await self.session_factory.execute(smt)
+        ratings = result.scalars().all()
+        if not ratings:
+            return []
+        return [
+            ResourceContentRatingByStudent(
+                content_id=rating.content_id,
+                title=rating.content.title,
+                summary=rating.content.summary,
+                rating=rating.rating,
+                student_id=rating.user_id,
+            )
+            for rating in ratings
+        ]
+
+    async def get_rating_content_by_user(
+        self, user_id: str, content_id: str
+    ) -> ResourceContentRatingByStudent | None:
+        smt = (
+            select(ContentRating)
+            .options(selectinload(ContentRating.content))
+            .where(
+                ContentRating.user_id == user_id, ContentRating.content_id == content_id
+            )
+        )
+        result = await self.session_factory.execute(smt)
+        rating = result.scalars().first()
+        if not rating:
+            return None
+        return ResourceContentRatingByStudent(
+            content_id=rating.content_id,
+            title=rating.content.title,
+            summary=rating.content.summary,
+            rating=rating.rating,
+            student_id=rating.user_id,
+        )
+
+    async def update_rating(self, request: RateContent):
+        smt = select(ContentRating).where(
+            ContentRating.user_id == request.user_id,
+            ContentRating.content_id == request.content_id,
+        )
+        result = await self.session_factory.execute(smt)
+        rating = result.scalars().first()
+        if not rating:
+            return
+        rating.rating = request.rating
+        rating.comment = request.comment
+        await self.session_factory.commit()
