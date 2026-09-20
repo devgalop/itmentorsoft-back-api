@@ -37,7 +37,7 @@ class SqsConsumerService(ABC):
                 if not messages or "Messages" not in messages:
                     await asyncio.sleep(30)
                     continue
-
+                messages_recieved: list[SqsMessageReceived] = []
                 for message in messages.get("Messages", []):
                     message_recieved = SqsMessageReceived(
                         message_id=message["MessageId"],
@@ -47,6 +47,15 @@ class SqsConsumerService(ABC):
                             message["Attributes"].get("ApproximateReceiveCount", 0)
                         ),
                     )
+                    messages_recieved.append(message_recieved)
+                    self.sqs_client.client.change_message_visibility(
+                        QueueUrl=self.sqs_config.queue_url,
+                        ReceiptHandle=message_recieved.receipt_handle,
+                        VisibilityTimeout=200,
+                    )
+
+                print(f"Received {len(messages_recieved)} messages")
+                for message_recieved in messages_recieved:
                     result = await self.process_message(message_recieved)
                     if result:
                         await asyncio.to_thread(
@@ -54,6 +63,7 @@ class SqsConsumerService(ABC):
                             QueueUrl=self.sqs_config.queue_url,
                             ReceiptHandle=message_recieved.receipt_handle,
                         )
+                        print(f"Deleted message: {message_recieved.message_id}")
             except Exception as e:
                 print(f"Error processing messages: {e}")
             await asyncio.sleep(30)
