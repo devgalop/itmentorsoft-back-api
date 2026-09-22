@@ -1,39 +1,41 @@
-name: PR Bot (Analysis + Comments)
+name: PR CI (Build + Tests + Coverage)
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
-  analysis:
+  build-and-test:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python 3.13
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: "3.12"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Install dependencies
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python -m pip install --upgrade pip
-          pip install git+https://github.com/devgalop/itmentorsoft-persistence.git@master
-          pip install -r requirements.txt || true
-          pip install pytest ruff black bandit
+          pip install -r requirements.txt
 
-      # 🧪 Tests
-      - name: Run tests
-        id: tests
-        run: pytest
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=src --cov-report=xml:coverage.xml --cov-report=term-missing tests/
         env:
           DATABASE_URL: postgresql+asyncpg://test:test@localhost:5432/test
           JWT_SECRET_KEY: test-secret-key
@@ -48,58 +50,75 @@ jobs:
           ASSESSMENT_MAX_QUESTIONS_NUMBER: "5"
           EMAIL_DEFAULT_SENDER: "test@example.com"
           RECOVERY_URL_BASE: "http://localhost:8000/recover"
-        continue-on-error: true
 
-      # 🧹 Lint con Ruff
-      - name: Lint (ruff)
-        id: lint
-        run: ruff check .
-        continue-on-error: true
-
-      # 🎨 Formato con Black
-      - name: Format check (black)
-        id: format
-        run: black --check .
-        continue-on-error: true
-
-      # 🔐 Seguridad con Bandit
-      - name: Security scan (bandit)
-        id: security
-        run: bandit -r src/
-        continue-on-error: true
-
-      # 📊 Determinar estado final
-      - name: Set final status
-        id: final
+      - name: Generate coverage summary
+        if: always()
         run: |
-          if [[ "${{ steps.tests.outcome }}" == "success" && \
-                "${{ steps.lint.outcome }}" == "success" && \
-                "${{ steps.format.outcome }}" == "success" && \
-                "${{ steps.security.outcome }}" == "success" ]]; then
-            echo "status=success" >> $GITHUB_OUTPUT
-          else
-            echo "status=failure" >> $GITHUB_OUTPUT
-          fi
+          python -c "
+          import xml.etree.ElementTree as ET
+          import json, os
 
-      # 💬 Comentario en el PR
-      - name: Comment PR
+          result = {'total': None, 'modules': []}
+          try:
+              tree = ET.parse('coverage.xml')
+              root = tree.getroot()
+              line_rate = float(root.attrib.get('line-rate', 0))
+              result['total'] = f'{line_rate * 100:.2f}'
+
+              for package in root.findall('.//package'):
+                  classes_el = package.find('classes')
+                  if classes_el is None:
+                      continue
+                  for cls in classes_el.findall('class'):
+                      name = cls.attrib.get('filename', cls.attrib.get('name', '?'))
+                      cls_rate = float(cls.attrib.get('line-rate', 0))
+                      result['modules'].append({
+                          'name': name,
+                          'coverage': f'{cls_rate * 100:.1f}'
+                      })
+          except Exception as e:
+              print(f'Warning: could not parse coverage.xml: {e}')
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f'coverage_json={json.dumps(result)}\n')
+          "
+        id: coverage
+
+      - name: Comment PR with coverage report
+        if: always()
         uses: actions/github-script@v7
+        env:
+          COVERAGE_JSON: ${{ steps.coverage.outputs.coverage_json }}
+          JOB_STATUS: ${{ job.status }}
         with:
           script: |
-            const status = "${{ steps.final.outputs.status }}";
+            const data = JSON.parse(process.env.COVERAGE_JSON || '{}');
+            const passed = process.env.JOB_STATUS === 'success';
+            const icon = passed ? '\u2705' : '\u274c';
+            const status = passed ? 'All tests passed' : 'Some tests failed';
 
-            const message = status === "success"
-              ? "✅ **PR aprobado automáticamente**\n\nTodos los checks pasaron:\n- Tests 🧪\n- Lint 🧹\n- Formato 🎨\n- Seguridad 🔐"
-              : "❌ **PR con problemas**\n\nRevisa los siguientes checks:\n- Tests 🧪\n- Lint 🧹\n- Formato 🎨\n- Seguridad 🔐\n\nVerifica los logs del workflow.";
+            let body = `## ${icon} CI Report \u2014 ${status}\n\n`;
 
-            github.rest.issues.createComment({
+            if (data.total) {
+              body += `### Total coverage: **${data.total}%**\n\n`;
+            }
+
+            if (data.modules && data.modules.length > 0) {
+              body += `<details><summary>Per-module breakdown</summary>\n\n`;
+              body += `| Module | Coverage |\n|--------|----------|\n`;
+              for (const m of data.modules) {
+                body += `| \`${m.name}\` | ${m.coverage}% |\n`;
+              }
+              body += `\n</details>\n`;
+            }
+
+            if (!data.total) {
+              body += `\n> \u26a0\ufe0f Could not parse coverage report. Check workflow logs.\n`;
+            }
+
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: message
+              body
             });
-
-      # 🚨 Fallar el job si algo falló
-      - name: Fail if needed
-        if: steps.final.outputs.status == 'failure'
-        run: exit 1

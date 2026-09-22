@@ -1,12 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from src.features.assessments.evaluate.evaluate_assessment_handler import (
-    EvaluateAssessmentHandler,
-)
-from src.features.assessments.evaluate.evaluate_assessment_service import (
-    EvaluateAssessmentService,
-)
 from src.features.assessments.shared.questions_seeder import seed_questions
 from src.features.user_management.shared.init import router as user_management_router
 from src.features.content_management.shared.init import (
@@ -22,7 +16,6 @@ from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
     seed_database,
 )
 from src.infrastructure.security.bcrypt_password_hasher import BcryptPasswordHasher
-from src.infrastructure.broker.aws.services.aws_sqs_manager import SqsManagerService
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
@@ -46,17 +39,11 @@ async def lifespan(app: FastAPI):
     await seed_assessments()
     await seed_contents()
     print("Application startup complete.")
-    print("Starting the SQS consumer services...")
-    evaluate_contract = EvaluateAssessmentHandler(EvaluateAssessmentService())
-    sqs_manager_service = SqsManagerService(evaluate_contract=evaluate_contract)
-    sqs_manager_service.create_queues()
-    consumers = sqs_manager_service.start_consumer_services()
     yield
     print("Shutting down the application...")
     print("Disconnecting the cache service...")
     await cache_client.disconnect()
     print("Cache service disconnected.")
-    await sqs_manager_service.stop_consumer_services(consumers)
     print("Application shutdown complete.")
 
 

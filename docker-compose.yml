@@ -22,6 +22,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - floci_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   valkey:
     image: valkey/valkey:8.1.9-alpine3.24
@@ -38,6 +45,21 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+
+  evaluator:
+    image: ghcr.io/devgalop/itmentorsoft-back-worker-evaluator:sha-f673c0a
+    container_name: evaluator-itmentorsoft
+    env_file: .env
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      valkey:
+        condition: service_healthy
+      floci:
+        condition: service_healthy
 
   api:
     build:
