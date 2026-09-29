@@ -46,6 +46,8 @@ def _make_mock_builder_instance(question_id: str = "q-123"):
     mock_builder.set_version.return_value = mock_builder
     mock_builder.set_classification.return_value = mock_builder
     mock_builder.set_difficulty.return_value = mock_builder
+    mock_builder.set_previous_version_id.return_value = mock_builder
+    mock_builder.set_root_version_id.return_value = mock_builder
     mock_builder.build.return_value = mock_question
 
     return mock_builder, mock_question

@@ -78,6 +78,8 @@ class QuestionManagerService:
                 .set_version(request.model.version)
                 .set_classification(request.model.topic)
                 .set_difficulty(difficulty)
+                .set_previous_version_id(request.model.previous_version_id)
+                .set_root_version_id(request.model.root_version_id)
                 .build()
             )
             await self.question_repository.save_question(question)

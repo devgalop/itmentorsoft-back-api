@@ -1,4 +1,4 @@
-from itmentorsoft_persistence import QuestionDifficulty
+from itmentorsoft_persistence import Question, QuestionDifficulty
 from itmentorsoft_persistence.repositories import QuestionRepository
 from src.features.assessments.register_question.register_question_request import (
     QuestionRubric,
@@ -38,16 +38,22 @@ class UpdateQuestionHandler:
                     message=f"Failed to update question: Invalid difficulty '{request.difficulty}'",
                 )
 
-            question = await self.question_repository.get_question_rubric(question_id)
-            if question is None:
+            previous_question = await self.question_repository.get_question_rubric(
+                question_id
+            )
+            if previous_question is None:
                 return UpdateQuestionResponse(
                     is_success=False,
                     message="Question not found",
                 )
 
-            await self.question_manager_service.update_question(question)
+            await self.question_manager_service.update_question(previous_question)
 
-            new_version = question.version + 1
+            ## Se debe detectar si es la root question y enviar los parametros
+            previous_version_id = self.get_previous_version_id(previous_question)
+            root_version_id = self.get_root_version_id(previous_question)
+
+            new_version = previous_question.version + 1
             creation_request = RegisterQuestionRequest(
                 text=request.text,
                 concept=request.concept,
@@ -64,6 +70,8 @@ class UpdateQuestionHandler:
                 version=new_version,
                 difficulty=request.difficulty,
                 topic=request.topic,
+                previous_version_id=previous_version_id,
+                root_version_id=root_version_id,
             )
 
             await self.question_manager_service.create_question(
@@ -79,3 +87,14 @@ class UpdateQuestionHandler:
                 is_success=False,
                 message=f"Failed to update question: {str(e)}",
             )
+
+    def is_root_question(self, question: Question) -> bool:
+        return question.root_version_id is None or question.root_version_id == ""
+
+    def get_root_version_id(self, question: Question) -> str:
+        if self.is_root_question(question):
+            return question.question_id
+        return question.root_version_id
+
+    def get_previous_version_id(self, question: Question) -> str:
+        return question.question_id

@@ -6,6 +6,7 @@ from itmentorsoft_persistence.dto import (
     EvaluativeQuestion,
     PaginatedQuestionsResult,
     Question,
+    QuestionDetails,
     QuestionReview,
     QuestionStatus,
 )
@@ -196,3 +197,65 @@ class PostgresQuestionsRepository(QuestionRepository):
         entity.is_enabled = status
         await self.session_factory.commit()
         return True
+
+    async def get_all_versions_by_question(
+        self, question_id: str
+    ) -> list[QuestionDetails]:
+
+        root_smt = select(QuestionEntity.root_version_id).where(
+            QuestionEntity.id == question_id
+        )
+        result = await self.session_factory.execute(root_smt)
+        root_entity = result.scalars().first()
+
+        if not root_entity:
+            # If the question has no root version, it must be the first version itself. Fetch it directly.
+            smt_first_version = (
+                select(QuestionEntity)
+                .options(selectinload(QuestionEntity.rubric))
+                .where(QuestionEntity.id == question_id)
+            )
+            result = await self.session_factory.execute(smt_first_version)
+            question_entities = result.scalars().all()
+            return [
+                self.mapper.to_detailed_model(entity) for entity in question_entities
+            ]
+
+        root_version_id = root_entity
+        # Fetch all versions of the question starting from the root version. and the root itself.
+        smt = (
+            select(QuestionEntity)
+            .options(selectinload(QuestionEntity.rubric))
+            .where(
+                (QuestionEntity.root_version_id == root_version_id)
+                | (QuestionEntity.id == root_version_id)
+            )
+            .order_by(QuestionEntity.version.desc())
+        )
+        result = await self.session_factory.execute(smt)
+        question_entities = result.scalars().all()
+        return [self.mapper.to_detailed_model(entity) for entity in question_entities]
+
+    async def get_latest_versions_all_questions(
+        self, page: int, page_size: int
+    ) -> PaginatedQuestionsResult:
+        smt = (
+            select(QuestionEntity)
+            .options(selectinload(QuestionEntity.rubric))
+            .where(QuestionEntity.is_enabled)
+            .offset(page * page_size)
+            .limit(page_size)
+        )
+        result = await self.session_factory.execute(smt)
+        question_entities = result.scalars().all()
+        questions = [
+            self.mapper.to_detailed_model(entity) for entity in question_entities
+        ]
+
+        total_smt = select(func.count(QuestionEntity.id)).where(
+            QuestionEntity.is_enabled
+        )
+        total_result = await self.session_factory.execute(total_smt)
+        total = total_result.scalar_one()
+
+        return PaginatedQuestionsResult(items=questions, total=total)

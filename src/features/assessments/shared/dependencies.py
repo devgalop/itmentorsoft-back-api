@@ -10,8 +10,14 @@ from src.features.assessments.evaluate.evaluate_assessment_contract import (
 from src.features.assessments.evaluate.evaluate_assessment_service import (
     EvaluateAssessmentService,
 )
+from src.features.assessments.get_all_question_versions.get_all_question_versions_handler import (
+    GetAllQuestionVersionsHandler,
+)
 from src.features.assessments.get_all_questions.get_all_questions_handler import (
     GetAllQuestionsHandler,
+)
+from src.features.assessments.get_all_questions_by_versions.get_all_questions_by_versions_handler import (
+    GetAllQuestionsByVersionsHandler,
 )
 from src.features.assessments.get_assessment.get_assessment_handler import (
     GetAssessmentHandler,
@@ -484,3 +490,19 @@ def get_update_model_handler(
         model_selector_service=model_selector_service,
         model_explorer_service=model_explorer_service,
     )
+
+
+def get_get_all_question_versions_handler(
+    question_repository: Annotated[
+        QuestionRepository, Depends(get_question_repository)
+    ],
+) -> GetAllQuestionVersionsHandler:
+    return GetAllQuestionVersionsHandler(questions_repository=question_repository)
+
+
+def get_get_all_questions_by_versions_handler(
+    question_repository: Annotated[
+        QuestionRepository, Depends(get_question_repository)
+    ],
+) -> GetAllQuestionsByVersionsHandler:
+    return GetAllQuestionsByVersionsHandler(question_repository=question_repository)
