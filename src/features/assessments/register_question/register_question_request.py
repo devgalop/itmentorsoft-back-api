@@ -35,6 +35,8 @@ class RegisterQuestionRequest(BaseModel):
     difficulty: str
     topic: str
     version: int = 1
+    previous_version_id: str | None = None
+    root_version_id: str | None = None
 
     @field_validator("text")
     def validate_text(cls, value: str) -> str:
@@ -148,4 +150,16 @@ class RegisterQuestionRequest(BaseModel):
             raise ValueError("Topic cannot be longer than 100 characters")
         if len(value) < 2:
             raise ValueError("Topic must be at least 2 characters long")
+        return value
+
+    @field_validator("previous_version_id")
+    def validate_previous_version_id(cls, value: str | None) -> str | None:
+        if value is not None and len(value) > 100:
+            raise ValueError("Previous version ID cannot be longer than 100 characters")
+        return value
+
+    @field_validator("root_version_id")
+    def validate_root_version_id(cls, value: str | None) -> str | None:
+        if value is not None and len(value) > 100:
+            raise ValueError("Root version ID cannot be longer than 100 characters")
         return value

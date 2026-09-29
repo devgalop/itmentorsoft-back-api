@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from src.features.assessments.shared.questions_seeder import seed_questions
 from src.features.user_management.shared.init import router as user_management_router
+from src.features.health_check.init import router as health_check_router
 from src.features.content_management.shared.init import (
     router as content_management_router,
 )
@@ -53,6 +54,7 @@ app.include_router(user_management_router, prefix="/users", tags=["Users"])
 app.include_router(content_management_router, prefix="/content", tags=["Content"])
 app.include_router(assessments_router, prefix="/assessments", tags=["Assessments"])
 app.include_router(reports_router, prefix="/reports", tags=["Reports"])
+app.include_router(health_check_router, prefix="/health", tags=["Health Check"])
 
 
 @app.exception_handler(Exception)
