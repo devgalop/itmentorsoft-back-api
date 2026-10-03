@@ -11,19 +11,17 @@ def test_when_request_is_valid_should_not_raise_exception():
 
 
 def test_when_student_id_is_empty_should_raise_exception():
-    with pytest.raises(ValueError, match="student_id must not be empty"):
+    with pytest.raises(ValueError, match="student_id no debe estar vacío"):
         GetRecommendedContentRequest(student_id="")
 
 
 def test_when_student_id_is_too_short_should_raise_exception():
-    with pytest.raises(
-        ValueError, match="student_id must be at least 5 characters long"
-    ):
+    with pytest.raises(ValueError, match="student_id debe tener al menos 5 caracteres"):
         GetRecommendedContentRequest(student_id="abc")
 
 
 def test_when_student_id_is_too_long_should_raise_exception():
-    with pytest.raises(ValueError, match="student_id must not exceed 100 characters"):
+    with pytest.raises(ValueError, match="student_id no debe exceder 100 caracteres"):
         GetRecommendedContentRequest(student_id="a" * 101)
 
 

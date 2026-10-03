@@ -7,6 +7,7 @@ from src.features.content_management.get_all_contents.get_all_contents_response 
 from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
+from src.i18n import t
 
 
 class GetAllContentsHandler:
@@ -20,7 +21,7 @@ class GetAllContentsHandler:
         )
         return GetAllContentsResponse(
             is_success=True,
-            message="Contents retrieved successfully",
+            message=t("content.retrieved"),
             items=result.items,
             total=result.total,
         )

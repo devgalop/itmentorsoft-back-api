@@ -12,32 +12,34 @@ def test_when_request_is_valid_then_exception_is_not_raised():
 
 
 def test_when_category_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Category must not be empty"):
+    with pytest.raises(ValueError, match="Categoría no debe estar vacía"):
         GetStudentsByCategoryRequest(category="", page=0, page_size=10)
 
 
 def test_when_category_is_too_short_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Category must be at least 3 characters long"):
+    with pytest.raises(ValueError, match="Categoría debe tener al menos 3 caracteres"):
         GetStudentsByCategoryRequest(category="ab", page=0, page_size=10)
 
 
 def test_when_category_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Category must not exceed 80 characters"):
+    with pytest.raises(ValueError, match="Categoría no debe exceder 80 caracteres"):
         GetStudentsByCategoryRequest(category="a" * 81, page=0, page_size=10)
 
 
 def test_when_page_is_negative_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Page must be a non-negative integer"):
+    with pytest.raises(
+        ValueError, match="Número de página debe ser un entero no negativo"
+    ):
         GetStudentsByCategoryRequest(category="Mathematics", page=-1, page_size=10)
 
 
 def test_when_page_size_is_zero_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Page size must be at least 1"):
+    with pytest.raises(ValueError, match="Tamaño de página debe ser al menos 1"):
         GetStudentsByCategoryRequest(category="Mathematics", page=0, page_size=0)
 
 
 def test_when_page_size_exceeds_100_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Page size must not exceed 100"):
+    with pytest.raises(ValueError, match="Tamaño de página no debe exceder 100"):
         GetStudentsByCategoryRequest(category="Mathematics", page=0, page_size=101)
 
 

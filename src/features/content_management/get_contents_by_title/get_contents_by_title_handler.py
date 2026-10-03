@@ -10,6 +10,7 @@ from src.features.content_management.get_contents_by_title.get_contents_by_title
 from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
+from src.i18n import t
 
 
 class GetContentsByTitleHandler:
@@ -27,7 +28,7 @@ class GetContentsByTitleHandler:
         )
         return GetContentsByTitleResponse(
             is_success=True,
-            message="Contents retrieved successfully",
+            message=t("content.retrieved"),
             items=result.items,
             total=result.total,
         )

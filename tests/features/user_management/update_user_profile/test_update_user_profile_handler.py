@@ -28,7 +28,7 @@ async def test_when_user_does_not_exist_should_return_failure():
     )
 
     assert not response.is_success
-    assert response.message == "User not found"
+    assert response.message == "Usuario no encontrado"
     user_repository.get_user_by_id.assert_called_once_with("non_existent_id")
     user_repository.get_user_by_username.assert_not_called()
     user_repository.update_username.assert_not_called()
@@ -66,7 +66,7 @@ async def test_when_username_is_taken_by_another_user_should_return_failure():
     )
 
     assert not response.is_success
-    assert response.message == "Username is not available"
+    assert response.message == "El nombre de usuario no está disponible"
     user_repository.get_user_by_id.assert_called_once_with("user_id")
     user_repository.get_user_by_username.assert_called_once_with("taken_username")
     user_repository.update_username.assert_not_called()
@@ -105,7 +105,7 @@ async def test_when_username_belongs_to_same_user_should_update_successfully():
     )
 
     assert response.is_success
-    assert response.message == "Username and name updated successfully"
+    assert response.message == "Nombre de usuario y nombre actualizados exitosamente"
     user_repository.update_username.assert_called_once_with(
         "user_id", "old_username", "New Name"
     )
@@ -135,7 +135,7 @@ async def test_when_user_exists_and_username_is_available_should_update_successf
     )
 
     assert response.is_success
-    assert response.message == "Username and name updated successfully"
+    assert response.message == "Nombre de usuario y nombre actualizados exitosamente"
     user_repository.get_user_by_id.assert_called_once_with("user_id")
     user_repository.get_user_by_username.assert_called_once_with("new_username")
     user_repository.update_username.assert_called_once_with(

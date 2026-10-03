@@ -105,7 +105,7 @@ async def test_when_status_is_invalid_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert "Invalid status 'nonexistent_status'" in response.message
+    assert "Estado inválido 'nonexistent_status'" in response.message
     assert "draft" in response.message
     assert "published" in response.message
     assert "archived" in response.message
@@ -182,7 +182,7 @@ async def test_when_status_is_not_in_enum_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert "Invalid status 'invalid_status_value'" in response.message
+    assert "Estado inválido 'invalid_status_value'" in response.message
     assert "draft" in response.message
     assert "published" in response.message
     assert "archived" in response.message

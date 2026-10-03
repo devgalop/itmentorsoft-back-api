@@ -26,7 +26,7 @@ def test_when_service_returns_models_should_return_success():
 
     assert isinstance(response, GetModelSelectedResponse)
     assert response.is_success is True
-    assert response.message == "Successfully retrieved selected models."
+    assert response.message == "Modelos seleccionados obtenidos exitosamente"
     assert len(response.models_by_process) == len(AvailableProcesses)
 
     qualifier_model = next(

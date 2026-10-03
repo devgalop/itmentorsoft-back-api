@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_assessments_summary.get_assessments_summary_request import (
     GetAssessmentsSummaryRequest,
 )
@@ -23,7 +24,7 @@ class GetAssessmentsSummaryHandler:
         if response.total_assessments == 0:
             return GetAssessmentsSummaryResponse(
                 is_success=False,
-                message="No assessments found for the student.",
+                message=t("assessment.summary.none_found"),
                 total_assessments=0,
                 assessments=[],
             )
@@ -41,7 +42,7 @@ class GetAssessmentsSummaryHandler:
 
         return GetAssessmentsSummaryResponse(
             is_success=True,
-            message="Assessments summary retrieved successfully.",
+            message=t("assessment.summary.retrieved"),
             total_assessments=response.total_assessments,
             assessments=assessment_summaries,
         )

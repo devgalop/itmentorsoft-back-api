@@ -4,6 +4,7 @@ from src.features.user_management.get_user.get_user_response import (
     UserResponse,
 )
 from itmentorsoft_persistence.repositories import UserRepository
+from src.i18n import t
 
 
 class GetUserHandler:
@@ -14,11 +15,11 @@ class GetUserHandler:
     async def handle(self, request: GetUserRequest) -> GetUserResponse:
         user = await self.user_repository.get_user_by_id(request.user_id)
         if not user:
-            return GetUserResponse(is_success=False, message="User not found")
+            return GetUserResponse(is_success=False, message=t("user.not_found"))
 
         return GetUserResponse(
             is_success=True,
-            message="User found",
+            message=t("user.found"),
             user=UserResponse(
                 user_id=user.id,
                 username=user.username,

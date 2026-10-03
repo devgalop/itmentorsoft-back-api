@@ -17,6 +17,7 @@ from itmentorsoft_persistence.dto import (
 from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
+from src.i18n import t
 
 
 class RegisterContentHandler:
@@ -40,7 +41,7 @@ class RegisterContentHandler:
             return RegisterContentResponse(
                 is_success=False,
                 content_id=None,
-                message="Content with the same title already exists",
+                message=t("content.duplicate_title"),
             )
 
         if not request.category:
@@ -50,7 +51,7 @@ class RegisterContentHandler:
         valid_categories = [category.value for category in ContentCategory]
         if request.category not in valid_categories:
             return RegisterContentResponse(
-                is_success=False, content_id=None, message="Invalid category provided"
+                is_success=False, content_id=None, message=t("content.category.invalid")
             )
 
         if not request.related_topic:
@@ -71,5 +72,5 @@ class RegisterContentHandler:
         return RegisterContentResponse(
             is_success=True,
             content_id=content_build.content_id,
-            message="Content registered successfully",
+            message=t("content.registered"),
         )

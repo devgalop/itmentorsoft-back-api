@@ -54,7 +54,7 @@ async def test_when_students_exist_then_return_success_with_result():
 
     assert isinstance(response, GetStudentsByCategoryResponse)
     assert response.is_success is True
-    assert response.message == "Students retrieved successfully"
+    assert response.message == "Estudiantes obtenidos exitosamente"
     assert response.result is not None
     assert len(response.result.students) == 2
     assert response.result.total_students == 2

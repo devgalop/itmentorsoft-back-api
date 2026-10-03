@@ -82,7 +82,7 @@ async def test_when_question_does_not_exist_then_should_return_failure():
     response = await handler.handle(QUESTION_ID, request, "user")
 
     assert response.is_success is False
-    assert response.message == "Question not found"
+    assert response.message == "Pregunta no encontrada"
     question_repository.update_question.assert_not_called()
 
 
@@ -99,7 +99,7 @@ async def test_when_update_is_successful_then_should_return_success_message():
     response = await handler.handle(QUESTION_ID, request, "user")
 
     assert response.is_success is True
-    assert response.message == "Question updated successfully"
+    assert response.message == "Pregunta actualizada exitosamente"
 
 
 @pytest.mark.asyncio
@@ -116,7 +116,7 @@ async def test_when_repository_raises_exception_then_should_return_failure():
     response = await handler.handle(QUESTION_ID, request, "user")
 
     assert response.is_success is False
-    assert "Failed to update question" in response.message
+    assert response.message == "Error al actualizar pregunta: DB error"
 
 
 @pytest.mark.asyncio

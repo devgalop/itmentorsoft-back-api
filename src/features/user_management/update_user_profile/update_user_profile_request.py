@@ -1,5 +1,6 @@
 import re
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 USERNAME_PATTERN = r"\w+$"
 
@@ -12,11 +13,11 @@ class UpdateUserProfileRequest(BaseModel):
     @field_validator("name")
     def validate_name(cls, value: str) -> str:
         if not value:
-            raise ValueError("Name is required")
+            raise ValueError(t("validation.name.required"))
         if len(value) < 3:
-            raise ValueError("Name must be at least 3 characters long")
+            raise ValueError(t("validation.name.min_length"))
         if len(value) > 100:
-            raise ValueError("Name must be no more than 100 characters long")
+            raise ValueError(t("validation.name.max_length"))
         return value
 
     @field_validator("user_id")
@@ -24,19 +25,19 @@ class UpdateUserProfileRequest(BaseModel):
         if not value:
             raise ValueError("User ID is required")
         if len(value) < 1:
-            raise ValueError("User ID must be at least 1 character long")
+            raise ValueError(t("validation.user_id.min_length_1"))
         if len(value) > 100:
-            raise ValueError("User ID must be no more than 100 characters long")
+            raise ValueError(t("validation.user_id.max_length"))
         return value
 
     @field_validator("username")
     def validate_username(cls, value: str) -> str:
         if not value:
-            raise ValueError("Username is required")
+            raise ValueError(t("validation.username.required"))
         if len(value) < 3:
-            raise ValueError("Username must be at least 3 characters long")
+            raise ValueError(t("validation.username.min_length"))
         if len(value) > 20:
-            raise ValueError("Username must be no more than 20 characters long")
+            raise ValueError(t("validation.username.max_length"))
         if not re.match(USERNAME_PATTERN, value):
             raise ValueError(
                 "Username must be alphanumeric and can include underscores"

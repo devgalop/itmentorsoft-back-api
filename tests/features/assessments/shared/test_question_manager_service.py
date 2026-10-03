@@ -99,7 +99,7 @@ async def test_create_question_happy_path_with_admin_users():
     # Assert
     assert response.is_success is True
     assert response.question_id == "q-123"
-    assert response.message == "Question created successfully"
+    assert response.message == "Pregunta creada exitosamente"
 
     question_repository.save_question.assert_called_once()
     user_repository.get_admin_users.assert_called_once()
@@ -144,7 +144,7 @@ async def test_create_question_happy_path_without_admin_users():
     # Assert
     assert response.is_success is True
     assert response.question_id == "q-456"
-    assert response.message == "Question created successfully"
+    assert response.message == "Pregunta creada exitosamente"
 
     question_repository.save_question.assert_called_once()
     user_repository.get_admin_users.assert_called_once()
@@ -186,7 +186,7 @@ async def test_create_question_exception_during_save():
 
     # Assert
     assert response.is_success is False
-    assert "Error creating question" in response.message
+    assert "Error al crear la pregunta" in response.message
     assert response.question_id == ""
 
 
@@ -230,4 +230,4 @@ async def test_create_question_exception_during_notification():
 
     # Assert
     assert response.is_success is False
-    assert "Error creating question" in response.message
+    assert "Error al crear la pregunta" in response.message

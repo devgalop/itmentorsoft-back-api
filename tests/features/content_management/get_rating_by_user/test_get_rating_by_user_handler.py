@@ -22,7 +22,7 @@ async def test_when_ratings_exist_then_should_return_success_with_ratings():
     request = GetContentRatingByUserRequest(user_id="valid_user_id_456")
     response = await handler.handle(request)
     assert response.is_success
-    assert response.message == "Ratings retrieved successfully."
+    assert response.message == "Calificaciones obtenidas exitosamente"
     assert len(response.rating_details) == 1
     content_repository.get_ratings_by_user.assert_called_once_with("valid_user_id_456")
 
@@ -35,7 +35,7 @@ async def test_when_no_ratings_found_then_should_return_failure_with_empty_list(
     request = GetContentRatingByUserRequest(user_id="valid_user_id_456")
     response = await handler.handle(request)
     assert not response.is_success
-    assert response.message == "No ratings found for the user."
+    assert response.message == "No se encontraron calificaciones para el usuario"
     assert response.rating_details == []
     content_repository.get_ratings_by_user.assert_called_once_with("valid_user_id_456")
 
@@ -86,7 +86,7 @@ async def test_when_multiple_ratings_then_should_return_all_ratings():
     request = GetContentRatingByUserRequest(user_id="valid_user_id_456")
     response = await handler.handle(request)
     assert response.is_success
-    assert response.message == "Ratings retrieved successfully."
+    assert response.message == "Calificaciones obtenidas exitosamente"
     assert len(response.rating_details) == 2
     assert response.rating_details[0].content_id == "content_one_001"
     assert response.rating_details[0].rating == 5.0

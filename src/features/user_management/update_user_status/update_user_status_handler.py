@@ -6,6 +6,7 @@ from src.features.user_management.update_user_status.update_user_status_request 
 from src.features.user_management.update_user_status.update_user_status_response import (
     UpdateUserStatusResponse,
 )
+from src.i18n import t
 
 
 class UpdateUserStatusHandler:
@@ -18,16 +19,20 @@ class UpdateUserStatusHandler:
 
         is_valid_status = request.new_status in (member.value for member in UserStatus)
         if not is_valid_status:
-            return UpdateUserStatusResponse(is_success=False, message="Invalid status")
+            return UpdateUserStatusResponse(
+                is_success=False, message=t("user.status.invalid")
+            )
 
         user = await self.user_repository.get_user_by_id(request.user_id)
         if not user:
-            return UpdateUserStatusResponse(is_success=False, message="User not found")
+            return UpdateUserStatusResponse(
+                is_success=False, message=t("user.not_found")
+            )
 
         await self.user_repository.update_user_status(
             request.user_id, request.new_status
         )
 
         return UpdateUserStatusResponse(
-            is_success=True, message="User status updated successfully"
+            is_success=True, message=t("user.status.updated")
         )

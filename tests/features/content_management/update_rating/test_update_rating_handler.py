@@ -30,7 +30,7 @@ async def test_update_rating_when_rating_exists_then_should_update_successfully(
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Rating updated successfully"
+    assert response.message == "Calificación actualizada exitosamente"
     content_repository.get_rating_content_by_user.assert_called_once_with(
         "valid_user_id_456", "valid_content_id_123"
     )
@@ -52,7 +52,7 @@ async def test_update_rating_when_rating_not_found_then_should_return_failure():
     response = await handler.handle(request)
 
     assert not response.is_success
-    assert response.message == "Rating not found"
+    assert response.message == "Calificación no encontrada"
     content_repository.get_rating_content_by_user.assert_called_once_with(
         "valid_user_id_456", "valid_content_id_123"
     )

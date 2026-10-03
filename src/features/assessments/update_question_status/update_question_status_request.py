@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class UpdateQuestionStatusRequest(BaseModel):
@@ -8,15 +9,15 @@ class UpdateQuestionStatusRequest(BaseModel):
     @field_validator("question_id")
     def validate_question_id(cls, value: str) -> str:
         if not value:
-            raise ValueError("question_id cannot be empty")
+            raise ValueError(t("validation.question_id.required"))
         if len(value) < 5:
-            raise ValueError("question_id must be at least 5 characters long")
+            raise ValueError(t("validation.question_id.min_length"))
         if len(value) > 100:
-            raise ValueError("question_id must be at most 100 characters long")
+            raise ValueError(t("validation.question_id.max_length"))
         return value
 
     @field_validator("status")
     def validate_status(cls, value: bool) -> bool:
         if not isinstance(value, bool):
-            raise ValueError("status must be a boolean value")
+            raise ValueError(t("validation.status.boolean"))
         return value

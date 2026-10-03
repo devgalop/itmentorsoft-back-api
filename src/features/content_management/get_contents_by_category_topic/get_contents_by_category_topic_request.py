@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class GetContentsByCategoryTopicRequest(BaseModel):
@@ -8,21 +9,21 @@ class GetContentsByCategoryTopicRequest(BaseModel):
     @field_validator("category")
     def validate_category(cls, value: str) -> str:
         if not value.strip():
-            raise ValueError("Category must not be empty.")
+            raise ValueError(t("validation.category.required"))
         if len(value) > 100:
-            raise ValueError("Category must not exceed 100 characters.")
+            raise ValueError(t("validation.category.max_length_100"))
         if len(value) < 3:
-            raise ValueError("Category must be at least 3 characters long.")
+            raise ValueError(t("validation.category.min_length"))
         return value.strip()
 
     @field_validator("topic")
     def validate_topic(cls, value: str) -> str:
         if not value.strip():
-            raise ValueError("Topic must not be empty.")
+            raise ValueError(t("validation.topic.required"))
         if len(value) > 100:
-            raise ValueError("Topic must not exceed 100 characters.")
+            raise ValueError(t("validation.topic.max_length"))
         if len(value) < 3:
-            raise ValueError("Topic must be at least 3 characters long.")
+            raise ValueError(t("validation.topic.min_length"))
         return value.strip()
 
 
@@ -33,11 +34,11 @@ class GetContentsByCategoryTopicPaginationRequest(GetContentsByCategoryTopicRequ
     @field_validator("page")
     def validate_page(cls, value: int) -> int:
         if value < 0:
-            raise ValueError("Page number must be at least 0.")
+            raise ValueError(t("validation.page.non_negative"))
         return value
 
     @field_validator("page_size")
     def validate_page_size(cls, value: int) -> int:
         if value < 1 or value > 100:
-            raise ValueError("Page size must be between 1 and 100.")
+            raise ValueError(t("validation.page_size.range"))
         return value

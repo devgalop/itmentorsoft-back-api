@@ -14,6 +14,7 @@ from itmentorsoft_persistence.dto import (
     UserRole,
     UserStatus,
 )
+from src.i18n import t
 
 
 class CreateUserHandler:
@@ -29,11 +30,11 @@ class CreateUserHandler:
 
     async def handle(self, user_data: CreateUserRequest) -> CreateUserResponse:
         if await self.user_repository.get_user_by_email(user_data.email):
-            return CreateUserResponse(is_success=False, message="Email already in use")
+            return CreateUserResponse(is_success=False, message=t("user.email_in_use"))
 
         if await self.user_repository.get_user_by_username(user_data.username):
             return CreateUserResponse(
-                is_success=False, message="Username already in use"
+                is_success=False, message=t("user.username_in_use")
             )
         default_role = await self.role_repository.get_role_by_name(
             UserRole.STUDENT.value
@@ -52,5 +53,5 @@ class CreateUserHandler:
         await self.user_repository.save(user_entity)
 
         return CreateUserResponse(
-            is_success=True, message="User created successfully", user_id=user_entity.id
+            is_success=True, message=t("user.created"), user_id=user_entity.id
         )

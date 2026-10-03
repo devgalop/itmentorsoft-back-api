@@ -20,6 +20,7 @@ from itmentorsoft_persistence.dto import (
     UserStatus,
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.i18n import t
 
 
 class CreateUserRequest:
@@ -102,20 +103,20 @@ class UserManagerService:
         if not EnvironmentVariablesConstants.LOGIN_URL_BASE:
             return CreateUserResponse(
                 is_success=False,
-                message="Login URL base is not set in environment variables",
+                message=t("user.login_url_not_set"),
             )
 
         if await self.user_repository.get_user_by_email(request.email):
-            return CreateUserResponse(is_success=False, message="Email already in use")
+            return CreateUserResponse(is_success=False, message=t("user.email_in_use"))
 
         if await self.user_repository.get_user_by_username(request.username):
             return CreateUserResponse(
-                is_success=False, message="Username already in use"
+                is_success=False, message=t("user.username_in_use")
             )
         role = await self.role_repository.get_role_by_name(request.role)
         if not role:
             return CreateUserResponse(
-                is_success=False, message="Invalid role specified"
+                is_success=False, message=t("user.role.invalid_specified")
             )
         user_role = UserRole(request.role)
         password_hashed = self.password_hasher.hash_password(request.password)
@@ -131,7 +132,7 @@ class UserManagerService:
         await self.user_repository.save(user_entity)
 
         notification_config_builder = NotificationConfigBuilder(
-            request.email, "Your account has been created successfully"
+            request.email, t("user.account_created_subject")
         )
 
         try:
@@ -153,7 +154,7 @@ class UserManagerService:
             print("Email template not found. Please contact support.")
 
         return CreateUserResponse(
-            is_success=True, message="User created successfully", user_id=user_entity.id
+            is_success=True, message=t("user.created"), user_id=user_entity.id
         )
 
     async def get_users_by_role(self, role: str) -> GetUsersByRoleResponse:
@@ -169,7 +170,7 @@ class UserManagerService:
         role_entity = await self.role_repository.get_role_by_name(role)
         if not role_entity:
             return GetUsersByRoleResponse(
-                is_success=False, message="Invalid role specified", users=[]
+                is_success=False, message=t("user.role.invalid_specified"), users=[]
             )
 
         users = await self.user_repository.get_users_by_role(role)
@@ -177,12 +178,12 @@ class UserManagerService:
         if not users:
             return GetUsersByRoleResponse(
                 is_success=False,
-                message="No users found for the specified role",
+                message=t("user.role.no_users_found"),
                 users=[],
             )
 
         return GetUsersByRoleResponse(
-            is_success=True, message="Users retrieved successfully", users=users
+            is_success=True, message=t("user.role.retrieved"), users=users
         )
 
     async def validate_user_block(self, user_id: str) -> UserTriesResponse:

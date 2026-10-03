@@ -8,12 +8,11 @@ from src.features.user_management.shared.user_manager_service import (
     UserManagerService,
     UserOTPNotificationRequest,
 )
+from src.i18n import t
 
 
 class ResendOTPHandler:
-    GENERIC_OTP_MESSAGE = (
-        "If your account exists, an OTP has been sent to your registered email."
-    )
+    GENERIC_OTP_MESSAGE = t("user.otp.generic_message")
 
     def __init__(
         self, user_repository: UserRepository, user_manager_service: UserManagerService

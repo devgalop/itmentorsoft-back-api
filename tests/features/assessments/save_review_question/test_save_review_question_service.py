@@ -45,7 +45,7 @@ async def test_when_user_and_question_exist_then_should_save_review_and_return_s
     response = await service.review_question(request)
 
     assert response.is_success is True
-    assert response.message == "Review comments saved successfully."
+    assert response.message == "Comentarios de revisión guardados exitosamente"
 
 
 @pytest.mark.asyncio
@@ -105,7 +105,7 @@ async def test_when_reviewer_does_not_exist_then_should_return_failure():
     response = await service.review_question(request)
 
     assert response.is_success is False
-    assert f"Reviewer with ID {VALID_REVIEWER_ID} does not exist." in response.message
+    assert f"Revisor con ID {VALID_REVIEWER_ID} no existe" in response.message
     question_repository.get_question.assert_not_called()
     question_repository.save_review.assert_not_called()
     question_repository.update_status.assert_not_called()
@@ -129,7 +129,7 @@ async def test_when_question_does_not_exist_then_should_return_failure():
     response = await service.review_question(request)
 
     assert response.is_success is False
-    assert f"Question with ID {VALID_QUESTION_ID} does not exist." in response.message
+    assert f"Pregunta con ID {VALID_QUESTION_ID} no existe" in response.message
     question_repository.save_review.assert_not_called()
     question_repository.update_status.assert_not_called()
 

@@ -107,7 +107,7 @@ async def test_when_service_raises_exception_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert "Failed to retrieve assessment" in response.message
+    assert "No se pudo obtener la evaluación" in response.message
     assert response.assessment_id is None
     assert response.questions is None
 

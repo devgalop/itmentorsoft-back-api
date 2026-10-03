@@ -12,22 +12,20 @@ def test_when_request_is_valid_should_not_raise_exception():
 
 
 def test_when_question_id_is_empty_should_raise_exception():
-    with pytest.raises(ValueError, match="question_id cannot be empty"):
+    with pytest.raises(ValueError, match="question_id no debe estar vacío"):
         UpdateQuestionStatusRequest(question_id="", status=True)
 
 
 def test_when_question_id_is_too_short_should_raise_exception():
     with pytest.raises(
-        ValueError, match="question_id must be at least 5 characters long"
+        ValueError, match="question_id debe tener al menos 5 caracteres"
     ):
         UpdateQuestionStatusRequest(question_id="q12", status=True)
 
 
 def test_when_question_id_is_too_long_should_raise_exception():
     long_id = "q" * 101
-    with pytest.raises(
-        ValueError, match="question_id must be at most 100 characters long"
-    ):
+    with pytest.raises(ValueError, match="question_id no debe exceder 100 caracteres"):
         UpdateQuestionStatusRequest(question_id=long_id, status=True)
 
 

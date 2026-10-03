@@ -10,17 +10,19 @@ def test_when_request_is_valid_then_exception_is_not_raised():
 
 
 def test_when_content_id_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Content ID must not be empty"):
+    with pytest.raises(ValueError, match="ID de contenido no debe estar vacío"):
         GetResourceRequest(content_id="")
 
 
 def test_when_content_id_is_too_short_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="Content ID must be at least 10 characters long"
+        ValueError, match="ID de contenido debe tener al menos 10 caracteres"
     ):
         GetResourceRequest(content_id="abc123")
 
 
 def test_when_content_id_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Content ID must not exceed 100 characters"):
+    with pytest.raises(
+        ValueError, match="ID de contenido no debe exceder 100 caracteres"
+    ):
         GetResourceRequest(content_id="a" * 101)

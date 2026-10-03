@@ -5,6 +5,7 @@ from src.features.assessments.get_quantity_of_assessments.get_quantity_of_assess
     GetQuantityOfAssessmentsResponse,
 )
 from itmentorsoft_persistence.repositories import AssessmentRepository
+from src.i18n import t
 
 
 class GetQuantityOfAssessmentsHandler:
@@ -21,6 +22,6 @@ class GetQuantityOfAssessmentsHandler:
         )
         return GetQuantityOfAssessmentsResponse(
             is_success=True,
-            message="Quantity of assessments retrieved successfully.",
+            message=t("assessment.quantity.retrieved"),
             total_assessments=total_assessments,
         )

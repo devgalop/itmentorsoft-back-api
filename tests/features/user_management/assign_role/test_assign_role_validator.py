@@ -11,7 +11,7 @@ def test_when_request_model_is_valid_then_no_validation_errors():
 
 
 def test_when_user_id_is_missing_then_validation_error():
-    with pytest.raises(ValueError, match="User ID must not be empty"):
+    with pytest.raises(ValueError, match="ID de usuario no debe estar vacío"):
         AssignRoleRequest(user_id="", role="admin")
 
 
@@ -22,18 +22,18 @@ def test_when_user_id_is_too_short_then_validation_error():
 
 def test_when_user_id_is_too_long_then_validation_error():
     with pytest.raises(
-        ValueError, match="User ID must be no more than 100 characters long"
+        ValueError, match="ID de usuario no debe exceder 100 caracteres"
     ):
         AssignRoleRequest(user_id="1" * 101, role="admin")
 
 
 def test_when_role_is_missing_then_validation_error():
-    with pytest.raises(ValueError, match="Role must not be empty"):
+    with pytest.raises(ValueError, match="Rol no debe estar vacío"):
         AssignRoleRequest(user_id="1", role="")
 
 
 def test_when_role_is_too_short_then_validation_error():
-    with pytest.raises(ValueError, match="Role must be at least 3 characters long"):
+    with pytest.raises(ValueError, match="Rol debe tener al menos 3 caracteres"):
         AssignRoleRequest(user_id="1", role="a")
 
 

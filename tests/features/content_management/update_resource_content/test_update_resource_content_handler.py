@@ -39,10 +39,7 @@ async def test_when_update_is_valid_then_should_return_success():
     response = await handler.handle(CONTENT_ID, request)
 
     assert response.is_success is True
-    assert (
-        response.message
-        == f"Content with ID {CONTENT_ID} has been successfully updated."
-    )
+    assert response.message == f"Contenido con ID {CONTENT_ID} actualizado exitosamente"
 
 
 @pytest.mark.asyncio
@@ -91,7 +88,7 @@ async def test_when_category_is_invalid_then_should_return_failure():
     response = await handler.handle(CONTENT_ID, request)
 
     assert response.is_success is False
-    assert response.message == "Invalid category provided"
+    assert response.message == "Categoría proporcionada inválida"
     content_repository.update_resource_content.assert_not_called()
 
 

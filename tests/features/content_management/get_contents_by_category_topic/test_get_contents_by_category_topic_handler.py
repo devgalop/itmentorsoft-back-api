@@ -38,7 +38,7 @@ async def test_get_contents_by_category_topic_when_repository_returns_items_then
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Contents retrieved successfully"
+    assert response.message == "Contenidos obtenidos exitosamente"
     assert len(response.items) == 1
     assert response.total == 1
     content_repository.get_resource_contents_by_category_and_related_topic.assert_called_once()
@@ -67,7 +67,7 @@ async def test_get_contents_by_category_topic_when_repository_returns_empty_then
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Contents retrieved successfully"
+    assert response.message == "Contenidos obtenidos exitosamente"
     assert response.items == []
     assert response.total == 0
     content_repository.get_resource_contents_by_category_and_related_topic.assert_called_once()

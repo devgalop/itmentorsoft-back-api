@@ -10,6 +10,7 @@ from src.features.assessments.shared.question_manager_service import (
     CreateQuestionRequest,
     QuestionManagerService,
 )
+from src.i18n import t
 
 
 class RegisterQuestionHandler:
@@ -29,7 +30,10 @@ class RegisterQuestionHandler:
             ]:
                 return RegisterQuestionResponse(
                     is_success=False,
-                    message=f"Failed to register question: Invalid difficulty '{request.difficulty}'",
+                    message=t(
+                        "question.register.invalid_difficulty",
+                        difficulty=request.difficulty,
+                    ),
                 )
 
             response = await self.question_service.create_question(
@@ -39,13 +43,13 @@ class RegisterQuestionHandler:
             if not response:
                 return RegisterQuestionResponse(
                     is_success=False,
-                    message="Failed to register question: Unknown error",
+                    message=t("question.register.unknown_error"),
                 )
 
             if not response.is_success:
                 return RegisterQuestionResponse(
                     is_success=False,
-                    message=f"Failed to register question: {response.message}",
+                    message=t("question.register.failed", message=response.message),
                 )
 
             return RegisterQuestionResponse(
@@ -55,5 +59,5 @@ class RegisterQuestionHandler:
             )
         except Exception as e:
             return RegisterQuestionResponse(
-                is_success=False, message=f"Failed to register question: {str(e)}"
+                is_success=False, message=t("question.register.failed", message=str(e))
             )

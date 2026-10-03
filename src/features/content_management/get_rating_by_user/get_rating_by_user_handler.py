@@ -1,4 +1,5 @@
 from itmentorsoft_persistence import ResourceContentRepository
+from src.i18n import t
 from src.features.content_management.get_rating_by_user.get_rating_by_user_response import (
     RatingDetails,
 )
@@ -21,7 +22,7 @@ class GetContentRatingByUserHandler:
         if not ratings:
             return GetContentRatingByUserResponse(
                 is_success=False,
-                message="No ratings found for the user.",
+                message=t("content.rating.none_found"),
                 rating_details=[],
             )
         result_ratings = [
@@ -36,6 +37,6 @@ class GetContentRatingByUserHandler:
         ]
         return GetContentRatingByUserResponse(
             is_success=True,
-            message="Ratings retrieved successfully.",
+            message=t("content.rating.retrieved"),
             rating_details=result_ratings,
         )

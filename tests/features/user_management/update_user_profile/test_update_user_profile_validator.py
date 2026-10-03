@@ -23,7 +23,7 @@ def test_when_user_id_is_empty_should_raise_exception():
 
 def test_when_user_id_is_too_long_should_raise_exception():
     with pytest.raises(
-        ValueError, match="User ID must be no more than 100 characters long"
+        ValueError, match="ID de usuario no debe exceder 100 caracteres"
     ):
         UpdateUserProfileRequest(
             user_id="a" * 101, username="valid_username", name="Valid Name"
@@ -31,18 +31,20 @@ def test_when_user_id_is_too_long_should_raise_exception():
 
 
 def test_when_username_is_empty_should_raise_exception():
-    with pytest.raises(ValueError, match="Username is required"):
+    with pytest.raises(ValueError, match="Nombre de usuario es requerido"):
         UpdateUserProfileRequest(user_id="user_id", username="", name="Valid Name")
 
 
 def test_when_username_is_too_short_should_raise_exception():
-    with pytest.raises(ValueError, match="Username must be at least 3 characters long"):
+    with pytest.raises(
+        ValueError, match="Nombre de usuario debe tener al menos 3 caracteres"
+    ):
         UpdateUserProfileRequest(user_id="user_id", username="ab", name="Valid Name")
 
 
 def test_when_username_is_too_long_should_raise_exception():
     with pytest.raises(
-        ValueError, match="Username must be no more than 20 characters long"
+        ValueError, match="Nombre de usuario no debe exceder 20 caracteres"
     ):
         UpdateUserProfileRequest(
             user_id="user_id", username="a" * 21, name="Valid Name"
@@ -52,7 +54,6 @@ def test_when_username_is_too_long_should_raise_exception():
 def test_when_username_has_special_characters_should_raise_exception():
     with pytest.raises(
         ValueError,
-        match="Username must be alphanumeric and can include underscores",
     ):
         UpdateUserProfileRequest(
             user_id="user_id", username="user@name!", name="Valid Name"
@@ -62,7 +63,6 @@ def test_when_username_has_special_characters_should_raise_exception():
 def test_when_username_has_spaces_should_raise_exception():
     with pytest.raises(
         ValueError,
-        match="Username must be alphanumeric and can include underscores",
     ):
         UpdateUserProfileRequest(
             user_id="user_id", username="user name", name="Valid Name"

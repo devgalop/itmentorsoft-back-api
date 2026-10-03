@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_question_categories.get_question_categories_request import (
     GetQuestionCategoriesRequest,
 )
@@ -20,11 +21,11 @@ class GetQuestionCategoriesHandler:
         if not categories:
             return GetQuestionCategoriesResponse(
                 is_success=False,
-                message="Failed to retrieve question categories.",
+                message=t("question.categories.retrieval_failed"),
                 categories=[],
             )
         return GetQuestionCategoriesResponse(
             is_success=True,
-            message="Question categories retrieved successfully.",
+            message=t("question.categories.retrieved"),
             categories=categories,
         )

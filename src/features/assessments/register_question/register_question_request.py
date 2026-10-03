@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class QuestionRubric(BaseModel):
@@ -8,17 +9,17 @@ class QuestionRubric(BaseModel):
     @field_validator("score")
     def validate_score(cls, value: int) -> int:
         if value < 0 or value > 3:
-            raise ValueError("Score must be between 0 and 3")
+            raise ValueError(t("validation.score.range"))
         return value
 
     @field_validator("criteria")
     def validate_criteria(cls, value: str) -> str:
         if not value:
-            raise ValueError("Criteria cannot be empty")
+            raise ValueError(t("validation.criteria.required"))
         if len(value) > 300:
-            raise ValueError("Criteria cannot be longer than 300 characters")
+            raise ValueError(t("validation.criteria.max_length"))
         if len(value) < 10:
-            raise ValueError("Criteria must be at least 10 characters long")
+            raise ValueError(t("validation.criteria.min_length"))
         return value
 
 
@@ -41,125 +42,117 @@ class RegisterQuestionRequest(BaseModel):
     @field_validator("text")
     def validate_text(cls, value: str) -> str:
         if not value:
-            raise ValueError("Text cannot be empty")
+            raise ValueError(t("validation.text.required"))
         if len(value) > 500:
-            raise ValueError("Text cannot be longer than 500 characters")
+            raise ValueError(t("validation.text.max_length"))
         if len(value) < 20:
-            raise ValueError("Text must be at least 20 characters long")
+            raise ValueError(t("validation.text.min_length"))
         return value
 
     @field_validator("concept")
     def validate_concept(cls, value: str) -> str:
         if not value:
-            raise ValueError("Concept cannot be empty")
+            raise ValueError(t("validation.concept.required"))
         if len(value) > 150:
-            raise ValueError("Concept cannot be longer than 150 characters")
+            raise ValueError(t("validation.concept.max_length"))
         if len(value) < 10:
-            raise ValueError("Concept must be at least 10 characters long")
+            raise ValueError(t("validation.concept.min_length"))
         return value
 
     @field_validator("definition")
     def validate_definition(cls, value: str) -> str:
         if not value:
-            raise ValueError("Definition cannot be empty")
+            raise ValueError(t("validation.definition.required"))
         if len(value) > 500:
-            raise ValueError("Definition cannot be longer than 500 characters")
+            raise ValueError(t("validation.definition.max_length"))
         if len(value) < 20:
-            raise ValueError("Definition must be at least 20 characters long")
+            raise ValueError(t("validation.definition.min_length"))
         return value
 
     @field_validator("simple_explanation")
     def validate_simple_explanation(cls, value: str) -> str:
         if not value:
-            raise ValueError("Simple explanation cannot be empty")
+            raise ValueError(t("validation.simple_explanation.required"))
         if len(value) > 300:
-            raise ValueError("Simple explanation cannot be longer than 300 characters")
+            raise ValueError(t("validation.simple_explanation.max_length"))
         if len(value) < 20:
-            raise ValueError("Simple explanation must be at least 20 characters long")
+            raise ValueError(t("validation.simple_explanation.min_length"))
         return value
 
     @field_validator("correct_sample")
     def validate_correct_sample(cls, value: str) -> str:
         if not value:
-            raise ValueError("Correct sample cannot be empty")
+            raise ValueError(t("validation.correct_sample.required"))
         if len(value) > 300:
-            raise ValueError("Correct sample cannot be longer than 300 characters")
+            raise ValueError(t("validation.correct_sample.max_length"))
         if len(value) < 20:
-            raise ValueError("Correct sample must be at least 20 characters long")
+            raise ValueError(t("validation.correct_sample.min_length"))
         return value
 
     @field_validator("wrong_sample")
     def validate_wrong_sample(cls, value: str) -> str:
         if not value:
-            raise ValueError("Wrong sample cannot be empty")
+            raise ValueError(t("validation.wrong_sample.required"))
         if len(value) > 300:
-            raise ValueError("Wrong sample cannot be longer than 300 characters")
+            raise ValueError(t("validation.wrong_sample.max_length"))
         if len(value) < 20:
-            raise ValueError("Wrong sample must be at least 20 characters long")
+            raise ValueError(t("validation.wrong_sample.min_length"))
         return value
 
     @field_validator("common_misconception")
     def validate_common_misconception(cls, value: list[str]) -> list[str]:
         if not value:
-            raise ValueError("Common misconception cannot be empty")
+            raise ValueError(t("validation.common_misconception.required"))
         if len(value) < 2:
-            raise ValueError("Common misconception must have at least 2 items")
+            raise ValueError(t("validation.common_misconception.min_items"))
         for item in value:
             if len(item) > 300:
-                raise ValueError(
-                    "Each common misconception cannot be longer than 300 characters"
-                )
+                raise ValueError(t("validation.common_misconception.item_max_length"))
             if len(item) < 20:
-                raise ValueError(
-                    "Each common misconception must be at least 20 characters long"
-                )
+                raise ValueError(t("validation.common_misconception.item_min_length"))
         return value
 
     @field_validator("semantic_keywords")
     def validate_semantic_keywords(cls, value: list[str]) -> list[str]:
         if not value:
-            raise ValueError("Semantic keywords cannot be empty")
+            raise ValueError(t("validation.semantic_keywords.required"))
         if len(value) < 1:
-            raise ValueError("Semantic keywords must have at least 1 item")
+            raise ValueError(t("validation.semantic_keywords.min_items"))
         for item in value:
             if len(item) > 100:
-                raise ValueError(
-                    "Each semantic keyword cannot be longer than 100 characters"
-                )
+                raise ValueError(t("validation.semantic_keywords.item_max_length"))
             if len(item) < 2:
-                raise ValueError(
-                    "Each semantic keyword must be at least 2 characters long"
-                )
+                raise ValueError(t("validation.semantic_keywords.item_min_length"))
         return value
 
     @field_validator("difficulty")
     def validate_difficulty(cls, value: str) -> str:
         if not value:
-            raise ValueError("Difficulty cannot be empty")
+            raise ValueError(t("validation.difficulty.required"))
         if len(value) > 30:
-            raise ValueError("Difficulty cannot be longer than 30 characters")
+            raise ValueError(t("validation.difficulty.max_length"))
         if len(value) < 4:
-            raise ValueError("Difficulty must be at least 4 characters long")
+            raise ValueError(t("validation.difficulty.min_length"))
         return value
 
     @field_validator("topic")
     def validate_topic(cls, value: str) -> str:
         if not value:
-            raise ValueError("Topic cannot be empty")
+            raise ValueError(t("validation.topic.required"))
         if len(value) > 100:
-            raise ValueError("Topic cannot be longer than 100 characters")
+            raise ValueError(t("validation.topic.max_length"))
         if len(value) < 2:
-            raise ValueError("Topic must be at least 2 characters long")
+            raise ValueError(t("validation.topic.min_length"))
         return value
 
     @field_validator("previous_version_id")
     def validate_previous_version_id(cls, value: str | None) -> str | None:
         if value is not None and len(value) > 100:
-            raise ValueError("Previous version ID cannot be longer than 100 characters")
+            raise ValueError(t("validation.previous_version_id.max_length"))
         return value
 
     @field_validator("root_version_id")
     def validate_root_version_id(cls, value: str | None) -> str | None:
         if value is not None and len(value) > 100:
-            raise ValueError("Root version ID cannot be longer than 100 characters")
+            raise ValueError(t("validation.root_version_id.max_length"))
         return value

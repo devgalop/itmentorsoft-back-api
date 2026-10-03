@@ -17,6 +17,7 @@ from src.features.shared.notification_service import (
 )
 from src.features.shared.template_loader import TemplateLoader
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.i18n import t
 
 
 class CreateQuestionRequest(BaseModel):
@@ -92,13 +93,13 @@ class QuestionManagerService:
 
             return CreateQuestionResponse(
                 is_success=True,
-                message="Question created successfully",
+                message=t("question.created"),
                 question_id=question.question_id,
             )
         except Exception as e:
             print(f"Error creating question: {e}")
             return CreateQuestionResponse(
-                is_success=False, message="Error creating question"
+                is_success=False, message=t("question.creation_error")
             )
 
     async def update_question(self, question: Question):

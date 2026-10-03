@@ -39,7 +39,7 @@ async def test_when_token_is_valid_and_user_exists_then_password_is_changed():
     )
 
     assert response.is_success
-    assert response.message == "Password changed successfully"
+    assert response.message == "Contraseña cambiada exitosamente"
     user_recovery_token_repository.get_user_id_by_transaction_id.assert_called_once_with(
         "valid_id_trx"
     )
@@ -84,7 +84,7 @@ async def test_when_token_is_invalid_then_should_respond_with_error():
     )
 
     assert not response.is_success
-    assert response.message == "Invalid or expired token"
+    assert response.message == "Token inválido o expirado"
     user_recovery_token_repository.get_user_id_by_transaction_id.assert_called_once_with(
         "valid_id_trx"
     )
@@ -124,7 +124,7 @@ async def test_when_token_is_expired_then_should_respond_with_error():
     )
 
     assert not response.is_success
-    assert response.message == "Invalid or expired token"
+    assert response.message == "Token inválido o expirado"
     user_recovery_token_repository.get_user_id_by_transaction_id.assert_called_once_with(
         "valid_id_trx"
     )
@@ -163,7 +163,7 @@ async def test_when_token_is_different_then_should_respond_with_error():
     )
 
     assert not response.is_success
-    assert response.message == "Invalid or expired token"
+    assert response.message == "Token inválido o expirado"
     user_recovery_token_repository.get_user_id_by_transaction_id.assert_called_once_with(
         "valid_id_trx"
     )
@@ -204,7 +204,7 @@ async def test_when_user_does_not_exist_then_should_respond_with_error():
     )
 
     assert not response.is_success
-    assert response.message == "User not found"
+    assert response.message == "Usuario no encontrado"
     user_recovery_token_repository.get_user_id_by_transaction_id.assert_called_once_with(
         "valid_id_trx"
     )

@@ -19,8 +19,9 @@ from src.features.user_management.recovery_password.recovery_password_response i
 )
 from itmentorsoft_persistence.repositories import UserRepository
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.i18n import t
 
-EMAIL_RECOVERY_SUBJECT = "Recovery Password Instructions"
+EMAIL_RECOVERY_SUBJECT = t("user.recovery.subject")
 RECOVERY_URL_BASE = EnvironmentVariablesConstants.RECOVERY_URL_BASE
 
 
@@ -46,10 +47,8 @@ class RecoveryPasswordHandler:
     ) -> RecoveryPasswordResponse:
 
         if not RECOVERY_URL_BASE:
-            return RecoveryPasswordResponse(
-                message="Recovery URL base is not set in environment variables"
-            )
-        response_message = "If the email exists in our system, you will receive a password recovery email shortly."
+            return RecoveryPasswordResponse(message=t("user.recovery.url_not_set"))
+        response_message = t("user.recovery.email_sent")
         user = await self.user_repository.get_user_response_by_email(request.email)
         if not user:
             return RecoveryPasswordResponse(message=response_message)
@@ -84,7 +83,7 @@ class RecoveryPasswordHandler:
             _ = await self.notification_service.send_notification(notification_config)
         except FileNotFoundError:
             return RecoveryPasswordResponse(
-                message="Email template not found. Please contact support."
+                message=t("user.recovery.template_not_found")
             )
 
         return RecoveryPasswordResponse(message=response_message)

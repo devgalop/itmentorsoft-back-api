@@ -64,7 +64,7 @@ async def test_when_email_already_exists_should_respond_with_error():
         )
     )
     assert not response.is_success
-    assert response.message == "Email already in use"
+    assert response.message == "El email ya está en uso"
     user_repository.get_user_by_email.assert_called_once_with("test@example.com")
     user_repository.get_user_by_username.assert_not_called()
     password_hasher.hash_password.assert_not_called()
@@ -95,7 +95,7 @@ async def test_when_username_already_exists_should_respond_with_error():
         )
     )
     assert not response.is_success
-    assert response.message == "Username already in use"
+    assert response.message == "El nombre de usuario ya está en uso"
     user_repository.get_user_by_email.assert_called_once_with("test@example.com")
     user_repository.get_user_by_username.assert_called_once_with("testuser")
     password_hasher.hash_password.assert_not_called()

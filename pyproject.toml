@@ -5,4 +5,5 @@ pythonpath = ["."]
 extend-exclude = [
     "./src/infrastructure/database/postgresql/models/__init__.py",
     "./alembic/env.py",
+    "./src/i18n/*"
 ]

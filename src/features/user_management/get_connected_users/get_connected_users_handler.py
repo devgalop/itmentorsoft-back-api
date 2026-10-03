@@ -4,6 +4,7 @@ from src.features.user_management.get_connected_users.get_connected_users_respon
 from itmentorsoft_persistence.repositories import (
     RefreshTokenRepository,
 )
+from src.i18n import t
 
 
 class GetConnectedUsersHandler:
@@ -15,11 +16,11 @@ class GetConnectedUsersHandler:
         if response.total_users <= 0:
             return GetConnectedUsersResponse(
                 is_success=False,
-                message="Cannot obtain any connected users",
+                message=t("user.connected.none"),
                 total_users=0,
             )
         return GetConnectedUsersResponse(
             is_success=True,
-            message="Users connected have been found successfully",
+            message=t("user.connected.found"),
             total_users=response.total_users,
         )

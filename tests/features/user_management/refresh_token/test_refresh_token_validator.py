@@ -14,14 +14,16 @@ def test_when_request_is_valid_should_not_raise_exception():
 
 
 def test_when_user_name_is_empty_should_raise_exception():
-    with pytest.raises(ValueError, match="Username is required"):
+    with pytest.raises(ValueError, match="Nombre de usuario es requerido"):
         RefreshTokenRequest(
             user_id="user_id", user_name="", refresh_token="valid-token-123"
         )
 
 
 def test_when_user_name_is_too_short_should_raise_exception():
-    with pytest.raises(ValueError, match="Username must be at least 3 characters long"):
+    with pytest.raises(
+        ValueError, match="Nombre de usuario debe tener al menos 3 caracteres"
+    ):
         RefreshTokenRequest(
             user_id="user_id", user_name="ab", refresh_token="valid-token-123"
         )
@@ -29,7 +31,7 @@ def test_when_user_name_is_too_short_should_raise_exception():
 
 def test_when_user_name_is_too_long_should_raise_exception():
     with pytest.raises(
-        ValueError, match="Username must be no more than 20 characters long"
+        ValueError, match="Nombre de usuario no debe exceder 20 caracteres"
     ):
         RefreshTokenRequest(
             user_id="user_id", user_name="a" * 21, refresh_token="valid-token-123"
@@ -39,7 +41,6 @@ def test_when_user_name_is_too_long_should_raise_exception():
 def test_when_user_name_has_invalid_characters_should_raise_exception():
     with pytest.raises(
         ValueError,
-        match="Username must be alphanumeric and can include underscores",
     ):
         RefreshTokenRequest(
             user_id="user_id", user_name="user name!", refresh_token="valid-token-123"

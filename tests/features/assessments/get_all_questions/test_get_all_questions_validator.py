@@ -17,22 +17,24 @@ def test_when_request_is_valid_with_custom_values_then_exception_is_not_raised()
 
 
 def test_when_page_is_negative_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Page must be a non-negative integer"):
+    with pytest.raises(
+        ValueError, match="Número de página debe ser un entero no negativo"
+    ):
         GetAllQuestionsRequest(page=-1)
 
 
 def test_when_page_size_is_zero_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Page size must be at least 1"):
+    with pytest.raises(ValueError, match="Tamaño de página debe ser al menos 1"):
         GetAllQuestionsRequest(page_size=0)
 
 
 def test_when_page_size_is_negative_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Page size must be at least 1"):
+    with pytest.raises(ValueError, match="Tamaño de página debe ser al menos 1"):
         GetAllQuestionsRequest(page_size=-5)
 
 
 def test_when_page_size_exceeds_max_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Page size must not exceed 100"):
+    with pytest.raises(ValueError, match="Tamaño de página no debe exceder 100"):
         GetAllQuestionsRequest(page_size=101)
 
 

@@ -10,6 +10,7 @@ from src.features.content_management.get_contents_by_category.get_contents_by_ca
 from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
+from src.i18n import t
 
 
 class GetContentsByCategoryHandler:
@@ -26,7 +27,7 @@ class GetContentsByCategoryHandler:
 
         return GetContentsByCategoryResponse(
             is_success=True,
-            message="Contents retrieved successfully",
+            message=t("content.retrieved"),
             items=response.items,
             total=response.total,
         )

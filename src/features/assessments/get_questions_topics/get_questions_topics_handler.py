@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_questions_topics.get_questions_topics_response import (
     GetQuestionsTopicsResponse,
 )
@@ -13,12 +14,12 @@ class GetQuestionsTopicsHandler:
         if not topics:
             return GetQuestionsTopicsResponse(
                 is_success=False,
-                message="No topics found.",
+                message=t("question.topic.none_found"),
                 topics=[],
             )
 
         return GetQuestionsTopicsResponse(
             is_success=True,
-            message="Topics with status published retrieved successfully.",
+            message=t("question.topic.published.retrieved"),
             topics=topics,
         )

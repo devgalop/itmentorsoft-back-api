@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class GetAllQuestionVersionsRequest(BaseModel):
@@ -11,5 +12,5 @@ class GetAllQuestionVersionsRequest(BaseModel):
         if len(value) < 3:
             raise ValueError("question_id must be at least 3 characters long")
         if len(value) > 100:
-            raise ValueError("question_id must be at most 100 characters long")
+            raise ValueError(t("validation.question_id.max_length"))
         return value

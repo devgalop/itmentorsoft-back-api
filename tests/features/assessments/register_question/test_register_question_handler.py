@@ -86,5 +86,5 @@ async def test_when_repository_raises_exception_then_should_return_failure():
     response = await handler.handle(request, "test_user")
 
     assert response.is_success is False
-    assert "Failed to register question" in response.message
+    assert response.message == "Error al registrar pregunta: DB error"
     assert response.question_id is None

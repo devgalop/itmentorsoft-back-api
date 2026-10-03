@@ -43,7 +43,7 @@ async def test_handle_success():
     result = await handler.handle(request)
 
     assert result.is_success is True
-    assert result.message == "Successfully retrieved all question versions."
+    assert result.message == "Versiones de la pregunta obtenidas exitosamente"
     assert len(result.questions) == 3
     assert result.total == 3
     question_repository.get_all_versions_by_question.assert_called_once_with(
@@ -61,7 +61,7 @@ async def test_handle_empty_result():
     result = await handler.handle(request)
 
     assert result.is_success is False
-    assert result.message == "No question versions found."
+    assert result.message == "No se encontraron versiones de la pregunta"
     assert result.questions == []
     assert result.total == 0
     question_repository.get_all_versions_by_question.assert_called_once_with(

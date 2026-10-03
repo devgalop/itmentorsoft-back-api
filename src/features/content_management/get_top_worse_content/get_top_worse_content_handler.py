@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.content_management.get_top_worse_content.get_top_worse_content_request import (
     GetTopWorseContentRequest,
 )
@@ -26,7 +27,7 @@ class GetTopWorseContentHandler:
         if not top_content:
             return GetTopWorseContentResponse(
                 is_success=False,
-                message="No top worse content found for the given topic.",
+                message=t("content.top.worse.none_found"),
                 items=[],
             )
 
@@ -41,6 +42,6 @@ class GetTopWorseContentHandler:
         ]
         return GetTopWorseContentResponse(
             is_success=True,
-            message="Top worse content retrieved successfully.",
+            message=t("content.top.worse.retrieved"),
             items=items,
         )

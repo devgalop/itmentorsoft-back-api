@@ -10,15 +10,19 @@ def test_when_user_id_is_valid_then_exception_is_not_raised():
 
 
 def test_when_user_id_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="User ID must not be empty"):
+    with pytest.raises(ValueError, match="ID de usuario no debe estar vacío"):
         GetContentRatingByUserRequest(user_id="")
 
 
 def test_when_user_id_is_too_short_then_exception_is_raised():
-    with pytest.raises(ValueError, match="User ID must be at least 10 characters long"):
+    with pytest.raises(
+        ValueError, match="ID de usuario debe tener al menos 10 caracteres"
+    ):
         GetContentRatingByUserRequest(user_id="short")
 
 
 def test_when_user_id_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="User ID must not exceed 100 characters"):
+    with pytest.raises(
+        ValueError, match="ID de usuario no debe exceder 100 caracteres"
+    ):
         GetContentRatingByUserRequest(user_id="a" * 101)

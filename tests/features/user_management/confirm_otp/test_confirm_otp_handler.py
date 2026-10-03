@@ -34,7 +34,7 @@ async def test_when_user_not_found_should_return_unsuccessful():
     response = await handler.handle(ConfirmOTPRequest(user_id="user_id", otp="ABC123"))
 
     assert not response.is_successful
-    assert response.message == "User not found"
+    assert response.message == "Usuario no encontrado"
     user_repository.get_user_by_id.assert_called_once_with("user_id")
     token_generator.generate_token.assert_not_called()
 
@@ -64,7 +64,7 @@ async def test_when_no_otp_stored_should_return_unsuccessful():
     response = await handler.handle(ConfirmOTPRequest(user_id="user_id", otp="ABC123"))
 
     assert not response.is_successful
-    assert response.message == "OTP has expired or is invalid"
+    assert response.message == "OTP expirado o inválido"
     token_generator.generate_token.assert_not_called()
 
 
@@ -107,7 +107,7 @@ async def test_when_otp_is_expired_should_return_unsuccessful():
         )
 
     assert not response.is_successful
-    assert response.message == "OTP has expired or is invalid"
+    assert response.message == "OTP expirado o inválido"
     token_generator.generate_token.assert_not_called()
 
 
@@ -150,7 +150,7 @@ async def test_when_otp_does_not_match_should_return_unsuccessful():
         )
 
     assert not response.is_successful
-    assert response.message == "Invalid OTP"
+    assert response.message == "OTP inválido"
     token_generator.generate_token.assert_not_called()
 
 
@@ -202,7 +202,7 @@ async def test_when_otp_is_valid_should_return_tokens_and_save_refresh_token():
         )
 
     assert response.is_successful
-    assert response.message == "OTP confirmed successfully"
+    assert response.message == "OTP confirmado exitosamente"
     assert response.token == "jwt_token"
     assert response.expiration_time == 3600
     assert response.refresh_token == "refresh_raw"
@@ -261,4 +261,4 @@ async def test_when_otp_is_empty_string_should_return_unsuccessful():
         )
 
     assert not response.is_successful
-    assert response.message == "OTP has expired or is invalid"
+    assert response.message == "OTP expirado o inválido"

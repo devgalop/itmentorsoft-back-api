@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.content_management.get_resource_content.get_resource_content_request import (
     GetResourceRequest,
 )
@@ -20,12 +21,12 @@ class GetResourceContentHandler:
         if result is None:
             return GetResourceContentResponse(
                 is_success=False,
-                message="Content not found",
+                message=t("content.resource.not_found"),
                 content=None,
             )
 
         return GetResourceContentResponse(
             is_success=True,
-            message="Content retrieved successfully",
+            message=t("content.resource.retrieved"),
             content=result,
         )

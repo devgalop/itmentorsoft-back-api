@@ -16,6 +16,7 @@ from src.features.user_management.refresh_token.refresh_token_response import (
     RefreshTokenResponse,
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.i18n import t
 
 
 def _get_refresh_token_expiration_delta_seconds() -> int:
@@ -86,7 +87,7 @@ class RefreshTokenHandler:
         if record.status == "revoked":
             from fastapi import HTTPException
 
-            raise HTTPException(status_code=403, detail="Refresh token revoked")
+            raise HTTPException(status_code=403, detail=t("user.refresh_token.revoked"))
 
         if record.expiration_time < time.time():
             await self.refresh_token_repository.revoke_tokens_by_user_id(record.user_id)

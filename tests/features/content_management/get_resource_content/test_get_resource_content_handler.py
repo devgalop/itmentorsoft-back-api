@@ -32,7 +32,7 @@ async def test_get_resource_content_when_content_exists_should_return_success():
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Content retrieved successfully"
+    assert response.message == "Contenido obtenido exitosamente"
     assert response.content is not None
     assert response.content.content_id == expected_content.content_id
     assert response.content.title == expected_content.title
@@ -49,7 +49,7 @@ async def test_get_resource_content_when_content_does_not_exist_should_return_fa
     response = await handler.handle(request)
 
     assert not response.is_success
-    assert response.message == "Content not found"
+    assert response.message == "Contenido no encontrado"
     assert response.content is None
 
 

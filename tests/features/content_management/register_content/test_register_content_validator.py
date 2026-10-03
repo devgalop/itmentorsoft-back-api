@@ -18,7 +18,7 @@ def test_when_request_is_valid_then_exception_is_not_raised():
 
 
 def test_when_title_is_missing_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Title must not be empty"):
+    with pytest.raises(ValueError, match="Título no debe estar vacío"):
         RegisterContentRequest(
             title="",
             description="This is a valid description",
@@ -29,7 +29,7 @@ def test_when_title_is_missing_then_exception_is_raised():
 
 
 def test_when_title_is_too_short_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Title must be at least 5 characters long"):
+    with pytest.raises(ValueError, match="Título debe tener al menos 5 caracteres"):
         RegisterContentRequest(
             title="abcd",
             description="This is a valid description",
@@ -40,7 +40,7 @@ def test_when_title_is_too_short_then_exception_is_raised():
 
 
 def test_when_title_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Title must not exceed 150 characters"):
+    with pytest.raises(ValueError, match="Título no debe exceder 150 caracteres"):
         RegisterContentRequest(
             title="a" * 151,
             description="This is a valid description",
@@ -51,7 +51,7 @@ def test_when_title_is_too_long_then_exception_is_raised():
 
 
 def test_when_description_is_missing_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Description must not be empty"):
+    with pytest.raises(ValueError, match="Descripción no debe estar vacía"):
         RegisterContentRequest(
             title="Valid Title",
             description="",
@@ -63,7 +63,7 @@ def test_when_description_is_missing_then_exception_is_raised():
 
 def test_when_description_is_too_short_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="Description must be at least 10 characters long"
+        ValueError, match="Descripción debe tener al menos 10 caracteres"
     ):
         RegisterContentRequest(
             title="Valid Title",
@@ -75,7 +75,7 @@ def test_when_description_is_too_short_then_exception_is_raised():
 
 
 def test_when_description_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Description must not exceed 300 characters"):
+    with pytest.raises(ValueError, match="Descripción no debe exceder 300 caracteres"):
         RegisterContentRequest(
             title="Valid Title",
             description="a" * 301,
@@ -86,7 +86,7 @@ def test_when_description_is_too_long_then_exception_is_raised():
 
 
 def test_when_url_is_missing_then_exception_is_raised():
-    with pytest.raises(ValueError, match="URL must not be empty"):
+    with pytest.raises(ValueError, match="URL no debe estar vacía"):
         RegisterContentRequest(
             title="Valid Title",
             description="This is a valid description",
@@ -98,7 +98,7 @@ def test_when_url_is_missing_then_exception_is_raised():
 
 def test_when_url_is_invalid_format_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="Invalid URL format, must start with https://"
+        ValueError, match="Formato de URL inválido, debe comenzar con https://"
     ):
         RegisterContentRequest(
             title="Valid Title",

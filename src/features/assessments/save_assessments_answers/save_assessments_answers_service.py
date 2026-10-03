@@ -19,6 +19,7 @@ from itmentorsoft_persistence.dto import (
 from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.shared.publisher_service import PublisherService
 from itmentorsoft_persistence.repositories import UserRepository
+from src.i18n import t
 
 
 class SaveAssessmentsAnswersService:
@@ -48,7 +49,7 @@ class SaveAssessmentsAnswersService:
         try:
             if not await self.is_existing_user(request.user_id):
                 return SaveAssessmentsAnswersResponse(
-                    is_success=False, message="User not found."
+                    is_success=False, message=t("assessment.user_not_found")
                 )
 
             assessment_quiz = await self.get_assessment_quiz(request.assessment_id)
@@ -56,7 +57,7 @@ class SaveAssessmentsAnswersService:
             if not assessment_quiz:
                 return SaveAssessmentsAnswersResponse(
                     is_success=False,
-                    message="Assessment quiz not found for the given assessment ID.",
+                    message=t("assessment.quiz.not_found"),
                 )
 
             existing_assessment = await self.assessment_repository.get_assessment(
@@ -66,13 +67,13 @@ class SaveAssessmentsAnswersService:
             if existing_assessment and len(existing_assessment.answers) > 0:
                 return SaveAssessmentsAnswersResponse(
                     is_success=False,
-                    message="Assessment answers already exist for the given assessment ID.",
+                    message=t("assessment.answers.already_exist"),
                 )
 
             if not self.is_assessment_assign_to_user(assessment_quiz, request.user_id):
                 return SaveAssessmentsAnswersResponse(
                     is_success=False,
-                    message="The assessment quiz does not belong to the user.",
+                    message=t("assessment.not_belong_to_user"),
                 )
 
             questions = assessment_quiz.questions if assessment_quiz else []
@@ -81,7 +82,7 @@ class SaveAssessmentsAnswersService:
             if not self.are_answered_questions_valid(answered_question_ids, questions):
                 return SaveAssessmentsAnswersResponse(
                     is_success=False,
-                    message="Invalid answered question IDs. They must match the questions of the assessment quiz.",
+                    message=t("assessment.answers.invalid_question_ids"),
                 )
 
             assessment = self.create_assessment_model(request)
@@ -91,11 +92,11 @@ class SaveAssessmentsAnswersService:
             await self.publisher_service.publish(request=EvaluateMessage(assessment))
 
             return SaveAssessmentsAnswersResponse(
-                is_success=True, message="Assessment answers saved successfully."
+                is_success=True, message=t("assessment.answers.saved")
             )
         except Exception as e:
             return SaveAssessmentsAnswersResponse(
-                is_success=False, message=f"An error occurred: {str(e)}"
+                is_success=False, message=t("assessment.error", message=str(e))
             )
 
     async def is_existing_user(self, user_id: str) -> bool:

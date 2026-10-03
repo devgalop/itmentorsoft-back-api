@@ -59,7 +59,7 @@ async def test_when_service_returns_failure_then_return_failure():
 
     assert isinstance(response, GetCategorySummaryResponse)
     assert response.is_success is False
-    assert response.message == "Category summary not found"
+    assert response.message == "Resumen de categoría no encontrado"
 
 
 @pytest.mark.asyncio

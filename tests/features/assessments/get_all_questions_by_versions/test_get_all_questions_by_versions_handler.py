@@ -44,7 +44,7 @@ async def test_handle_success():
     result = await handler.handle(request)
 
     assert result.is_success is True
-    assert result.message == "Questions retrieved successfully"
+    assert result.message == "Preguntas obtenidas exitosamente"
     assert len(result.questions) == 3
     assert result.total == 3
     question_repository.get_latest_versions_all_questions.assert_called_once_with(
@@ -65,7 +65,7 @@ async def test_handle_empty_result():
     result = await handler.handle(request)
 
     assert result.is_success is False
-    assert result.message == "No questions found"
+    assert result.message == "No se encontraron preguntas"
     assert result.questions == []
     assert result.total == 0
     question_repository.get_latest_versions_all_questions.assert_called_once_with(

@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_assessment.get_assessment_request import (
     GetAssessmentRequest,
 )
@@ -20,7 +21,7 @@ class GetAssessmentHandler:
         except Exception as e:
             return GetAssessmentResponse(
                 is_success=False,
-                message=f"Failed to retrieve assessment: {str(e)}",
+                message=t("assessment.retrieval_failed", error=str(e)),
                 assessment_id=None,
                 questions=None,
             )

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class UpdateQuestionRubric(BaseModel):
@@ -142,7 +143,7 @@ class UpdateQuestionRequest(BaseModel):
     @field_validator("topic")
     def validate_topic(cls, value: str) -> str:
         if not value:
-            raise ValueError("Topic cannot be empty")
+            raise ValueError(t("validation.topic.required"))
         if len(value) > 100:
             raise ValueError("Topic cannot be longer than 100 characters")
         if len(value) < 2:

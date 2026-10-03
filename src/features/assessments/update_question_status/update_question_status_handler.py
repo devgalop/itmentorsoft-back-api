@@ -5,6 +5,7 @@ from src.features.assessments.update_question_status.update_question_status_requ
 from src.features.assessments.update_question_status.update_question_status_response import (
     UpdateQuestionStatusResponse,
 )
+from src.i18n import t
 
 
 class UpdateQuestionStatusHandler:
@@ -20,13 +21,13 @@ class UpdateQuestionStatusHandler:
         if not result:
             return UpdateQuestionStatusResponse(
                 is_success=False,
-                message=f"Question with ID {request.question_id} not found",
+                message=t("question.status.not_found", question_id=request.question_id),
                 question_id="",
                 new_status=False,
             )
         return UpdateQuestionStatusResponse(
             is_success=result,
-            message="Question status updated successfully",
+            message=t("question.status.updated"),
             question_id=request.question_id,
             new_status=request.status,
         )

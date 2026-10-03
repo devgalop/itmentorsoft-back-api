@@ -11,6 +11,7 @@ from itmentorsoft_persistence.repositories import (
     UserRecoveryTokenRepository,
     UserRepository,
 )
+from src.i18n import t
 
 
 class ChangePasswordHandler:
@@ -40,12 +41,12 @@ class ChangePasswordHandler:
             )
         ):
             return ChangePasswordResponse(
-                is_success=False, message="Invalid or expired token"
+                is_success=False, message=t("user.token.invalid_or_expired")
             )
 
         user = await self.user_repository.get_user_by_id(user_recover_info.user_id)
         if not user:
-            return ChangePasswordResponse(is_success=False, message="User not found")
+            return ChangePasswordResponse(is_success=False, message=t("user.not_found"))
 
         await self.user_recovery_token_repository.revoke_tokens_by_user_id(
             user_recover_info.user_id
@@ -56,5 +57,5 @@ class ChangePasswordHandler:
         )
 
         return ChangePasswordResponse(
-            is_success=True, message="Password changed successfully"
+            is_success=True, message=t("user.password_changed")
         )

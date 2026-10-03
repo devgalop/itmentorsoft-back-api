@@ -46,7 +46,7 @@ async def test_when_repository_returns_success_should_return_mapped_recommendati
     )
 
     assert response.is_success is True
-    assert response.message == "Learning paths retrieved successfully."
+    assert response.message == "Rutas de aprendizaje obtenidas exitosamente"
     assert len(response.recommendation) == 1
     assert response.recommendation[0].topic == "Python"
     assert len(response.recommendation[0].contents) == 1
@@ -75,7 +75,7 @@ async def test_when_repository_returns_failure_should_return_failure_response():
     )
 
     assert response.is_success is False
-    assert response.message == "Failed to retrieve learning paths."
+    assert response.message == "No se pudieron obtener las rutas de aprendizaje"
     assert response.recommendation == []
     learning_path_repository.get_learning_path.assert_called_once_with("student_123")
     learning_path_repository.save_learning_path.assert_not_called()
@@ -99,7 +99,7 @@ async def test_when_repository_returns_empty_recommendations_should_return_empty
     )
 
     assert response.is_success is True
-    assert response.message == "Learning paths retrieved successfully."
+    assert response.message == "Rutas de aprendizaje obtenidas exitosamente"
     assert response.recommendation == []
     learning_path_repository.get_learning_path.assert_called_once_with("student_123")
     learning_path_repository.save_learning_path.assert_not_called()

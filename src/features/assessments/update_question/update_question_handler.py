@@ -14,6 +14,7 @@ from src.features.assessments.update_question.update_question_request import (
 from src.features.assessments.update_question.update_question_response import (
     UpdateQuestionResponse,
 )
+from src.i18n import t
 
 
 class UpdateQuestionHandler:
@@ -35,7 +36,10 @@ class UpdateQuestionHandler:
             ]:
                 return UpdateQuestionResponse(
                     is_success=False,
-                    message=f"Failed to update question: Invalid difficulty '{request.difficulty}'",
+                    message=t(
+                        "question.update.invalid_difficulty",
+                        difficulty=request.difficulty,
+                    ),
                 )
 
             previous_question = await self.question_repository.get_question_rubric(
@@ -44,7 +48,7 @@ class UpdateQuestionHandler:
             if previous_question is None:
                 return UpdateQuestionResponse(
                     is_success=False,
-                    message="Question not found",
+                    message=t("question.not_found"),
                 )
 
             await self.question_manager_service.update_question(previous_question)
@@ -80,12 +84,12 @@ class UpdateQuestionHandler:
 
             return UpdateQuestionResponse(
                 is_success=True,
-                message="Question updated successfully",
+                message=t("question.updated"),
             )
         except Exception as e:
             return UpdateQuestionResponse(
                 is_success=False,
-                message=f"Failed to update question: {str(e)}",
+                message=t("question.update.failed", message=str(e)),
             )
 
     def is_root_question(self, question: Question) -> bool:
