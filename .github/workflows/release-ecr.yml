@@ -3,6 +3,7 @@ name: Release to AWS ECR
 on:
   push:
     tags:
+      - "v.*.*"
       - "prod-*-*"
 
 permissions:
