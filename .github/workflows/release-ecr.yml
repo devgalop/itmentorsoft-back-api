@@ -6,6 +6,7 @@ on:
       - "prod-*-*"
 
 permissions:
+  id-token: write
   contents: read
 
 env:
