@@ -47,7 +47,7 @@ services:
       start_period: 5s
 
   evaluator:
-    image: ghcr.io/devgalop/itmentorsoft-back-worker-evaluator:sha-f673c0a
+    image: ghcr.io/devgalop/itmentorsoft-back-worker-evaluator:latest
     container_name: evaluator-itmentorsoft
     env_file: .env
     ports:
