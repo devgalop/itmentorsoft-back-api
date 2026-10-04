@@ -7,6 +7,7 @@ from src.features.content_management.update_resource_status.update_resource_stat
 from src.features.content_management.update_resource_status.update_resource_status_response import (
     UpdateResourceStatusResponse,
 )
+from src.i18n import t
 
 
 class UpdateResourceStatusHandler:
@@ -22,13 +23,13 @@ class UpdateResourceStatusHandler:
         if not result:
             return UpdateResourceStatusResponse(
                 is_success=False,
-                message="Status cannot be updated",
+                message=t("content.status.cannot_update"),
                 content_id="",
                 new_status=False,
             )
         return UpdateResourceStatusResponse(
             is_success=True,
-            message="Resource content status has been updated",
+            message=t("content.status.updated"),
             content_id=request.content_id,
             new_status=request.status,
         )

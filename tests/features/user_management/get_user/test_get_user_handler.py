@@ -24,7 +24,7 @@ async def test_when_user_exists_should_return_user():
     response = await handler.handle(GetUserRequest(user_id="123"))
     assert isinstance(response, GetUserResponse)
     assert response.is_success
-    assert response.message == "User found"
+    assert response.message == "Usuario encontrado"
     user_repository.get_user_by_id.assert_called_once_with("123")
 
 
@@ -37,5 +37,5 @@ async def test_when_user_does_not_exist_should_return_not_found():
     response = await handler.handle(GetUserRequest(user_id="123"))
     assert isinstance(response, GetUserResponse)
     assert not response.is_success
-    assert response.message == "User not found"
+    assert response.message == "Usuario no encontrado"
     user_repository.get_user_by_id.assert_called_once_with("123")

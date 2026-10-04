@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_model_selected.get_model_selected_response import (
     GetModelSelectedResponse,
     ModelByProcess,
@@ -26,17 +27,17 @@ class GetModelSelectedHandler:
             if not models_by_process:
                 return GetModelSelectedResponse(
                     is_success=False,
-                    message="No selected models found.",
+                    message=t("model.selected.none_found"),
                     models_by_process=[],
                 )
             return GetModelSelectedResponse(
                 is_success=True,
-                message="Successfully retrieved selected models.",
+                message=t("model.selected.retrieved"),
                 models_by_process=models_by_process,
             )
         except Exception as e:
             return GetModelSelectedResponse(
                 is_success=False,
-                message=f"Failed to retrieve selected models: {str(e)}",
+                message=t("model.selected.retrieval_failed", error=str(e)),
                 models_by_process=[],
             )

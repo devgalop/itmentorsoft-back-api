@@ -24,7 +24,7 @@ async def test_when_categories_exist_then_should_return_categories_successfully(
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Question categories retrieved successfully."
+    assert response.message == "Categorías de preguntas obtenidas exitosamente"
     assert len(response.categories) == 2
 
 
@@ -39,7 +39,7 @@ async def test_when_categories_is_empty_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Failed to retrieve question categories."
+    assert response.message == "No se pudieron obtener las categorías de preguntas"
     assert response.categories == []
 
 
@@ -54,7 +54,7 @@ async def test_when_categories_is_none_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Failed to retrieve question categories."
+    assert response.message == "No se pudieron obtener las categorías de preguntas"
     assert response.categories == []
 
 

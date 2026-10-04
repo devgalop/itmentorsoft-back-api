@@ -50,7 +50,7 @@ def test_when_question_id_is_empty_then_exception_is_raised():
 
 def test_when_question_id_is_too_short_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="question_id must be at least 5 characters long"
+        ValueError, match="question_id debe tener al menos 5 caracteres"
     ):
         AssessmentAnswer(question_id="abc", answer=VALID_ANSWER, takes_time_seconds=60)
 

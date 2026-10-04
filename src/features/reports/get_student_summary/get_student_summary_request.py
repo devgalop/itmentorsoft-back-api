@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class GetStudentSummaryRequest(BaseModel):
@@ -7,9 +8,9 @@ class GetStudentSummaryRequest(BaseModel):
     @field_validator("student_id")
     def validate_student_id(cls, value: str) -> str:
         if not value:
-            raise ValueError("student_id must not be empty")
+            raise ValueError(t("validation.student_id.required"))
         if len(value) < 5:
-            raise ValueError("student_id must be at least 5 characters long")
+            raise ValueError(t("validation.student_id.min_length"))
         if len(value) > 100:
-            raise ValueError("student_id must not exceed 100 characters")
+            raise ValueError(t("validation.student_id.max_length"))
         return value

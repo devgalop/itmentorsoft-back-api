@@ -10,6 +10,7 @@ from src.features.assessments.evaluate.evaluate_assessment_response import (
 from src.features.assessments.evaluate.evaluate_assessment_service import (
     EvaluateAssessmentService,
 )
+from src.i18n import t
 
 
 class EvaluateAssessmentHandler(EvaluateAssessmentContract):
@@ -27,11 +28,11 @@ class EvaluateAssessmentHandler(EvaluateAssessmentContract):
         if not result:
             return EvaluateAssessmentResponse(
                 is_success=False,
-                message="No qualifications generated for the assessment.",
+                message=t("assessment.evaluation.no_qualifications"),
                 qualifications=None,
             )
         return EvaluateAssessmentResponse(
             is_success=True,
-            message="Assessment evaluation completed successfully.",
+            message=t("assessment.evaluation.completed"),
             qualifications=result,
         )

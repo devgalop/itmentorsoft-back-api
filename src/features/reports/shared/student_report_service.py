@@ -10,6 +10,7 @@ from itmentorsoft_persistence.dto import (
     StudentSummary,
 )
 from itmentorsoft_persistence.repositories import UserRepository
+from src.i18n import t
 
 
 class GetSummaryResponse(BaseModel):
@@ -59,20 +60,20 @@ class StudentReportService:
         student_found = await self.user_repository.get_user_by_id(user_id)
         if not student_found:
             return GetSummaryResponse(
-                is_success=False, message="Student not found", student_summary=None
+                is_success=False, message=t("student.not_found"), student_summary=None
             )
 
         response = await self.assessment_repository.get_student_summary(user_id)
         if not response or not response.knowledge_profiles:
             return GetSummaryResponse(
                 is_success=False,
-                message="Student summary not found",
+                message=t("student.summary.not_found"),
                 student_summary=None,
             )
 
         return GetSummaryResponse(
             is_success=True,
-            message="Student summary retrieved successfully",
+            message=t("student.summary.retrieved"),
             student_summary=response,
         )
 
@@ -88,20 +89,22 @@ class StudentReportService:
         student_found = await self.user_repository.get_user_by_id(user_id)
         if not student_found:
             return GetProgressByTopic(
-                is_success=False, message="Student not found", historical_progress=None
+                is_success=False,
+                message=t("student.not_found"),
+                historical_progress=None,
             )
 
         response = await self.assessment_repository.get_student_progress(user_id)
         if not response or not response.historical_progress:
             return GetProgressByTopic(
                 is_success=False,
-                message="Student progress not found",
+                message=t("student.progress.not_found"),
                 historical_progress=None,
             )
 
         return GetProgressByTopic(
             is_success=True,
-            message="Student progress retrieved successfully",
+            message=t("student.progress.retrieved"),
             historical_progress=response,
         )
 
@@ -118,13 +121,13 @@ class StudentReportService:
         if not response:
             return GetCategorySummary(
                 is_success=False,
-                message="Category summary not found",
+                message=t("category.summary.not_found"),
                 category_summary=None,
             )
 
         return GetCategorySummary(
             is_success=True,
-            message="Category summary retrieved successfully",
+            message=t("category.summary.retrieved"),
             category_summary=response,
         )
 
@@ -142,13 +145,13 @@ class StudentReportService:
         if not response or not response.students:
             return GetStudentsResponse(
                 is_success=False,
-                message="Students not found",
+                message=t("student.not_found"),
                 students=None,
             )
 
         return GetStudentsResponse(
             is_success=True,
-            message="Students retrieved successfully",
+            message=t("student.retrieved"),
             students=response,
         )
 
@@ -171,12 +174,12 @@ class StudentReportService:
         if not response or not response.students:
             return GetStudentsResponse(
                 is_success=False,
-                message="Students not found",
+                message=t("student.not_found"),
                 students=None,
             )
 
         return GetStudentsResponse(
             is_success=True,
-            message="Students retrieved successfully",
+            message=t("student.retrieved"),
             students=response,
         )

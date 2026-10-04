@@ -9,6 +9,7 @@ from src.features.user_management.shared.user_manager_service import (
     UserManagerService,
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.i18n import t
 
 
 class CreateUserFromAdminHandler:
@@ -24,7 +25,7 @@ class CreateUserFromAdminHandler:
         if not DEFAULT_PASSWORD:
             return CreateUserFromAdminResponse(
                 is_success=False,
-                message="Default password is not set in environment variables",
+                message=t("user.admin.default_password_not_set"),
             )
 
         response = await self.user_manager_service.create_user(

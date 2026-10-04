@@ -30,7 +30,7 @@ async def test_when_valid_request_should_update_model():
     )
 
     assert response.is_success is True
-    assert response.message == "Model updated successfully"
+    assert response.message == "Modelo actualizado exitosamente"
     model_explorer_service.get_available_models.assert_called_once()
     model_selector_service.set_selected_model.assert_called_once()
 
@@ -46,7 +46,7 @@ async def test_when_process_is_invalid_should_return_failure():
     )
 
     assert response.is_success is False
-    assert response.message == "Invalid process specified"
+    assert response.message == "Proceso especificado inválido"
     model_explorer_service.get_available_models.assert_not_called()
     model_selector_service.set_selected_model.assert_not_called()
 
@@ -66,7 +66,7 @@ async def test_when_model_not_available_should_return_failure():
     )
 
     assert response.is_success is False
-    assert response.message == "Model ID not found in available models"
+    assert response.message == "ID de modelo no encontrado en los modelos disponibles"
     model_explorer_service.get_available_models.assert_called_once()
     model_selector_service.set_selected_model.assert_not_called()
 

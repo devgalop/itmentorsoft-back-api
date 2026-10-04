@@ -11,6 +11,7 @@ from itmentorsoft_persistence.dto import (
 from src.features.content_management.update_resource_content.update_resource_content_response import (
     UpdateResourceContentResponse,
 )
+from src.i18n import t
 
 
 class UpdateResourceContentHandler:
@@ -27,7 +28,7 @@ class UpdateResourceContentHandler:
             valid_categories = [category.value for category in ContentCategory]
             if request.category not in valid_categories:
                 return UpdateResourceContentResponse(
-                    is_success=False, message="Invalid category provided"
+                    is_success=False, message=t("content.category.invalid")
                 )
 
             if not request.related_topic:
@@ -47,7 +48,7 @@ class UpdateResourceContentHandler:
 
             return UpdateResourceContentResponse(
                 is_success=True,
-                message=f"Content with ID {content_id} has been successfully updated.",
+                message=t("content.updated", content_id=content_id),
             )
         except ValueError as e:
             return UpdateResourceContentResponse(is_success=False, message=str(e))

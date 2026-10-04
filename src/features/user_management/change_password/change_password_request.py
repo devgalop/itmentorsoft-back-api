@@ -1,5 +1,6 @@
 from pydantic import BaseModel, field_validator
 import re
+from src.i18n import t
 
 SPECIAL_CHAR_PATTERN = r'[!@#$%^&*()_+\-=\[\]{}|;\'":,.<>\/?]'
 
@@ -10,17 +11,17 @@ class ChangePasswordRequest(BaseModel):
     @field_validator("new_password")
     def validate_password(cls, value: str) -> str:
         if not value:
-            raise ValueError("Password is required")
+            raise ValueError(t("validation.password.required"))
         if len(value) < 6:
-            raise ValueError("Password must be at least 6 characters long")
+            raise ValueError(t("validation.password.min_length"))
         if len(value) > 20:
-            raise ValueError("Password must be no more than 20 characters long")
+            raise ValueError(t("validation.password.max_length"))
         if not any(char.isdigit() for char in value):
-            raise ValueError("Password must contain at least one digit")
+            raise ValueError(t("validation.password.digit"))
         if not any(char.isalpha() for char in value):
-            raise ValueError("Password must contain at least one letter")
+            raise ValueError(t("validation.password.letter"))
         if not re.search(SPECIAL_CHAR_PATTERN, value):
-            raise ValueError("Password must contain at least one special character")
+            raise ValueError(t("validation.password.special"))
         return value
 
 

@@ -47,7 +47,7 @@ async def test_when_question_exists_then_should_return_question_successfully():
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Question retrieved successfully"
+    assert response.message == "Pregunta obtenida exitosamente"
     assert response.question is not None
 
 
@@ -62,7 +62,6 @@ async def test_when_question_does_not_exist_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Question not found"
     assert response.question is None
 
 

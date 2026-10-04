@@ -1,3 +1,4 @@
+from src.i18n import t
 from itmentorsoft_persistence import QuestionRepository
 
 from src.features.assessments.get_all_questions_by_versions.get_all_questions_by_versions_request import (
@@ -20,12 +21,15 @@ class GetAllQuestionsByVersionsHandler:
         )
         if not result or not result.items:
             return GetAllQuestionsByVersionsResponse(
-                is_success=False, message="No questions found", questions=[], total=0
+                is_success=False,
+                message=t("question.list.none_found"),
+                questions=[],
+                total=0,
             )
 
         return GetAllQuestionsByVersionsResponse(
             is_success=True,
-            message="Questions retrieved successfully",
+            message=t("question.list.retrieved"),
             questions=result.items,
             total=result.total,
         )

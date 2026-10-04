@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_question_by_id.get_question_by_id_request import (
     GetQuestionByIdRequest,
 )
@@ -21,7 +22,7 @@ class GetQuestionByIdHandler:
             if question is None:
                 return GetQuestionByIdResponse(
                     is_success=False,
-                    message="Question not found",
+                    message=t("question.not_found"),
                     question=None,
                 )
 
@@ -45,12 +46,12 @@ class GetQuestionByIdHandler:
             )
             return GetQuestionByIdResponse(
                 is_success=True,
-                message="Question retrieved successfully",
+                message=t("question.retrieved"),
                 question=question_data,
             )
         except Exception as e:
             return GetQuestionByIdResponse(
                 is_success=False,
-                message=f"Failed to retrieve question: {str(e)}",
+                message=t("question.retrieval_failed", error=str(e)),
                 question=None,
             )

@@ -5,6 +5,7 @@ from src.features.user_management.update_user_profile.update_user_profile_reques
 from src.features.user_management.update_user_profile.update_user_profile_response import (
     UpdateUserProfileResponse,
 )
+from src.i18n import t
 
 
 class UpdateUserProfileHandler:
@@ -17,7 +18,9 @@ class UpdateUserProfileHandler:
 
         existing_user = await self.user_repository.get_user_by_id(request.user_id)
         if not existing_user:
-            return UpdateUserProfileResponse(is_success=False, message="User not found")
+            return UpdateUserProfileResponse(
+                is_success=False, message=t("user.not_found")
+            )
 
         existing_user_with_username = await self.user_repository.get_user_by_username(
             request.username
@@ -27,12 +30,12 @@ class UpdateUserProfileHandler:
             and existing_user_with_username.id != request.user_id
         ):
             return UpdateUserProfileResponse(
-                is_success=False, message="Username is not available"
+                is_success=False, message=t("user.username_not_available")
             )
 
         await self.user_repository.update_username(
             request.user_id, request.username, request.name
         )
         return UpdateUserProfileResponse(
-            is_success=True, message="Username and name updated successfully"
+            is_success=True, message=t("user.profile_updated")
         )

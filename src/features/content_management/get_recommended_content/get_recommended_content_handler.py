@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.content_management.get_recommended_content.get_recommended_content_request import (
     GetRecommendedContentRequest,
 )
@@ -26,7 +27,7 @@ class GetRecommendedContentHandler:
         if not response.is_success:
             return GetRecommendedContentResponse(
                 is_success=False,
-                message="Failed to retrieve learning paths.",
+                message=t("content.learning_path.retrieval_failed"),
                 recommendation=[],
             )
 
@@ -51,6 +52,6 @@ class GetRecommendedContentHandler:
 
         return GetRecommendedContentResponse(
             is_success=True,
-            message="Learning paths retrieved successfully.",
+            message=t("content.learning_path.retrieved"),
             recommendation=results,
         )

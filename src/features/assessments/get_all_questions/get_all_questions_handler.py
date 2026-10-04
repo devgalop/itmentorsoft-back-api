@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_all_questions.get_all_questions_request import (
     GetAllQuestionsRequest,
 )
@@ -17,11 +18,14 @@ class GetAllQuestionsHandler:
         )
         if not paginated_result.items:
             return GetAllQuestionsResponse(
-                is_success=False, message="No questions found.", questions=[], total=0
+                is_success=False,
+                message=t("question.list.none_found"),
+                questions=[],
+                total=0,
             )
         return GetAllQuestionsResponse(
             is_success=True,
-            message="Successfully retrieved all questions.",
+            message=t("question.list.retrieved"),
             questions=paginated_result.items,
             total=paginated_result.total,
         )

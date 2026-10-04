@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class UpdateResourceStatusRequest(BaseModel):
@@ -18,5 +19,5 @@ class UpdateResourceStatusRequest(BaseModel):
     @field_validator("status")
     def validate_status(cls, value: bool) -> bool:
         if not isinstance(value, bool):
-            raise ValueError("status must be a boolean value")
+            raise ValueError(t("validation.status.boolean"))
         return value

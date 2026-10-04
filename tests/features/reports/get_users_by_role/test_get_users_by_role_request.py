@@ -11,19 +11,17 @@ def test_when_role_is_valid_should_not_raise_exception():
 
 
 def test_when_role_is_empty_should_raise_exception():
-    with pytest.raises(ValueError, match="Role must not be empty"):
+    with pytest.raises(ValueError, match="Rol no debe estar vacío"):
         GetUsersByRoleRequest(role="")
 
 
 def test_when_role_is_too_short_should_raise_exception():
-    with pytest.raises(ValueError, match="Role must be at least 3 characters long"):
+    with pytest.raises(ValueError, match="Rol debe tener al menos 3 caracteres"):
         GetUsersByRoleRequest(role="ab")
 
 
 def test_when_role_is_too_long_should_raise_exception():
-    with pytest.raises(
-        ValueError, match="Role must be no more than 20 characters long"
-    ):
+    with pytest.raises(ValueError, match="Rol no debe exceder 20 caracteres"):
         GetUsersByRoleRequest(role="a" * 21)
 
 

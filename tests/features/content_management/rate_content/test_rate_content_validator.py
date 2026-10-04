@@ -19,7 +19,7 @@ def test_when_request_is_valid_then_exception_is_not_raised():
 
 
 def test_when_content_id_is_missing_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Content ID must not be empty"):
+    with pytest.raises(ValueError, match="ID de contenido no debe estar vacío"):
         RateContentRequest(
             content_id="",
             user_id="valid_user_id_456",
@@ -29,7 +29,7 @@ def test_when_content_id_is_missing_then_exception_is_raised():
 
 def test_when_content_id_is_too_short_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="Content ID must be at least 10 characters long"
+        ValueError, match="ID de contenido debe tener al menos 10 caracteres"
     ):
         RateContentRequest(
             content_id="short",
@@ -39,7 +39,9 @@ def test_when_content_id_is_too_short_then_exception_is_raised():
 
 
 def test_when_content_id_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Content ID must not exceed 100 characters"):
+    with pytest.raises(
+        ValueError, match="ID de contenido no debe exceder 100 caracteres"
+    ):
         RateContentRequest(
             content_id="a" * 101,
             user_id="valid_user_id_456",
@@ -48,7 +50,7 @@ def test_when_content_id_is_too_long_then_exception_is_raised():
 
 
 def test_when_user_id_is_missing_then_exception_is_raised():
-    with pytest.raises(ValueError, match="User ID must not be empty"):
+    with pytest.raises(ValueError, match="ID de usuario no debe estar vacío"):
         RateContentRequest(
             content_id="valid_content_id_123",
             user_id="",
@@ -57,7 +59,9 @@ def test_when_user_id_is_missing_then_exception_is_raised():
 
 
 def test_when_user_id_is_too_short_then_exception_is_raised():
-    with pytest.raises(ValueError, match="User ID must be at least 10 characters long"):
+    with pytest.raises(
+        ValueError, match="ID de usuario debe tener al menos 10 caracteres"
+    ):
         RateContentRequest(
             content_id="valid_content_id_123",
             user_id="short",
@@ -66,7 +70,9 @@ def test_when_user_id_is_too_short_then_exception_is_raised():
 
 
 def test_when_user_id_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="User ID must not exceed 100 characters"):
+    with pytest.raises(
+        ValueError, match="ID de usuario no debe exceder 100 caracteres"
+    ):
         RateContentRequest(
             content_id="valid_content_id_123",
             user_id="a" * 101,
@@ -75,7 +81,7 @@ def test_when_user_id_is_too_long_then_exception_is_raised():
 
 
 def test_when_rating_is_below_range_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Rating must be between 0 and 5"):
+    with pytest.raises(ValueError, match="Calificación debe estar entre 0 y 5"):
         RateContentRequest(
             content_id="valid_content_id_123",
             user_id="valid_user_id_456",
@@ -84,7 +90,7 @@ def test_when_rating_is_below_range_then_exception_is_raised():
 
 
 def test_when_rating_is_above_range_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Rating must be between 0 and 5"):
+    with pytest.raises(ValueError, match="Calificación debe estar entre 0 y 5"):
         RateContentRequest(
             content_id="valid_content_id_123",
             user_id="valid_user_id_456",

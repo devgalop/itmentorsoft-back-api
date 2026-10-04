@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.reports.get_users_by_role.get_users_by_role_request import (
     GetUsersByRoleRequest,
 )
@@ -25,7 +26,7 @@ class GetUsersByRoleHandler:
         ]
         return GetUsersByRoleResponse(
             is_success=True,
-            message="Users retrieved successfully",
+            message=t("report.users.retrieved"),
             total_users=len(users),
             users=users,
         )

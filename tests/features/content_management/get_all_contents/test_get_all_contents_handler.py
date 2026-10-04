@@ -36,7 +36,7 @@ async def test_get_all_contents_when_repository_returns_items_then_should_return
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Contents retrieved successfully"
+    assert response.message == "Contenidos obtenidos exitosamente"
     assert len(response.items) == 1
     assert response.total == 1
     content_repository.get_all_resource_contents.assert_called_once_with(0, 10)
@@ -54,7 +54,7 @@ async def test_get_all_contents_when_repository_returns_empty_then_should_return
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Contents retrieved successfully"
+    assert response.message == "Contenidos obtenidos exitosamente"
     assert response.items == []
     assert response.total == 0
     content_repository.get_all_resource_contents.assert_called_once_with(0, 10)

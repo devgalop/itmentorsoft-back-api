@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_pending_approval_questions.get_pending_approval_questions_request import (
     GetPendingApprovalQuestionsRequest,
 )
@@ -23,27 +24,27 @@ class GetPendingApprovalQuestionsHandler:
             if not pending_questions:
                 return GetPendingApprovalQuestionsResponse(
                     is_success=False,
-                    message="Failed to retrieve pending approval questions.",
+                    message=t("question.pending_approval.retrieval_failed"),
                     questions=[],
                     total=0,
                 )
             if pending_questions.total == 0:
                 return GetPendingApprovalQuestionsResponse(
                     is_success=True,
-                    message="No pending approval questions found.",
+                    message=t("question.pending_approval.none_found"),
                     questions=[],
                     total=0,
                 )
             return GetPendingApprovalQuestionsResponse(
                 is_success=True,
-                message="Pending approval questions retrieved successfully.",
+                message=t("question.pending_approval.retrieved"),
                 questions=pending_questions.items,
                 total=pending_questions.total,
             )
         except Exception as e:
             return GetPendingApprovalQuestionsResponse(
                 is_success=False,
-                message=f"Invalid request: {str(e)}",
+                message=t("question.pending_approval.invalid_request", error=str(e)),
                 questions=[],
                 total=0,
             )

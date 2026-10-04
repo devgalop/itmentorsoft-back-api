@@ -44,7 +44,7 @@ async def test_when_student_has_assessments_should_return_success_summary():
     )
 
     assert response.is_success is True
-    assert response.message == "Assessments summary retrieved successfully."
+    assert response.message == "Resumen de evaluaciones obtenido exitosamente"
     assert response.total_assessments == 2
     assert len(response.assessments) == 2
     assert response.assessments[0].assessment_id == "assessment_1"
@@ -72,7 +72,7 @@ async def test_when_student_has_no_assessments_should_return_failure():
     )
 
     assert response.is_success is False
-    assert response.message == "No assessments found for the student."
+    assert response.message == "No se encontraron evaluaciones para el estudiante"
     assert response.total_assessments == 0
     assert response.assessments == []
     assessment_repository.get_assessments_summary.assert_called_once_with(

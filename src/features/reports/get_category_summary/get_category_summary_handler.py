@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.reports.get_category_summary.get_category_summary_request import (
     GetCategorySummaryRequest,
 )
@@ -31,7 +32,7 @@ class GetCategorySummaryHandler:
         if summary.category == "" and summary.total_students == 0:
             return GetCategorySummaryResponse(
                 is_success=False,
-                message="Category summary not found",
+                message=t("report.category_summary.not_found"),
                 category_summary=summary,
             )
         return GetCategorySummaryResponse(

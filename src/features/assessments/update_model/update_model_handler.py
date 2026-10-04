@@ -9,6 +9,7 @@ from src.features.assessments.update_model.update_model_request import (
 from src.features.assessments.update_model.update_model_response import (
     UpdateModelResponse,
 )
+from src.i18n import t
 
 
 class UpdateModelHandler:
@@ -24,7 +25,7 @@ class UpdateModelHandler:
         try:
             if request.process not in [process.value for process in AvailableProcesses]:
                 return UpdateModelResponse(
-                    is_success=False, message="Invalid process specified"
+                    is_success=False, message=t("model.process.invalid")
                 )
 
             process = AvailableProcesses(request.process)
@@ -32,14 +33,12 @@ class UpdateModelHandler:
             available_models = await self.model_explorer_service.get_available_models()
             if request.model_id not in available_models:
                 return UpdateModelResponse(
-                    is_success=False, message="Model ID not found in available models"
+                    is_success=False, message=t("model.id.not_found")
                 )
 
             await self.model_selector_service.set_selected_model(
                 process=process, model_name=request.model_id
             )
-            return UpdateModelResponse(
-                is_success=True, message="Model updated successfully"
-            )
+            return UpdateModelResponse(is_success=True, message=t("model.updated"))
         except Exception as e:
             return UpdateModelResponse(is_success=False, message=str(e))

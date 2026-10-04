@@ -8,6 +8,7 @@ from src.features.assessments.save_review_question.save_review_question_response
 )
 from itmentorsoft_persistence.dto import QuestionReview
 from itmentorsoft_persistence.repositories import QuestionRepository, UserRepository
+from src.i18n import t
 
 
 class ReviewQuestionService:
@@ -24,14 +25,16 @@ class ReviewQuestionService:
         if not user:
             return SaveReviewQuestionResponse(
                 is_success=False,
-                message=f"Reviewer with ID {request.reviewer_id} does not exist.",
+                message=t("reviewer.not_found", reviewer_id=request.reviewer_id),
             )
 
         question = await self.question_repository.get_question(request.question_id)
         if not question:
             return SaveReviewQuestionResponse(
                 is_success=False,
-                message=f"Question with ID {request.question_id} does not exist.",
+                message=t(
+                    "question.not_found_with_id", question_id=request.question_id
+                ),
             )
 
         await self.question_repository.save_review(
@@ -48,5 +51,5 @@ class ReviewQuestionService:
         )
 
         return SaveReviewQuestionResponse(
-            is_success=True, message="Review comments saved successfully."
+            is_success=True, message=t("review.comments_saved")
         )

@@ -16,6 +16,7 @@ from src.features.user_management.shared.dependencies import (
     get_token_generator,
 )
 from src.features.user_management.shared.token_generator import TokenGenerator
+from src.i18n import t
 
 router = APIRouter()
 
@@ -90,12 +91,14 @@ async def refresh_session(
     """
     refresh_token_cookie = request_http.cookies.get("refresh_token")
     if not refresh_token_cookie:
-        raise HTTPException(status_code=401, detail="Refresh token cookie missing")
+        raise HTTPException(
+            status_code=401, detail=t("auth.refresh_token.cookie_missing")
+        )
     token_info = token_generator.validate_token(
         credentials.credentials, verify_exp=False
     )
     if not token_info:
-        raise HTTPException(status_code=401, detail="Invalid access token")
+        raise HTTPException(status_code=401, detail=t("auth.access_token.invalid"))
 
     refresh_token_request = RefreshTokenRequest(
         user_id=token_info.user_id,
@@ -111,7 +114,7 @@ async def refresh_session(
         or not response.refresh_token
         or not response.expiration_time
     ):
-        raise HTTPException(status_code=500, detail="Token generation failed")
+        raise HTTPException(status_code=500, detail=t("auth.token.generation_failed"))
 
     response_http.set_cookie(
         key="refresh_token", value=response.refresh_token, httponly=True, secure=True

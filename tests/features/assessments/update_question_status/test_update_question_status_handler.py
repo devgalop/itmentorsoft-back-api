@@ -19,7 +19,7 @@ async def test_when_question_exists_and_status_updated_then_should_return_succes
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Question status updated successfully"
+    assert response.message == "Estado de pregunta actualizado exitosamente"
     assert response.question_id == "question_12345"
     assert response.new_status is True
     question_repository.update_question_status.assert_called_once_with(
@@ -37,7 +37,7 @@ async def test_when_question_not_found_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Question with ID nonexistent_123 not found"
+    assert response.message == "Pregunta con ID nonexistent_123 no encontrada"
     assert response.question_id == ""
     assert response.new_status is False
     question_repository.update_question_status.assert_called_once_with(

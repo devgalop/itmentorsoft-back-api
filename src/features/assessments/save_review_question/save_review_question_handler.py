@@ -8,6 +8,7 @@ from itmentorsoft_persistence.dto import QuestionStatus
 from src.features.assessments.shared.review_question_service import (
     ReviewQuestionService,
 )
+from src.i18n import t
 
 
 class SaveReviewQuestionHandler:
@@ -21,6 +22,10 @@ class SaveReviewQuestionHandler:
         if request.status not in valid_statuses:
             return SaveReviewQuestionResponse(
                 is_success=False,
-                message=f"Invalid status '{request.status}'. Valid statuses are: {', '.join(valid_statuses)}",
+                message=t(
+                    "question.review.invalid_status",
+                    status=request.status,
+                    valid_statuses=", ".join(valid_statuses),
+                ),
             )
         return await self.review_service.review_question(request)

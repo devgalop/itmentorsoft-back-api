@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_questions_by_level.get_questions_by_level_request import (
     GetQuestionsByLevelRequest,
 )
@@ -30,12 +31,12 @@ class GetQuestionsByLevelHandler:
             ]
             return GetQuestionsByLevelResponse(
                 is_success=True,
-                message="Questions retrieved successfully",
+                message=t("question.list.retrieved"),
                 questions=questions_data,
             )
         except Exception as e:
             return GetQuestionsByLevelResponse(
                 is_success=False,
-                message=f"An error occurred while retrieving questions: {str(e)}",
+                message=t("question.list.retrieval_failed", error=str(e)),
                 questions=[],
             )

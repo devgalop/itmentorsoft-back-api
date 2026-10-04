@@ -18,17 +18,21 @@ def test_when_category_has_whitespace_then_strips_it():
 
 
 def test_when_category_is_too_short_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="at least 3 characters"):
+    with pytest.raises(
+        ValidationError, match="Categoría debe tener al menos 3 caracteres"
+    ):
         GetContentsByCategoryRequest(category="Py")
 
 
 def test_when_category_is_too_long_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="exceed 100 characters"):
+    with pytest.raises(
+        ValidationError, match="Categoría no debe exceder 100 caracteres"
+    ):
         GetContentsByCategoryRequest(category="a" * 101)
 
 
 def test_when_category_is_empty_whitespace_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="must not be empty"):
+    with pytest.raises(ValidationError, match="Categoría no debe estar vacía"):
         GetContentsByCategoryRequest(category="   ")
 
 
@@ -39,17 +43,23 @@ def test_when_pagination_uses_defaults_then_page_is_zero_and_page_size_is_ten():
 
 
 def test_when_page_is_negative_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="at least 0"):
+    with pytest.raises(
+        ValidationError, match="Número de página debe ser un entero no negativo"
+    ):
         GetContentsByCategoryPaginationRequest(category="Python", page=-1)
 
 
 def test_when_page_size_is_zero_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="between 1 and 100"):
+    with pytest.raises(
+        ValidationError, match="Tamaño de página debe estar entre 1 y 100"
+    ):
         GetContentsByCategoryPaginationRequest(category="Python", page_size=0)
 
 
 def test_when_page_size_exceeds_100_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="between 1 and 100"):
+    with pytest.raises(
+        ValidationError, match="Tamaño de página debe estar entre 1 y 100"
+    ):
         GetContentsByCategoryPaginationRequest(category="Python", page_size=101)
 
 

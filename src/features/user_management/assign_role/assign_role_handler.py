@@ -8,6 +8,7 @@ from itmentorsoft_persistence.dto import (
     AssignRoleToUserCommand as AssignRoleToUserCommandDTO,
 )
 from itmentorsoft_persistence.repositories import RoleRepository, UserRepository
+from src.i18n import t
 
 
 class AssignRoleHandler:
@@ -30,7 +31,7 @@ class AssignRoleHandler:
             available_roles = await self.role_repository.get_available_roles()
             if request.role not in [role.name for role in available_roles]:
                 return AssignRoleResponse(
-                    is_success=False, message="Invalid role specified."
+                    is_success=False, message=t("user.role.invalid")
                 )
             role_selected = available_roles[
                 [role.name for role in available_roles].index(request.role)
@@ -39,8 +40,6 @@ class AssignRoleHandler:
                 user_id=request.user_id, role_id=role_selected.role_id
             )
             await self.user_repository.assign_role_to_user(assign_role_command)
-            return AssignRoleResponse(
-                is_success=True, message="Role assigned successfully."
-            )
+            return AssignRoleResponse(is_success=True, message=t("user.role.assigned"))
         except Exception as e:
             return AssignRoleResponse(is_success=False, message=str(e))

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class AssessmentAnswer(BaseModel):
@@ -13,7 +14,7 @@ class AssessmentAnswer(BaseModel):
         if len(value) > 200:
             raise ValueError("question_id must not exceed 200 characters")
         if len(value) < 5:
-            raise ValueError("question_id must be at least 5 characters long")
+            raise ValueError(t("validation.question_id.min_length"))
         return value
 
     @field_validator("answer")

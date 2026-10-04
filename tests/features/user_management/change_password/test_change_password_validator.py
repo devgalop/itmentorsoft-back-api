@@ -41,40 +41,38 @@ def test_when_id_trx_is_missing_then_validation_error():
 
 
 def test_when_new_password_is_missing_then_validation_error():
-    with pytest.raises(ValueError, match="Password is required"):
+    with pytest.raises(ValueError, match="Contraseña es requerida"):
         ChangePasswordRequest(new_password="")
 
 
 def test_when_new_password_is_too_short_then_validation_error():
     new_pass = "Ab1!"
-    with pytest.raises(ValueError, match="Password must be at least 6 characters long"):
+    with pytest.raises(ValueError, match="Contraseña debe tener al menos 6 caracteres"):
         ChangePasswordRequest(new_password=new_pass)
 
 
 def test_when_new_password_is_too_long_then_validation_error():
     new_pass = "A" * 21 + "1!"
-    with pytest.raises(
-        ValueError, match="Password must be no more than 20 characters long"
-    ):
+    with pytest.raises(ValueError, match="Contraseña no debe exceder 20 caracteres"):
         ChangePasswordRequest(new_password=new_pass)
 
 
 def test_when_new_password_has_no_digit_then_validation_error():
     new_pass = "NewSecPass!"
-    with pytest.raises(ValueError, match="Password must contain at least one digit"):
+    with pytest.raises(ValueError, match="Contraseña debe contener al menos un dígito"):
         ChangePasswordRequest(new_password=new_pass)
 
 
 def test_when_new_password_has_no_letter_then_validation_error():
     new_pass = "12345678!"
-    with pytest.raises(ValueError, match="Password must contain at least one letter"):
+    with pytest.raises(ValueError, match="Contraseña debe contener al menos una letra"):
         ChangePasswordRequest(new_password=new_pass)
 
 
 def test_when_new_password_has_no_special_char_then_validation_error():
     new_pass = "NewSecPass123"
     with pytest.raises(
-        ValueError, match="Password must contain at least one special character"
+        ValueError, match="Contraseña debe contener al menos un carácter especial"
     ):
         ChangePasswordRequest(new_password=new_pass)
 

@@ -14,6 +14,7 @@ from src.features.reports.get_category_summary.get_category_summary_response imp
 from src.features.reports.shared.dependencies import get_get_category_summary_handler
 from src.features.user_management.shared.require_roles import require_roles
 from src.features.user_management.shared.token_generator import TokenData
+from src.i18n import t
 
 router = APIRouter()
 
@@ -88,7 +89,7 @@ async def get_category_summary(
     _: Annotated[TokenData, Depends(require_roles(["admin", "teacher"]))],
 ) -> GetCategorySummaryResponse:
     if not category:
-        raise HTTPException(status_code=400, detail="Category parameter is required.")
+        raise HTTPException(status_code=400, detail=t("validation.category.required"))
     try:
         request = GetCategorySummaryRequest(category=category)
         response = await handler.handle(request)

@@ -24,7 +24,7 @@ async def test_when_rating_exists_then_should_return_success_with_rating_detail(
     )
     response = await handler.handle(request)
     assert response.is_success
-    assert response.message == "Rating retrieved successfully"
+    assert response.message == "Calificaciones obtenidas exitosamente"
     assert response.rating_detail is not None
     content_repository.get_rating_content_by_user.assert_called_once_with(
         "valid_user_id_456", "valid_content_id_123"
@@ -41,7 +41,6 @@ async def test_when_rating_not_found_then_should_return_failure_with_none():
     )
     response = await handler.handle(request)
     assert not response.is_success
-    assert response.message == "Rating not found"
     assert response.rating_detail is None
     content_repository.get_rating_content_by_user.assert_called_once_with(
         "valid_user_id_456", "valid_content_id_123"

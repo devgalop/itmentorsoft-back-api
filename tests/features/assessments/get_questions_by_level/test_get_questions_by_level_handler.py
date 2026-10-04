@@ -37,7 +37,7 @@ async def test_when_questions_exist_then_should_return_questions_successfully():
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Questions retrieved successfully"
+    assert response.message == "Preguntas obtenidas exitosamente"
     assert len(response.questions) == 2
 
 
@@ -52,7 +52,7 @@ async def test_when_no_questions_exist_then_should_return_empty_list():
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Questions retrieved successfully"
+    assert response.message == "Preguntas obtenidas exitosamente"
     assert response.questions == []
 
 
@@ -100,5 +100,5 @@ async def test_when_repository_raises_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert "An error occurred while retrieving questions" in response.message
+    assert "Ocurrió un error al obtener las preguntas" in response.message
     assert response.questions == []

@@ -111,7 +111,7 @@ async def test_when_token_is_revoked_should_raise_http_exception():
         user_repository, refresh_token_repository, password_hasher, token_generator
     )
 
-    with pytest.raises(HTTPException, match="Refresh token revoked"):
+    with pytest.raises(HTTPException, match="Token de refresh revocado"):
         await handler.handle(
             RefreshTokenRequest(
                 user_id="user_id", user_name="testuser", refresh_token="some-token"

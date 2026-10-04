@@ -33,13 +33,13 @@ def test_when_question_id_is_valid_then_no_exception_is_raised():
 
 
 def test_when_question_id_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="question_id must not be empty"):
+    with pytest.raises(ValueError, match="question_id no debe estar vacío"):
         make_valid_request(question_id="")
 
 
 def test_when_question_id_is_too_short_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="question_id must be at least 5 characters long"
+        ValueError, match="question_id debe tener al menos 5 caracteres"
     ):
         make_valid_request(question_id="abc")
 
@@ -55,7 +55,7 @@ def test_when_question_id_is_at_maximum_boundary_then_no_exception_is_raised():
 
 
 def test_when_question_id_exceeds_maximum_then_exception_is_raised():
-    with pytest.raises(ValueError, match="question_id must not exceed 100 characters"):
+    with pytest.raises(ValueError, match="question_id no debe exceder 100 caracteres"):
         make_valid_request(question_id="q" * 101)
 
 
@@ -68,13 +68,13 @@ def test_when_reviewer_id_is_valid_then_no_exception_is_raised():
 
 
 def test_when_reviewer_id_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="reviewer_id must not be empty"):
+    with pytest.raises(ValueError, match="reviewer_id no debe estar vacío"):
         make_valid_request(reviewer_id="")
 
 
 def test_when_reviewer_id_is_too_short_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="reviewer_id must be at least 5 characters long"
+        ValueError, match="reviewer_id debe tener al menos 5 caracteres"
     ):
         make_valid_request(reviewer_id="abc")
 
@@ -90,7 +90,7 @@ def test_when_reviewer_id_is_at_maximum_boundary_then_no_exception_is_raised():
 
 
 def test_when_reviewer_id_exceeds_maximum_then_exception_is_raised():
-    with pytest.raises(ValueError, match="reviewer_id must not exceed 100 characters"):
+    with pytest.raises(ValueError, match="reviewer_id no debe exceder 100 caracteres"):
         make_valid_request(reviewer_id="u" * 101)
 
 
@@ -103,13 +103,13 @@ def test_when_review_comments_is_valid_then_no_exception_is_raised():
 
 
 def test_when_review_comments_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="review_comments must not be empty"):
+    with pytest.raises(ValueError, match="review_comments no debe estar vacío"):
         make_valid_request(review_comments="")
 
 
 def test_when_review_comments_is_too_short_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="review_comments must be at least 10 characters long"
+        ValueError, match="review_comments debe tener al menos 10 caracteres"
     ):
         make_valid_request(review_comments="short")
 
@@ -126,7 +126,7 @@ def test_when_review_comments_is_at_maximum_boundary_then_no_exception_is_raised
 
 def test_when_review_comments_exceeds_maximum_then_exception_is_raised():
     with pytest.raises(
-        ValueError, match="review_comments must not exceed 1000 characters"
+        ValueError, match="review_comments no debe exceder 1000 caracteres"
     ):
         make_valid_request(review_comments="c" * 1001)
 
@@ -140,7 +140,7 @@ def test_when_status_is_valid_then_no_exception_is_raised():
 
 
 def test_when_status_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="status must not be empty"):
+    with pytest.raises(ValueError, match="status no debe estar vacío"):
         make_valid_request(status="")
 
 

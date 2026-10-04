@@ -17,7 +17,7 @@ async def test_when_topics_exist_should_return_success():
     response = await handler.handle()
 
     assert response.is_success is True
-    assert response.message == "Topics with status published retrieved successfully."
+    assert response.message == "Temas publicados obtenidos exitosamente"
     assert response.topics == ["Math", "Science", "History"]
     question_repository.get_questions_topics.assert_called_once()
 
@@ -31,7 +31,7 @@ async def test_when_topics_is_empty_should_return_failure():
     response = await handler.handle()
 
     assert response.is_success is False
-    assert response.message == "No topics found."
+    assert response.message == "No se encontraron temas"
     assert response.topics == []
     question_repository.get_questions_topics.assert_called_once()
 

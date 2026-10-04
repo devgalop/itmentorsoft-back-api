@@ -27,6 +27,7 @@ from itmentorsoft_persistence.repositories import (
 )
 
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.i18n import t
 
 _rng = SystemRandom()
 
@@ -129,7 +130,7 @@ class GetAssessmentService:
 
         return GetAssessmentResponse(
             is_success=True,
-            message="Assessment retrieved successfully",
+            message=t("assessment.retrieved"),
             assessment_id=assessment_id,
             questions=questions,
         )
@@ -217,7 +218,7 @@ class GetAssessmentService:
 
         return GetAssessmentByTopicResponse(
             is_success=True,
-            message="Assessment retrieved successfully",
+            message=t("assessment.retrieved"),
             assessment_id=assessment_id,
             topic_id=request.topic_id,
             questions=questions,

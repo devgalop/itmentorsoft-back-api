@@ -10,17 +10,15 @@ def test_when_request_is_valid_then_exception_is_not_raised():
 
 
 def test_when_student_id_is_empty_then_exception_is_raised():
-    with pytest.raises(ValueError, match="student_id must not be empty"):
+    with pytest.raises(ValueError, match="student_id no debe estar vacío"):
         GetStudentProgressRequest(student_id="")
 
 
 def test_when_student_id_is_too_short_then_exception_is_raised():
-    with pytest.raises(
-        ValueError, match="student_id must be at least 5 characters long"
-    ):
+    with pytest.raises(ValueError, match="student_id debe tener al menos 5 caracteres"):
         GetStudentProgressRequest(student_id="abcd")
 
 
 def test_when_student_id_is_too_long_then_exception_is_raised():
-    with pytest.raises(ValueError, match="student_id must not exceed 100 characters"):
+    with pytest.raises(ValueError, match="student_id no debe exceder 100 caracteres"):
         GetStudentProgressRequest(student_id="a" * 101)

@@ -18,6 +18,7 @@ from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
 )
 from src.infrastructure.security.bcrypt_password_hasher import BcryptPasswordHasher
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.i18n import t
 
 
 @asynccontextmanager
@@ -63,7 +64,7 @@ async def global_exception_handler(request: Request, exc: Exception):
         status_code=500,
         content={
             "status": 500,
-            "message": "An unexpected error occurred",
+            "message": t("error.unexpected"),
             "path": request.url.path,
         },
     )

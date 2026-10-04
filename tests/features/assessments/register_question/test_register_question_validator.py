@@ -31,61 +31,57 @@ def test_when_request_is_valid_then_exception_is_not_raised():
 
 def test_when_text_is_empty_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "text": ""}
-    with pytest.raises(ValueError, match="Text cannot be empty"):
+    with pytest.raises(ValueError, match="Texto no puede estar vacío"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_text_is_too_short_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "text": "short"}
-    with pytest.raises(ValueError, match="Text must be at least 20 characters long"):
+    with pytest.raises(ValueError, match="Texto debe tener al menos 20 caracteres"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_text_is_too_long_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "text": "a" * 501}
-    with pytest.raises(ValueError, match="Text cannot be longer than 500 characters"):
+    with pytest.raises(ValueError, match="Texto no puede exceder 500 caracteres"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_concept_is_empty_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "concept": ""}
-    with pytest.raises(ValueError, match="Concept cannot be empty"):
+    with pytest.raises(ValueError, match="Concepto no puede estar vacío"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_concept_is_too_short_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "concept": "short"}
-    with pytest.raises(ValueError, match="Concept must be at least 10 characters long"):
+    with pytest.raises(ValueError, match="Concepto debe tener al menos 10 caracteres"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_concept_is_too_long_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "concept": "a" * 151}
-    with pytest.raises(
-        ValueError, match="Concept cannot be longer than 150 characters"
-    ):
+    with pytest.raises(ValueError, match="Concepto no puede exceder 150 caracteres"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_definition_is_empty_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "definition": ""}
-    with pytest.raises(ValueError, match="Definition cannot be empty"):
+    with pytest.raises(ValueError, match="Definición no puede estar vacía"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_definition_is_too_short_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "definition": "short"}
     with pytest.raises(
-        ValueError, match="Definition must be at least 20 characters long"
+        ValueError, match="Definición debe tener al menos 20 caracteres"
     ):
         RegisterQuestionRequest(**data)
 
 
 def test_when_definition_is_too_long_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "definition": "a" * 501}
-    with pytest.raises(
-        ValueError, match="Definition cannot be longer than 500 characters"
-    ):
+    with pytest.raises(ValueError, match="Definición no puede exceder 500 caracteres"):
         RegisterQuestionRequest(**data)
 
 
@@ -95,14 +91,16 @@ def test_when_common_misconception_has_less_than_2_items_then_exception_is_raise
         "common_misconception": ["Only one item here for test"],
     }
     with pytest.raises(
-        ValueError, match="Common misconception must have at least 2 items"
+        ValueError, match="Conceptos erróneos comunes debe tener al menos 2 elementos"
     ):
         RegisterQuestionRequest(**data)
 
 
 def test_when_common_misconception_is_empty_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "common_misconception": []}
-    with pytest.raises(ValueError, match="Common misconception cannot be empty"):
+    with pytest.raises(
+        ValueError, match="Conceptos erróneos comunes no puede estar vacío"
+    ):
         RegisterQuestionRequest(**data)
 
 
@@ -111,7 +109,7 @@ def test_when_rubric_score_is_out_of_range_then_exception_is_raised():
         **VALID_REGISTER_REQUEST,
         "rubric": [{"score": 5, "criteria": "This is a valid criteria text"}],
     }
-    with pytest.raises(ValueError, match="Score must be between 0 and 3"):
+    with pytest.raises(ValueError, match="Puntuación debe estar entre 0 y 3"):
         RegisterQuestionRequest(**data)
 
 
@@ -120,13 +118,13 @@ def test_when_rubric_criteria_is_too_short_then_exception_is_raised():
         **VALID_REGISTER_REQUEST,
         "rubric": [{"score": 1, "criteria": "Short"}],
     }
-    with pytest.raises(
-        ValueError, match="Criteria must be at least 10 characters long"
-    ):
+    with pytest.raises(ValueError, match="Criterio debe tener al menos 10 caracteres"):
         RegisterQuestionRequest(**data)
 
 
 def test_when_semantic_keywords_is_empty_then_exception_is_raised():
     data = {**VALID_REGISTER_REQUEST, "semantic_keywords": []}
-    with pytest.raises(ValueError, match="Semantic keywords cannot be empty"):
+    with pytest.raises(
+        ValueError, match="Palabras clave semánticas no puede estar vacío"
+    ):
         RegisterQuestionRequest(**data)

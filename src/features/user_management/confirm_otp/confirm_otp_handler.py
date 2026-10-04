@@ -17,6 +17,7 @@ from src.features.user_management.shared.token_generator import (
     TokenGenerator,
     TokenRequest,
 )
+from src.i18n import t
 
 
 class ConfirmOTPHandler:
@@ -36,17 +37,19 @@ class ConfirmOTPHandler:
 
         user = await self.user_repository.get_user_by_id(request.user_id)
         if not user:
-            return ConfirmOTPResponse(is_successful=False, message="User not found")
+            return ConfirmOTPResponse(is_successful=False, message=t("user.not_found"))
 
         user_otp = await self.user_repository.get_user_otp(request.user_id)
 
         if not user_otp or not user_otp.otp or user_otp.expiration_time < int(time()):
             return ConfirmOTPResponse(
-                is_successful=False, message="OTP has expired or is invalid"
+                is_successful=False, message=t("user.otp.expired_or_invalid")
             )
 
         if request.otp != user_otp.otp:
-            return ConfirmOTPResponse(is_successful=False, message="Invalid OTP")
+            return ConfirmOTPResponse(
+                is_successful=False, message=t("user.otp.invalid")
+            )
 
         await self.user_repository.revoke_otp_codes(request.user_id)
 
@@ -69,7 +72,7 @@ class ConfirmOTPHandler:
 
         return ConfirmOTPResponse(
             is_successful=True,
-            message="OTP confirmed successfully",
+            message=t("user.otp.confirmed"),
             token=token_response.token,
             expiration_time=token_response.expiration_time,
             refresh_token=refresh_token_response.token,

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class GetAllQuestionsByVersionsRequest(BaseModel):
@@ -8,13 +9,13 @@ class GetAllQuestionsByVersionsRequest(BaseModel):
     @field_validator("page")
     def validate_page(cls, value: int) -> int:
         if value < 0:
-            raise ValueError("Page must be a non-negative integer")
+            raise ValueError(t("validation.page.non_negative"))
         return value
 
     @field_validator("page_size")
     def validate_page_size(cls, value: int) -> int:
         if value < 1:
-            raise ValueError("Page size must be at least 1")
+            raise ValueError(t("validation.page_size.min"))
         if value > 100:
-            raise ValueError("Page size must not exceed 100")
+            raise ValueError(t("validation.page_size.max"))
         return value

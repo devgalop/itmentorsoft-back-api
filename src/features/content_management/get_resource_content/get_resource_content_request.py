@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class GetResourceRequest(BaseModel):
@@ -7,9 +8,9 @@ class GetResourceRequest(BaseModel):
     @field_validator("content_id")
     def validate_content_id(cls, value: str) -> str:
         if not value:
-            raise ValueError("Content ID must not be empty")
+            raise ValueError(t("validation.content_id.required"))
         if len(value) > 100:
-            raise ValueError("Content ID must not exceed 100 characters")
+            raise ValueError(t("validation.content_id.max_length"))
         if len(value) < 10:
-            raise ValueError("Content ID must be at least 10 characters long")
+            raise ValueError(t("validation.content_id.min_length"))
         return value

@@ -35,7 +35,7 @@ async def test_register_content_when_is_valid_then_should_register_content_succe
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Content registered successfully"
+    assert response.message == "Contenido registrado exitosamente"
     content_repository.get_resource_contents_by_title.assert_called_once()
     content_repository.save.assert_called_once()
 
@@ -62,7 +62,7 @@ async def test_register_content_when_title_already_exists_should_return_failure(
 
     assert not response.is_success
     assert response.content_id is None
-    assert response.message == "Content with the same title already exists"
+    assert response.message == "Ya existe contenido con el mismo título"
     content_repository.get_resource_contents_by_title.assert_called_once()
     content_repository.save.assert_not_called()
 
@@ -87,7 +87,7 @@ async def test_register_content_when_category_is_invalid_should_return_failure()
 
     assert not response.is_success
     assert response.content_id is None
-    assert response.message == "Invalid category provided"
+    assert response.message == "Categoría proporcionada inválida"
     content_repository.get_resource_contents_by_title.assert_called_once()
     content_repository.save.assert_not_called()
 
@@ -166,7 +166,7 @@ async def test_register_content_when_request_is_valid_should_return_content_id()
     assert response.is_success
     assert response.content_id is not None
     assert isinstance(response.content_id, str)
-    assert response.message == "Content registered successfully"
+    assert response.message == "Contenido registrado exitosamente"
     content_repository.get_resource_contents_by_title.assert_called_once()
     content_repository.save.assert_called_once()
 

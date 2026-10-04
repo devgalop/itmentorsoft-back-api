@@ -19,7 +19,7 @@ async def test_when_repository_returns_true_should_return_success():
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Resource content status has been updated"
+    assert response.message == "El estado del contenido ha sido actualizado"
     assert response.content_id == "content_123"
     assert response.new_status is True
     content_repository.update_resource_status.assert_called_once_with(
@@ -37,7 +37,7 @@ async def test_when_repository_returns_false_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Status cannot be updated"
+    assert response.message == "El estado no puede ser actualizado"
     assert response.content_id == ""
     assert response.new_status is False
     content_repository.update_resource_status.assert_called_once_with(

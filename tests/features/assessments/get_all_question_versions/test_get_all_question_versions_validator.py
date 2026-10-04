@@ -35,7 +35,5 @@ def test_question_id_too_short_raises_error():
 
 def test_question_id_too_long_raises_error():
     question_id = "q" * 101
-    with pytest.raises(
-        ValueError, match="question_id must be at most 100 characters long"
-    ):
+    with pytest.raises(ValueError, match="question_id no debe exceder 100 caracteres"):
         GetAllQuestionVersionsRequest(question_id=question_id)

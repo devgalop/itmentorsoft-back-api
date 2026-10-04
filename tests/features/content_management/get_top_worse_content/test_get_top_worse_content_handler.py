@@ -34,7 +34,10 @@ async def test_when_content_exists_should_return_top_worse_content():
     response = await handler.handle(GetTopWorseContentRequest(topic="python", limit=5))
 
     assert response.is_success is True
-    assert response.message == "Top worse content retrieved successfully."
+    assert (
+        response.message
+        == "Contenido con las calificaciones más bajas obtenido exitosamente"
+    )
     assert len(response.items) == 2
     assert response.items[0].content_id == "id_1"
     assert response.items[0].rating == 1.2
@@ -55,7 +58,10 @@ async def test_when_no_content_found_should_return_failure_response():
     )
 
     assert response.is_success is False
-    assert response.message == "No top worse content found for the given topic."
+    assert (
+        response.message
+        == "No se encontró contenido con las calificaciones más bajas para el tema proporcionado"
+    )
     assert response.items == []
     content_repository.get_top_content.assert_called_once_with(
         topic="unknown_topic", limit=10, order="asc"

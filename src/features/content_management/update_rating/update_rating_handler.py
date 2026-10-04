@@ -6,6 +6,7 @@ from src.features.content_management.update_rating.update_rating_request import 
 from src.features.content_management.update_rating.update_rating_response import (
     UpdateRatingResponse,
 )
+from src.i18n import t
 
 
 class UpdateRatingHandler:
@@ -17,7 +18,9 @@ class UpdateRatingHandler:
             request.user_id, request.content_id
         )
         if not rating_found:
-            return UpdateRatingResponse(is_success=False, message="Rating not found")
+            return UpdateRatingResponse(
+                is_success=False, message=t("content.rating.not_found")
+            )
 
         await self.content_repository.update_rating(
             RateContent(
@@ -29,5 +32,5 @@ class UpdateRatingHandler:
             )
         )
         return UpdateRatingResponse(
-            is_success=True, message="Rating updated successfully"
+            is_success=True, message=t("content.rating.updated")
         )

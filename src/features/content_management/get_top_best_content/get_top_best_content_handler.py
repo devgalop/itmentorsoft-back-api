@@ -9,6 +9,7 @@ from itmentorsoft_persistence.dto import TopContentOrder
 from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
+from src.i18n import t
 
 
 class GetTopBestContentHandler:
@@ -26,7 +27,7 @@ class GetTopBestContentHandler:
         if not top_content:
             return GetTopBestContentResponse(
                 is_success=False,
-                message="No top best content found for the given topic.",
+                message=t("content.top.none_found"),
                 items=[],
             )
 
@@ -41,6 +42,6 @@ class GetTopBestContentHandler:
         ]
         return GetTopBestContentResponse(
             is_success=True,
-            message="Top best content retrieved successfully.",
+            message=t("content.top.retrieved"),
             items=items,
         )

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, field_validator
+from src.i18n import t
 
 
 class UpdateResourceContentRequest(BaseModel):
@@ -11,27 +12,27 @@ class UpdateResourceContentRequest(BaseModel):
     @field_validator("title")
     def validate_title(cls, value: str) -> str:
         if not value:
-            raise ValueError("Title must not be empty")
+            raise ValueError(t("validation.title.required"))
         if len(value) < 5:
-            raise ValueError("Title must be at least 5 characters long")
+            raise ValueError(t("validation.title.min_length_5"))
         if len(value) > 150:
-            raise ValueError("Title must not exceed 150 characters")
+            raise ValueError(t("validation.title.max_length_150"))
         return value
 
     @field_validator("description")
     def validate_description(cls, value: str) -> str:
         if not value:
-            raise ValueError("Description must not be empty")
+            raise ValueError(t("validation.description.required"))
         if len(value) < 10:
-            raise ValueError("Description must be at least 10 characters long")
+            raise ValueError(t("validation.description.min_length"))
         if len(value) > 300:
-            raise ValueError("Description must not exceed 300 characters")
+            raise ValueError(t("validation.description.max_length"))
         return value
 
     @field_validator("url")
     def validate_url(cls, value: str) -> str:
         if not value:
-            raise ValueError("URL must not be empty")
+            raise ValueError(t("validation.url.required"))
         if not value.startswith("https://"):
-            raise ValueError("Invalid URL format, must start with https://")
+            raise ValueError(t("validation.url.format"))
         return value

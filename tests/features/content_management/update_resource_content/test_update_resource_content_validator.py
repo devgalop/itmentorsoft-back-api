@@ -33,17 +33,19 @@ def test_when_title_is_valid_then_exception_is_not_raised():
 
 
 def test_when_title_is_too_short_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="at least 5 characters"):
+    with pytest.raises(
+        ValidationError, match="Título debe tener al menos 5 caracteres"
+    ):
         make_valid_request(title="Py")
 
 
 def test_when_title_is_too_long_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="exceed 150 characters"):
+    with pytest.raises(ValidationError, match="Título no debe exceder 150 caracteres"):
         make_valid_request(title="a" * 151)
 
 
 def test_when_title_is_empty_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="must not be empty"):
+    with pytest.raises(ValidationError, match="Título no debe estar vacío"):
         make_valid_request(title="")
 
 
@@ -66,17 +68,21 @@ def test_when_description_is_valid_then_exception_is_not_raised():
 
 
 def test_when_description_is_too_short_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="at least 10 characters"):
+    with pytest.raises(
+        ValidationError, match="Descripción debe tener al menos 10 caracteres"
+    ):
         make_valid_request(description="Short")
 
 
 def test_when_description_is_too_long_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="exceed 300 characters"):
+    with pytest.raises(
+        ValidationError, match="Descripción no debe exceder 300 caracteres"
+    ):
         make_valid_request(description="a" * 301)
 
 
 def test_when_description_is_empty_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="must not be empty"):
+    with pytest.raises(ValidationError, match="Descripción no debe estar vacía"):
         make_valid_request(description="")
 
 
@@ -99,12 +105,14 @@ def test_when_url_is_valid_then_exception_is_not_raised():
 
 
 def test_when_url_is_empty_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="must not be empty"):
+    with pytest.raises(ValidationError, match="URL no debe estar vacía"):
         make_valid_request(url="")
 
 
 def test_when_url_does_not_start_with_https_then_raises_validation_error():
-    with pytest.raises(ValidationError, match="must start with https://"):
+    with pytest.raises(
+        ValidationError, match="Formato de URL inválido, debe comenzar con https://"
+    ):
         make_valid_request(url="http://example.com")
 
 

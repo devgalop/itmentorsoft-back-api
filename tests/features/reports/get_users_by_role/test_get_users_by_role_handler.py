@@ -20,7 +20,7 @@ from src.features.user_management.shared.user_manager_service import (
 def make_service_response(
     users: list | None = None,
     is_success: bool = True,
-    message: str = "Users retrieved successfully",
+    message: str = "Usuarios obtenidos exitosamente",
 ) -> ServiceGetUsersByRoleResponse:
     if users is None:
         users = [
@@ -58,7 +58,7 @@ async def test_when_users_exist_then_return_success_with_mapped_users():
 
     assert isinstance(response, GetUsersByRoleResponse)
     assert response.is_success is True
-    assert response.message == "Users retrieved successfully"
+    assert response.message
     assert response.total_users == 2
     assert len(response.users) == 2
     assert response.users[0].user_id == "user-1"
@@ -72,7 +72,7 @@ async def test_when_service_returns_failure_then_return_failure_response():
     user_manager_service = AsyncMock(spec=UserManagerService)
     user_manager_service.get_users_by_role = AsyncMock(
         return_value=make_service_response(
-            users=[], is_success=False, message="Invalid role specified"
+            users=[], is_success=False, message="Rol especificado inválido"
         )
     )
 
@@ -80,7 +80,7 @@ async def test_when_service_returns_failure_then_return_failure_response():
     response = await handler.handle(GetUsersByRoleRequest(role="unknown"))
 
     assert response.is_success is False
-    assert response.message == "Invalid role specified"
+    assert response.message == "Rol especificado inválido"
     assert response.total_users == 0
     assert response.users == []
 

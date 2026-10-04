@@ -44,7 +44,7 @@ async def test_when_questions_exist_then_should_return_questions_successfully():
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Successfully retrieved all questions."
+    assert response.message == "Preguntas obtenidas exitosamente"
     assert len(response.questions) == 2
     assert response.total == 100
 
@@ -62,7 +62,7 @@ async def test_when_no_questions_exist_then_should_return_empty_list():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "No questions found."
+    assert response.message == "No se encontraron preguntas"
     assert response.questions == []
     assert response.total == 0
 

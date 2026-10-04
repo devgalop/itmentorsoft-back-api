@@ -29,7 +29,7 @@ async def test_when_role_is_valid_then_should_assign_role_successfully():
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Role assigned successfully."
+    assert response.message == "Rol asignado exitosamente"
     role_repository.get_available_roles.assert_called_once()
     user_repository.assign_role_to_user.assert_called_once()
 
@@ -53,7 +53,7 @@ async def test_when_role_is_invalid_then_should_respond_with_error():
     response = await handler.handle(request)
 
     assert not response.is_success
-    assert response.message == "Invalid role specified."
+    assert response.message == "Rol especificado inválido"
     role_repository.get_available_roles.assert_called_once()
     user_repository.assign_role_to_user.assert_not_called()
 

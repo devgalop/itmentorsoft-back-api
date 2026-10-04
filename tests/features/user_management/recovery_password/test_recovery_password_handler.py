@@ -43,7 +43,7 @@ async def test_when_email_does_not_exist_then_response_message_is_returned():
     assert isinstance(response, RecoveryPasswordResponse)
     assert (
         response.message
-        == "If the email exists in our system, you will receive a password recovery email shortly."
+        == "Si el email existe en nuestro sistema, recibirás un email de recuperación de contraseña en breve"
     )
     user_repository.get_user_response_by_email.assert_called_once_with(
         "nonexistent@example.com"
@@ -85,7 +85,7 @@ async def test_when_email_exists_then_recovery_process_is_initiated():
     assert isinstance(response, RecoveryPasswordResponse)
     assert (
         response.message
-        == "If the email exists in our system, you will receive a password recovery email shortly."
+        == "Si el email existe en nuestro sistema, recibirás un email de recuperación de contraseña en breve"
     )
     user_repository.get_user_response_by_email.assert_called_once_with(
         "testuser@example.com"

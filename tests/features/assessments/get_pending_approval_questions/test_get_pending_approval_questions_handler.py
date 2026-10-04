@@ -50,7 +50,9 @@ async def test_when_repository_returns_questions_then_should_return_success():
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Pending approval questions retrieved successfully."
+    assert (
+        response.message == "Preguntas pendientes de aprobación obtenidas exitosamente"
+    )
     assert response.total == 2
     assert len(response.questions) == 2
 
@@ -93,7 +95,7 @@ async def test_when_repository_returns_empty_total_then_should_return_success_wi
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "No pending approval questions found."
+    assert response.message == "No se encontraron preguntas pendientes de aprobación"
     assert response.questions == []
     assert response.total == 0
 
@@ -109,7 +111,10 @@ async def test_when_repository_returns_none_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Failed to retrieve pending approval questions."
+    assert (
+        response.message
+        == "No se pudieron obtener las preguntas pendientes de aprobación"
+    )
     assert response.questions == []
     assert response.total == 0
 
@@ -125,7 +130,10 @@ async def test_when_repository_returns_empty_list_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Failed to retrieve pending approval questions."
+    assert (
+        response.message
+        == "No se pudieron obtener las preguntas pendientes de aprobación"
+    )
     assert response.questions == []
     assert response.total == 0
 
@@ -143,7 +151,7 @@ async def test_when_repository_raises_exception_then_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert "Invalid request" in response.message
+    assert "Solicitud inválida" in response.message
     assert "Database connection error" in response.message
     assert response.questions == []
     assert response.total == 0

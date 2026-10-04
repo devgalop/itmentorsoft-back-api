@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.assessments.get_assessment_result.get_assessment_result_request import (
     GetAssessmentResultRequest,
 )
@@ -22,7 +23,7 @@ class GetAssessmentResultHandler:
         if assessment_result is None:
             return GetAssessmentResultResponse(
                 is_success=False,
-                message="Assessment result not found.",
+                message=t("assessment.result.not_found"),
                 result=None,
             )
         result = StudentAssessmentResult(
@@ -46,6 +47,6 @@ class GetAssessmentResultHandler:
         )
         return GetAssessmentResultResponse(
             is_success=True,
-            message="Assessment result retrieved successfully.",
+            message=t("assessment.result.retrieved"),
             result=result,
         )

@@ -36,7 +36,7 @@ async def test_when_status_is_valid_and_user_exists_should_update_status():
     )
 
     assert response.is_success
-    assert response.message == "User status updated successfully"
+    assert response.message == "Estado del usuario actualizado exitosamente"
     user_repository.get_user_by_id.assert_called_once_with("user_id")
     user_repository.update_user_status.assert_called_once_with("user_id", "inactive")
 
@@ -51,7 +51,7 @@ async def test_when_status_is_invalid_should_return_error():
     )
 
     assert not response.is_success
-    assert response.message == "Invalid status"
+    assert response.message == "Estado inválido"
     user_repository.get_user_by_id.assert_not_called()
     user_repository.update_user_status.assert_not_called()
 
@@ -67,6 +67,6 @@ async def test_when_user_does_not_exist_should_return_error():
     )
 
     assert not response.is_success
-    assert response.message == "User not found"
+    assert response.message == "Usuario no encontrado"
     user_repository.get_user_by_id.assert_called_once_with("nonexistent_id")
     user_repository.update_user_status.assert_not_called()

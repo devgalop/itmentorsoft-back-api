@@ -20,7 +20,7 @@ async def test_when_student_has_assessments_should_return_total_count():
     )
 
     assert response.is_success is True
-    assert response.message == "Quantity of assessments retrieved successfully."
+    assert response.message == "Cantidad de evaluaciones obtenida exitosamente"
     assert response.total_assessments == 5
     assessment_repository.get_quantity_of_assessments.assert_called_once_with(
         "student_123"
@@ -38,7 +38,7 @@ async def test_when_student_has_no_assessments_should_return_zero():
     )
 
     assert response.is_success is True
-    assert response.message == "Quantity of assessments retrieved successfully."
+    assert response.message == "Cantidad de evaluaciones obtenida exitosamente"
     assert response.total_assessments == 0
     assessment_repository.get_quantity_of_assessments.assert_called_once_with(
         "student_456"

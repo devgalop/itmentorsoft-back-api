@@ -12,32 +12,32 @@ def test_when_request_is_valid_should_not_raise_exception():
 
 
 def test_when_topic_is_empty_should_raise_exception():
-    with pytest.raises(ValueError, match="Topic cannot be empty"):
+    with pytest.raises(ValueError, match="Tema no puede estar vacío"):
         GetTopBestContentRequest(topic="   ", limit=10)
 
 
 def test_when_topic_is_too_short_should_raise_exception():
-    with pytest.raises(ValueError, match="Topic must be at least 3 characters long"):
+    with pytest.raises(ValueError, match="Tema debe tener al menos 3 caracteres"):
         GetTopBestContentRequest(topic="ab", limit=10)
 
 
 def test_when_topic_is_too_long_should_raise_exception():
-    with pytest.raises(ValueError, match="Topic cannot exceed 100 characters"):
+    with pytest.raises(ValueError, match="Tema no puede exceder 100 caracteres"):
         GetTopBestContentRequest(topic="a" * 101, limit=10)
 
 
 def test_when_limit_is_zero_should_raise_exception():
-    with pytest.raises(ValueError, match="Limit must be between 1 and 50"):
+    with pytest.raises(ValueError, match="Límite debe estar entre 1 y 50"):
         GetTopBestContentRequest(topic="python", limit=0)
 
 
 def test_when_limit_is_negative_should_raise_exception():
-    with pytest.raises(ValueError, match="Limit must be between 1 and 50"):
+    with pytest.raises(ValueError, match="Límite debe estar entre 1 y 50"):
         GetTopBestContentRequest(topic="python", limit=-5)
 
 
 def test_when_limit_exceeds_maximum_should_raise_exception():
-    with pytest.raises(ValueError, match="Limit must be between 1 and 50"):
+    with pytest.raises(ValueError, match="Límite debe estar entre 1 y 50"):
         GetTopBestContentRequest(topic="python", limit=51)
 
 

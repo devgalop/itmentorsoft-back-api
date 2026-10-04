@@ -10,6 +10,7 @@ from src.features.content_management.rate_content.rate_content_response import (
 from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
 )
+from src.i18n import t
 
 
 class RateContentHandler:
@@ -23,7 +24,7 @@ class RateContentHandler:
         if not content_found:
             return RateContentResponse(
                 is_success=False,
-                message=f"Content with ID {request.content_id} not found.",
+                message=t("content.not_found", content_id=request.content_id),
             )
         rate_content = RateContentDTO(
             id=uuid.uuid4().hex,
@@ -33,6 +34,4 @@ class RateContentHandler:
             comment=request.comment,
         )
         await self.resource_content_repository.rate_resource_content(rate_content)
-        return RateContentResponse(
-            is_success=True, message="Content rated successfully."
-        )
+        return RateContentResponse(is_success=True, message=t("content.rated"))

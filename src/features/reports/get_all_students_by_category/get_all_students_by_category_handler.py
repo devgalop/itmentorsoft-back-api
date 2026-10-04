@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.reports.get_all_students_by_category.get_all_students_by_category_request import (
     GetStudentsByCategoryRequest,
 )
@@ -22,7 +23,7 @@ class GetStudentsByCategoryHandler:
         )
         return GetStudentsByCategoryResponse(
             is_success=True,
-            message="Students retrieved successfully",
+            message=t("report.students.retrieved"),
             result=self.map_to_response(paginated_result),
         )
 

@@ -16,6 +16,7 @@ from src.features.content_management.shared.dependencies import (
 from src.features.user_management.shared.require_roles import require_roles
 from src.features.user_management.shared.token_generator import TokenData
 from src.features.user_management.shared.validate_user import UserIdentityValidator
+from src.i18n import t
 
 router = APIRouter()
 
@@ -62,7 +63,7 @@ async def get_content_rating_by_user(
         )
         response = await handler.handle(request)
         if not response.is_success:
-            raise HTTPException(status_code=404, detail="Content rating not found.")
+            raise HTTPException(status_code=404, detail=t("content.rating.not_found"))
         return response
 
     except Exception as e:

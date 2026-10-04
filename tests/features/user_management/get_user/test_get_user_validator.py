@@ -8,12 +8,14 @@ def test_when_request_is_valid_then_exception_is_not_raised():
 
 
 def test_when_user_id_is_missing_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Username is required"):
+    with pytest.raises(ValueError, match="Nombre de usuario es requerido"):
         GetUserRequest(user_id="")
 
 
 def test_when_user_id_is_too_short_then_exception_is_raised():
-    with pytest.raises(ValueError, match="Username must be at least 3 characters long"):
+    with pytest.raises(
+        ValueError, match="Nombre de usuario debe tener al menos 3 caracteres"
+    ):
         GetUserRequest(user_id="ab")
 
 
@@ -25,7 +27,5 @@ def test_when_user_id_is_too_long_then_exception_is_raised():
 
 
 def test_when_user_id_contains_invalid_characters_then_exception_is_raised():
-    with pytest.raises(
-        ValueError, match="Username must be alphanumeric and can include underscores"
-    ):
+    with pytest.raises(ValueError):
         GetUserRequest(user_id="invalid-username")

@@ -1,3 +1,4 @@
+from src.i18n import t
 from src.features.content_management.get_contents_by_topic.get_contents_by_topic_request import (
     GetContentsByTopicPaginationRequest,
 )
@@ -28,7 +29,7 @@ class GetContentsByTopicHandler:
         )
         return GetContentsByTopicResponse(
             is_success=True,
-            message="Contents retrieved successfully",
+            message=t("content.retrieved"),
             items=result.items,
             total=result.total,
         )

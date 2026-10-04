@@ -18,7 +18,7 @@ async def test_when_there_are_active_users_should_return_success_response():
     response = await handler.handle()
 
     assert response.is_success is True
-    assert response.message == "Users connected have been found successfully"
+    assert response.message == "Usuarios conectados encontrados exitosamente"
     assert response.total_users == 5
     repository.get_users_with_active_tokens.assert_called_once()
 
@@ -34,7 +34,7 @@ async def test_when_there_are_no_active_users_should_return_failure_response():
     response = await handler.handle()
 
     assert response.is_success is False
-    assert response.message == "Cannot obtain any connected users"
+    assert response.message == "No se encontraron usuarios conectados"
     assert response.total_users == 0
     repository.get_users_with_active_tokens.assert_called_once()
 

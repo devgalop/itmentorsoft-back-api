@@ -33,7 +33,7 @@ async def test_rate_content_when_content_exists_then_should_rate_content_success
     response = await handler.handle(request)
 
     assert response.is_success
-    assert response.message == "Content rated successfully."
+    assert response.message == "Contenido calificado exitosamente"
     content_repository.get_resource_content.assert_called_once_with(
         "valid_content_id_123"
     )
@@ -55,7 +55,7 @@ async def test_rate_content_when_content_not_found_then_should_return_failure():
     response = await handler.handle(request)
 
     assert not response.is_success
-    assert response.message == "Content with ID nonexistent_content_id not found."
+    assert response.message == "Contenido con ID nonexistent_content_id no encontrado"
     content_repository.get_resource_content.assert_called_once_with(
         "nonexistent_content_id"
     )

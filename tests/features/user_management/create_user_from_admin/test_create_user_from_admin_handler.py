@@ -15,7 +15,7 @@ async def test_when_user_is_valid_should_create_user():
     user_manager_service = AsyncMock()
     user_manager_service.create_user = AsyncMock(
         return_value=CreateUserResponse(
-            is_success=True, message="User created successfully", user_id="user-123"
+            is_success=True, message="Usuario creado exitosamente", user_id="user-123"
         )
     )
 
@@ -34,7 +34,7 @@ async def test_when_user_is_valid_should_create_user():
         )
 
     assert response.is_success
-    assert response.message == "User created successfully"
+    assert response.message == "Usuario creado exitosamente"
     assert response.user_id == "user-123"
     user_manager_service.create_user.assert_called_once()
 
@@ -59,7 +59,10 @@ async def test_when_default_password_is_not_set_should_return_error():
         )
 
     assert not response.is_success
-    assert response.message == "Default password is not set in environment variables"
+    assert (
+        response.message
+        == "La contraseña por defecto no está configurada en las variables de entorno"
+    )
     user_manager_service.create_user.assert_not_called()
 
 
@@ -68,7 +71,7 @@ async def test_when_email_already_exists_should_return_error():
     user_manager_service = AsyncMock()
     user_manager_service.create_user = AsyncMock(
         return_value=CreateUserResponse(
-            is_success=False, message="Email already in use"
+            is_success=False, message="El email ya está en uso"
         )
     )
 
@@ -88,7 +91,7 @@ async def test_when_email_already_exists_should_return_error():
         )
 
     assert not response.is_success
-    assert response.message == "Email already in use"
+    assert response.message == "El email ya está en uso"
     assert response.user_id == ""
 
 
@@ -97,7 +100,7 @@ async def test_when_username_already_exists_should_return_error():
     user_manager_service = AsyncMock()
     user_manager_service.create_user = AsyncMock(
         return_value=CreateUserResponse(
-            is_success=False, message="Username already in use"
+            is_success=False, message="El nombre de usuario ya está en uso"
         )
     )
 
@@ -116,7 +119,7 @@ async def test_when_username_already_exists_should_return_error():
         )
 
     assert not response.is_success
-    assert response.message == "Username already in use"
+    assert response.message == "El nombre de usuario ya está en uso"
     assert response.user_id == ""
 
 
@@ -125,7 +128,7 @@ async def test_when_role_is_invalid_should_return_error():
     user_manager_service = AsyncMock()
     user_manager_service.create_user = AsyncMock(
         return_value=CreateUserResponse(
-            is_success=False, message="Invalid role specified"
+            is_success=False, message="Rol especificado inválido"
         )
     )
     with patch(
@@ -144,5 +147,5 @@ async def test_when_role_is_invalid_should_return_error():
         )
 
     assert not response.is_success
-    assert response.message == "Invalid role specified"
+    assert response.message == "Rol especificado inválido"
     assert response.user_id == ""

@@ -44,7 +44,7 @@ async def test_when_assessment_result_exists_should_return_success():
     response = await handler.handle(request)
 
     assert response.is_success is True
-    assert response.message == "Assessment result retrieved successfully."
+    assert response.message == "Resultado de evaluación obtenido exitosamente"
     assert response.result is not None
     assert response.result.assessment_id == "assessment_123"
     assert response.result.user_id == "user_456"
@@ -71,7 +71,7 @@ async def test_when_assessment_result_not_found_should_return_failure():
     response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "Assessment result not found."
+    assert response.message == "Resultado de evaluación no encontrado"
     assert response.result is None
     assessment_repository.get_assessment_result.assert_called_once_with(
         "nonexistent", "user_456"
