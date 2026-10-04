@@ -1,9 +1,9 @@
-name: Master CI (Build + Test + Docker)
+name: Release to GHCR
 
 on:
   push:
     tags:
-      - "v.*"
+      - "v*.*.*"
 
 permissions:
   contents: read
@@ -52,7 +52,7 @@ jobs:
           EMAIL_DEFAULT_SENDER: "test@example.com"
           RECOVERY_URL_BASE: "http://localhost:8000/recover"
 
-  docker:
+  docker-publish:
     needs: build-and-test
     runs-on: ubuntu-latest
 
@@ -76,6 +76,9 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
             type=raw,value=latest
 
       - name: Build and push Docker image

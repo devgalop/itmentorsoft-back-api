@@ -1,0 +1,109 @@
+name: Release to AWS ECR
+
+on:
+  push:
+    tags:
+      - "prod-*-*"
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=src --cov-report=xml:coverage.xml --cov-report=term-missing tests/
+        env:
+          DATABASE_URL: postgresql+asyncpg://test:test@localhost:5432/test
+          JWT_SECRET_KEY: test-secret-key
+          JWT_ALGORITHM: HS256
+          JWT_EXPIRATION_DELTA_SECONDS: "1800"
+          RANDOM_TOKEN_EXPIRATION_DELTA_SECONDS: "1800"
+          REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS: "604800"
+          DB_POOL_SIZE: "5"
+          DB_MAX_OVERFLOW: "10"
+          DB_POOL_TIMEOUT: "30"
+          DB_POOL_RECYCLE: "3600"
+          ASSESSMENT_MAX_QUESTIONS_NUMBER: "5"
+          EMAIL_DEFAULT_SENDER: "test@example.com"
+          RECOVERY_URL_BASE: "http://localhost:8000/recover"
+
+  docker-publish:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Extract version tags from prod tag
+        id: tags
+        run: |
+          # Get the full tag name (e.g., prod-v1-2-3)
+          PROD_TAG="${GITHUB_REF_NAME}"
+
+          # Extract version portion: strip "prod-" prefix
+          VERSION_PART="${PROD_TAG#prod-}"
+
+          # Convert dashes to dots for semver (e.g., v1-2-3 -> v1.2.3)
+          VERSION_TAG="${VERSION_PART//-/.}"
+
+          # ECR registry from login step
+          ECR_REGISTRY="${{ steps.login-ecr.outputs.registry }}"
+
+          # Build tag list: both the prod tag and the version tag
+          echo "prod_tag=${ECR_REGISTRY}/${ECR_REPOSITORY}:${PROD_TAG}" >> "$GITHUB_OUTPUT"
+          echo "version_tag=${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION_TAG}" >> "$GITHUB_OUTPUT"
+
+          echo "Prod tag: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${PROD_TAG}"
+          echo "Version tag: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION_TAG}"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image to ECR
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.tags.outputs.prod_tag }}
+            ${{ steps.tags.outputs.version_tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
