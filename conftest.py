@@ -4,7 +4,11 @@ import os
 # itmentorsoft_persistence reads DATABASE_URL at import time (module scope),
 # so without these defaults, test collection fails with a KeyError.
 _TEST_ENV_DEFAULTS = {
-    "DATABASE_URL": "postgresql+asyncpg://test:test@localhost:5432/test",
+    "DATABASE_USER": "test",
+    "DATABASE_PASSWORD": "test",
+    "DATABASE_HOST": "localhost",
+    "DATABASE_PORT": "5432",
+    "DATABASE_NAME": "test",
     "JWT_SECRET_KEY": "test-secret-key",
     "JWT_ALGORITHM": "HS256",
     "JWT_EXPIRATION_DELTA_SECONDS": "1800",
