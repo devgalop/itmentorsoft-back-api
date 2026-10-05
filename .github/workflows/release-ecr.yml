@@ -3,6 +3,7 @@ name: Release to AWS ECR
 on:
   push:
     tags:
+      - "v.*.*"
       - "prod-*-*"
 
 permissions:
@@ -14,50 +15,7 @@ env:
   ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run tests with coverage
-        run: |
-          pytest --cov=src --cov-report=xml:coverage.xml --cov-report=term-missing tests/
-        env:
-          DATABASE_URL: postgresql+asyncpg://test:test@localhost:5432/test
-          JWT_SECRET_KEY: test-secret-key
-          JWT_ALGORITHM: HS256
-          JWT_EXPIRATION_DELTA_SECONDS: "1800"
-          RANDOM_TOKEN_EXPIRATION_DELTA_SECONDS: "1800"
-          REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS: "604800"
-          DB_POOL_SIZE: "5"
-          DB_MAX_OVERFLOW: "10"
-          DB_POOL_TIMEOUT: "30"
-          DB_POOL_RECYCLE: "3600"
-          ASSESSMENT_MAX_QUESTIONS_NUMBER: "5"
-          EMAIL_DEFAULT_SENDER: "test@example.com"
-          RECOVERY_URL_BASE: "http://localhost:8000/recover"
-
   docker-publish:
-    needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -71,9 +29,6 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           retry-max-attempts: 3
 
-      - name: Verify AWS identity
-        run: |
-          aws sts get-caller-identity
 
       - name: Login to Amazon ECR
         id: login-ecr

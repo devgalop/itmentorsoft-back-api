@@ -40,7 +40,10 @@ class PostgresUserRepository(UserRepository):
         stmt = (
             select(UserEntity)
             .options(selectinload(UserEntity.role))
-            .where(UserEntity.username == username)
+            .where(
+                UserEntity.username == username,
+                UserEntity.status == UserStatus.ACTIVE.value,
+            )
         )
         result = await self.session_factory.execute(stmt)
         user_found = result.scalars().first()
@@ -52,7 +55,9 @@ class PostgresUserRepository(UserRepository):
         stmt = (
             select(UserEntity)
             .options(selectinload(UserEntity.role))
-            .where(UserEntity.email == email)
+            .where(
+                UserEntity.email == email, UserEntity.status == UserStatus.ACTIVE.value
+            )
         )
         result = await self.session_factory.execute(stmt)
         user_found = result.scalars().first()
@@ -64,7 +69,9 @@ class PostgresUserRepository(UserRepository):
         stmt = (
             select(UserEntity)
             .options(selectinload(UserEntity.role))
-            .where(UserEntity.email == email)
+            .where(
+                UserEntity.email == email, UserEntity.status == UserStatus.ACTIVE.value
+            )
         )
         result = await self.session_factory.execute(stmt)
         user_found = result.scalars().first()
