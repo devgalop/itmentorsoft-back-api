@@ -13,6 +13,10 @@ class EnvironmentVariablesConstants:
         "OPENCODE_API_URL",
         "BREVO_API_KEY",
         "BREVO_BASE_API_URL",
+        "DATABASE_USER",
+        "DATABASE_PASSWORD",
+        "DATABASE_HOST",
+        "DATABASE_NAME",
         "DATABASE_ADMIN_USERNAME",
         "DATABASE_ADMIN_PASSWORD",
         "DATABASE_ADMIN_EMAIL",
@@ -50,7 +54,10 @@ class EnvironmentVariablesConstants:
         "REFRESH_TOKEN_EXPIRATION_DELTA_SECONDS", "604800"
     )  # Default to 7 days if not set
 
-    DATABASE_URL = os.getenv("DATABASE_URL", "")
+    DATABASE_USER = os.getenv("DATABASE_USER", "")
+    DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", "")
+    DATABASE_HOST = os.getenv("DATABASE_HOST", "")
+    DATABASE_NAME = os.getenv("DATABASE_NAME", "")
     DB_POOL_SIZE = os.getenv("DB_POOL_SIZE", "5")
     DB_MAX_OVERFLOW = os.getenv("DB_MAX_OVERFLOW", "10")
     DB_POOL_TIMEOUT = os.getenv("DB_POOL_TIMEOUT", "30")
