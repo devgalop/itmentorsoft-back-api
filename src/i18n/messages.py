@@ -300,6 +300,17 @@ MESSAGES_ES: dict[str, str] = {
     "validation.assessment.required": "Datos de evaluación son requeridos para evaluación",
     # ===== GLOBAL =====
     "error.unexpected": "Ocurrió un error inesperado",
+    "learning_path.created": "Ruta de aprendizaje creada exitosamente",
+    "learning_path.failed": "Error al crear la ruta de aprendizaje",
+    "learning_path.not_found": "La ruta de aprendizaje no fue encontrada",
+    "learning_path.exists": "La ruta de aprendizaje ya existe y no está completada. Debe completarla antes de crear una nueva",
+    "learning_path.completed": "La ruta de aprendizaje ha sido completada exitosamente",
+    "learning_path.retrieved": "La ruta de aprendizaje ha sido recuperada con éxito",
+    "validation.path_id.required": "ID de ruta no debe estar vacío",
+    "validation.path_id.min_length": "ID de ruta debe tener al menos 5 caracteres",
+    "validation.path_id.max_length": "ID de ruta no debe exceder 100 caracteres",
+    "content.learning_path.retrieval_failed": "Error al recuperar la ruta de aprendizaje",
+    "content.learning_path.retrieved": "Ruta de aprendizaje recuperada exitosamente",
 }
 
 

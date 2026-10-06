@@ -2,6 +2,9 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.features.content_management.generate_learning_path.generate_learning_path_handler import (
+    GenerateLearningPathHandler,
+)
 from src.features.content_management.get_all_contents.get_all_contents_handler import (
     GetAllContentsHandler,
 )
@@ -41,9 +44,13 @@ from src.features.content_management.register_content.register_content_handler i
 from itmentorsoft_persistence.dto import ResourceContentBuilder
 from itmentorsoft_persistence.repositories import (
     ResourceContentRepository,
+    UserRepository,
 )
 from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
+)
+from src.features.content_management.shared.learning_path_manager_service import (
+    LearningPathManagerService,
 )
 from src.features.content_management.update_content_path_status.update_content_path_status_handler import (
     UpdateContentPathStatusHandler,
@@ -59,6 +66,7 @@ from itmentorsoft_persistence.mappers import (
     PostgresLearningPathMapper,
     ResourceContentMapper,
 )
+from src.features.user_management.shared.dependencies import get_user_repository
 from src.infrastructure.database.postgresql.repository.postgres_learning_path_repository import (
     PostgresLearningPathRepository,
 )
@@ -175,14 +183,6 @@ def get_learning_path_repository(
     )
 
 
-def get_get_recommended_content_handler(
-    learning_path_repository: Annotated[
-        LearningPathRepository, Depends(get_learning_path_repository)
-    ],
-) -> GetRecommendedContentHandler:
-    return GetRecommendedContentHandler(learning_path_repository)
-
-
 def get_update_content_path_status_handler(
     learning_path_repository: Annotated[
         LearningPathRepository, Depends(get_learning_path_repository)
@@ -238,3 +238,28 @@ def get_update_rating_handler(
     ],
 ) -> UpdateRatingHandler:
     return UpdateRatingHandler(content_repository)
+
+
+def get_learning_path_service(
+    learning_path_repository: Annotated[
+        LearningPathRepository, Depends(get_learning_path_repository)
+    ],
+    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+) -> LearningPathManagerService:
+    return LearningPathManagerService(user_repository, learning_path_repository)
+
+
+def get_generate_learning_path_handler(
+    learning_path_manager_service: Annotated[
+        LearningPathManagerService, Depends(get_learning_path_service)
+    ],
+) -> GenerateLearningPathHandler:
+    return GenerateLearningPathHandler(learning_path_manager_service)
+
+
+def get_get_recommended_content_handler(
+    learning_path_service: Annotated[
+        LearningPathManagerService, Depends(get_learning_path_service)
+    ],
+) -> GetRecommendedContentHandler:
+    return GetRecommendedContentHandler(learning_path_service)

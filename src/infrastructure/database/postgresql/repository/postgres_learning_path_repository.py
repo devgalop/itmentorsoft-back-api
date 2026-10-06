@@ -13,6 +13,7 @@ from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
 )
 from itmentorsoft_persistence.models import (
+    LearningPathEntity,
     TopicResultEntity,
     ContentRating,
     LearningPathContentEntity,
@@ -21,6 +22,7 @@ from itmentorsoft_persistence.models import (
 from itmentorsoft_persistence.mappers import (
     PostgresLearningPathMapper,
 )
+from sqlalchemy.orm import selectinload
 
 
 class PostgresLearningPathRepository(LearningPathRepository):
@@ -41,6 +43,7 @@ class PostgresLearningPathRepository(LearningPathRepository):
             return LearningPathResponse(
                 is_success=False,
                 message="No se encontraron resultados de evaluación para el usuario.",
+                path_id="",
                 recommendation=[],
             )
         # 2. Para cada tema, buscar el top 5 de contenidos con mejor puntaje
@@ -85,6 +88,7 @@ class PostgresLearningPathRepository(LearningPathRepository):
         return LearningPathResponse(
             is_success=True,
             message="Learning paths retrieved successfully.",
+            path_id=uuid.uuid4().hex,
             recommendation=learning_paths,
         )
 
@@ -151,3 +155,75 @@ class PostgresLearningPathRepository(LearningPathRepository):
             message="Learning path progress retrieved successfully.",
             path_progress=LearningPathProgress(path_id=path_id, progress=progress),
         )
+
+    async def is_learning_path_created(self, user_id: str) -> bool:
+        stmt = select(LearningPathEntity).where(
+            LearningPathEntity.user_id == user_id,
+        )
+        result = await self.session_factory.execute(stmt)
+        learning_path = result.scalars().first()
+        return learning_path is not None and not learning_path.is_completed
+
+    async def get_learning_path_by_id(self, path_id: str) -> LearningPath | None:
+        stmt = (
+            select(LearningPathEntity)
+            .options(
+                selectinload(LearningPathEntity.contents).options(
+                    selectinload(LearningPathContentEntity.content)
+                )
+            )
+            .where(LearningPathEntity.id == path_id)
+        )
+        result = await self.session_factory.execute(stmt)
+        learning_path = result.scalars().first()
+        if not learning_path:
+            return None
+
+        smt_ratings = select(ContentRating.content_id, ContentRating.rating).where(
+            ContentRating.content_id.in_(
+                [content.content.id for content in learning_path.contents]
+            )
+        )
+        result_ratings = await self.session_factory.execute(smt_ratings)
+        all_ratings = result_ratings.fetchall()
+        content_ratings = {}
+        for content_id, rating in all_ratings:
+            if content_id not in content_ratings:
+                content_ratings[content_id] = []
+            content_ratings[content_id].append(rating)
+
+        average_ratings = {
+            content_id: sum(ratings) / len(ratings) if ratings else 0.0
+            for content_id, ratings in content_ratings.items()
+        }
+
+        learning_path_progress = await self.get_learning_path_progress(learning_path.id)
+
+        return LearningPath(
+            path_id=learning_path.id,
+            user_id=learning_path.user_id,
+            is_completed=learning_path.is_completed,
+            topic=learning_path.topic,
+            progress=(
+                learning_path_progress.path_progress.progress
+                if learning_path_progress and learning_path_progress.path_progress
+                else 0.0
+            ),
+            contents=[
+                ContentByTopic(
+                    content_id=content.content.id,
+                    title=content.content.title,
+                    description=content.content.summary,
+                    rating=average_ratings.get(content.content.id, 0.0),
+                )
+                for content in learning_path.contents
+            ],
+        )
+
+    async def is_path_associated_with_user(self, path_id: str, user_id: str) -> bool:
+        stmt = select(LearningPathEntity).where(
+            LearningPathEntity.user_id == user_id, LearningPathEntity.id == path_id
+        )
+        result = await self.session_factory.execute(stmt)
+        learning_path = result.scalars().first()
+        return learning_path is not None
