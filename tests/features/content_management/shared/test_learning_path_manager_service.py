@@ -77,35 +77,40 @@ async def test_create_learning_path_when_success_should_save_and_return_paths():
 
     learning_path_repository = AsyncMock()
     learning_path_repository.is_learning_path_created = AsyncMock(return_value=False)
+
+    # Create LearningPath objects using positional arguments
+    learning_path_1 = LearningPath(
+        "path_1",
+        "user_123",
+        "Python",
+        False,
+        [
+            ContentByTopic(
+                content_id="c1",
+                title="Intro to Python",
+                description="Basics",
+                rating=4.5,
+            )
+        ],
+    )
+    learning_path_2 = LearningPath(
+        "path_2",
+        "user_123",
+        "Data Structures",
+        False,
+        [],
+    )
+
+    # Create LearningPathResponse using positional arguments
+    learning_path_response = LearningPathResponse(
+        True,
+        "Learning paths generated.",
+        "main_path",
+        [learning_path_1, learning_path_2],
+    )
+
     learning_path_repository.get_learning_path = AsyncMock(
-        return_value=LearningPathResponse(
-            is_success=True,
-            message="Learning paths generated.",
-            path_id="main_path",
-            recommendation=[
-                LearningPath(
-                    path_id="path_1",
-                    user_id="user_123",
-                    topic="Python",
-                    is_completed=False,
-                    contents=[
-                        ContentByTopic(
-                            content_id="c1",
-                            title="Intro to Python",
-                            description="Basics",
-                            rating=4.5,
-                        )
-                    ],
-                ),
-                LearningPath(
-                    path_id="path_2",
-                    user_id="user_123",
-                    topic="Data Structures",
-                    is_completed=False,
-                    contents=[],
-                ),
-            ],
-        )
+        return_value=learning_path_response
     )
     learning_path_repository.save_learning_path = AsyncMock()
 
@@ -129,13 +134,17 @@ async def test_create_learning_path_when_empty_recommendation_should_return_empt
 
     learning_path_repository = AsyncMock()
     learning_path_repository.is_learning_path_created = AsyncMock(return_value=False)
+
+    # Create LearningPathResponse using positional arguments
+    learning_path_response = LearningPathResponse(
+        True,
+        "No recommendations found.",
+        "",
+        [],
+    )
+
     learning_path_repository.get_learning_path = AsyncMock(
-        return_value=LearningPathResponse(
-            is_success=True,
-            message="No recommendations found.",
-            path_id="",
-            recommendation=[],
-        )
+        return_value=learning_path_response
     )
     learning_path_repository.save_learning_path = AsyncMock()
 
@@ -210,28 +219,33 @@ async def test_get_learning_path_when_not_found_should_return_failure():
 async def test_get_learning_path_when_found_should_return_topic_summary():
     user_repository = AsyncMock()
     learning_path_repository = AsyncMock()
+
+    # Create LearningPath using positional arguments (progress is set as attribute)
+    learning_path = LearningPath(
+        "path_123",
+        "user_456",
+        "Python Programming",
+        False,
+        [
+            ContentByTopic(
+                content_id="c1",
+                title="Variables",
+                description="Learn about variables",
+                rating=4.8,
+            ),
+            ContentByTopic(
+                content_id="c2",
+                title="Functions",
+                description="Learn about functions",
+                rating=4.6,
+            ),
+        ],
+    )
+    # Set progress as attribute after creation
+    learning_path.progress = 0.5
+
     learning_path_repository.get_learning_path_by_id = AsyncMock(
-        return_value=LearningPath(
-            path_id="path_123",
-            user_id="user_456",
-            topic="Python Programming",
-            is_completed=False,
-            progress=0.5,
-            contents=[
-                ContentByTopic(
-                    content_id="c1",
-                    title="Variables",
-                    description="Learn about variables",
-                    rating=4.8,
-                ),
-                ContentByTopic(
-                    content_id="c2",
-                    title="Functions",
-                    description="Learn about functions",
-                    rating=4.6,
-                ),
-            ],
-        )
+        return_value=learning_path
     )
 
     service = LearningPathManagerService(user_repository, learning_path_repository)
@@ -255,15 +269,19 @@ async def test_get_learning_path_when_found_should_return_topic_summary():
 async def test_get_learning_path_with_no_contents_should_return_empty_list():
     user_repository = AsyncMock()
     learning_path_repository = AsyncMock()
+
+    # Create LearningPath using positional arguments
+    learning_path = LearningPath(
+        "path_empty",
+        "user_456",
+        "Empty Topic",
+        False,
+        [],
+    )
+    learning_path.progress = 0.0
+
     learning_path_repository.get_learning_path_by_id = AsyncMock(
-        return_value=LearningPath(
-            path_id="path_empty",
-            user_id="user_456",
-            topic="Empty Topic",
-            is_completed=False,
-            progress=0.0,
-            contents=[],
-        )
+        return_value=learning_path
     )
 
     service = LearningPathManagerService(user_repository, learning_path_repository)
@@ -277,22 +295,26 @@ async def test_get_learning_path_with_no_contents_should_return_empty_list():
 async def test_get_learning_path_with_completed_progress_should_return_full_progress():
     user_repository = AsyncMock()
     learning_path_repository = AsyncMock()
+
+    # Create LearningPath using positional arguments
+    learning_path = LearningPath(
+        "path_complete",
+        "user_456",
+        "Completed Topic",
+        True,
+        [
+            ContentByTopic(
+                content_id="c1",
+                title="Done Content",
+                description="Already done",
+                rating=5.0,
+            )
+        ],
+    )
+    learning_path.progress = 100.0
+
     learning_path_repository.get_learning_path_by_id = AsyncMock(
-        return_value=LearningPath(
-            path_id="path_complete",
-            user_id="user_456",
-            topic="Completed Topic",
-            is_completed=True,
-            progress=100.0,
-            contents=[
-                ContentByTopic(
-                    content_id="c1",
-                    title="Done Content",
-                    description="Already done",
-                    rating=5.0,
-                )
-            ],
-        )
+        return_value=learning_path
     )
 
     service = LearningPathManagerService(user_repository, learning_path_repository)
