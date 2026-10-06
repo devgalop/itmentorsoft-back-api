@@ -62,14 +62,18 @@ router = APIRouter()
     },
 )
 async def get_recommended_content(
-    user_id: str,
+    path_id: str,
     handler: Annotated[
         GetRecommendedContentHandler, Depends(get_get_recommended_content_handler)
     ],
-    _: Annotated[TokenData, Depends(require_roles(["student"]))],
+    token_data: Annotated[TokenData, Depends(require_roles(["student"]))],
 ) -> GetRecommendedContentResponse:
     try:
-        request = GetRecommendedContentRequest(student_id=user_id)
+
+        request = GetRecommendedContentRequest(
+            path_id=path_id, student_id=token_data.user_id
+        )
+
         response = await handler.handle(request)
 
         if not response.is_success:

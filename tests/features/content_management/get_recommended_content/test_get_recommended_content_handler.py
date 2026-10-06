@@ -7,129 +7,162 @@ from src.features.content_management.get_recommended_content.get_recommended_con
 from src.features.content_management.get_recommended_content.get_recommended_content_request import (
     GetRecommendedContentRequest,
 )
-from itmentorsoft_persistence.dto import (
-    ContentByTopic,
-    LearningPath,
+from src.features.content_management.shared.learning_path_manager_service import (
+    LearningPathManagerService,
     LearningPathResponse,
+    TopicSummary,
+    ContentByTopic,
 )
 
 
 @pytest.mark.asyncio
-async def test_when_repository_returns_success_should_return_mapped_recommendations():
-    learning_path_repository = AsyncMock()
+async def test_when_path_not_associated_should_return_failure():
+    learning_path_service = AsyncMock(spec=LearningPathManagerService)
+    learning_path_service.check_path_association = AsyncMock(return_value=False)
 
-    content = ContentByTopic(
-        content_id="content_1",
-        title="Intro to Python",
-        description="Learn Python basics",
-        rating=4.5,
-    )
-    learning_path = LearningPath(
-        path_id="path_1",
-        user_id="student_123",
-        topic="Python",
-        is_completed=False,
-        contents=[content],
-    )
-    learning_path_repository.get_learning_path = AsyncMock(
-        return_value=LearningPathResponse(
-            is_success=True,
-            message="Paths found",
-            recommendation=[learning_path],
-        )
-    )
-    learning_path_repository.save_learning_path = AsyncMock()
-
-    handler = GetRecommendedContentHandler(learning_path_repository)
-    response = await handler.handle(
-        GetRecommendedContentRequest(student_id="student_123")
-    )
-
-    assert response.is_success is True
-    assert response.message == "Rutas de aprendizaje obtenidas exitosamente"
-    assert len(response.recommendation) == 1
-    assert response.recommendation[0].topic == "Python"
-    assert len(response.recommendation[0].contents) == 1
-    assert response.recommendation[0].contents[0].content_id == "content_1"
-    assert response.recommendation[0].contents[0].title == "Intro to Python"
-    assert response.recommendation[0].contents[0].rating == 4.5
-    learning_path_repository.get_learning_path.assert_called_once_with("student_123")
-    learning_path_repository.save_learning_path.assert_called_once_with(learning_path)
-
-
-@pytest.mark.asyncio
-async def test_when_repository_returns_failure_should_return_failure_response():
-    learning_path_repository = AsyncMock()
-
-    learning_path_repository.get_learning_path = AsyncMock(
-        return_value=LearningPathResponse(
-            is_success=False,
-            message="Repository error",
-            recommendation=[],
-        )
-    )
-
-    handler = GetRecommendedContentHandler(learning_path_repository)
-    response = await handler.handle(
-        GetRecommendedContentRequest(student_id="student_123")
-    )
+    handler = GetRecommendedContentHandler(learning_path_service)
+    request = GetRecommendedContentRequest(student_id="student_123", path_id="path_456")
+    response = await handler.handle(request)
 
     assert response.is_success is False
-    assert response.message == "No se pudieron obtener las rutas de aprendizaje"
-    assert response.recommendation == []
-    learning_path_repository.get_learning_path.assert_called_once_with("student_123")
-    learning_path_repository.save_learning_path.assert_not_called()
+    assert response.message == "Error al recuperar la ruta de aprendizaje"
+    assert response.recommendation is None
+    learning_path_service.check_path_association.assert_called_once_with(
+        "student_123", "path_456"
+    )
+    learning_path_service.get_learning_path.assert_not_called()
 
 
 @pytest.mark.asyncio
-async def test_when_repository_returns_empty_recommendations_should_return_empty_list():
-    learning_path_repository = AsyncMock()
-
-    learning_path_repository.get_learning_path = AsyncMock(
+async def test_when_service_returns_failure_should_return_failure_response():
+    learning_path_service = AsyncMock(spec=LearningPathManagerService)
+    learning_path_service.check_path_association = AsyncMock(return_value=True)
+    learning_path_service.get_learning_path = AsyncMock(
         return_value=LearningPathResponse(
-            is_success=True,
-            message="No paths",
-            recommendation=[],
+            is_success=False,
+            message="La ruta de aprendizaje no fue encontrada",
+            learning_path=None,
         )
     )
 
-    handler = GetRecommendedContentHandler(learning_path_repository)
-    response = await handler.handle(
-        GetRecommendedContentRequest(student_id="student_123")
-    )
+    handler = GetRecommendedContentHandler(learning_path_service)
+    request = GetRecommendedContentRequest(student_id="student_123", path_id="path_456")
+    response = await handler.handle(request)
 
-    assert response.is_success is True
-    assert response.message == "Rutas de aprendizaje obtenidas exitosamente"
-    assert response.recommendation == []
-    learning_path_repository.get_learning_path.assert_called_once_with("student_123")
-    learning_path_repository.save_learning_path.assert_not_called()
+    assert response.is_success is False
+    assert response.message == "Error al recuperar la ruta de aprendizaje"
+    assert response.recommendation is None
+    learning_path_service.check_path_association.assert_called_once_with(
+        "student_123", "path_456"
+    )
+    learning_path_service.get_learning_path.assert_called_once_with("path_456")
 
 
 @pytest.mark.asyncio
-async def test_when_multiple_learning_paths_should_save_all_and_map_correctly():
-    learning_path_repository = AsyncMock()
+async def test_when_service_returns_success_should_return_topic_summary():
+    topic_summary = TopicSummary(
+        topic_path_id="path_456",
+        topic="Python Programming",
+        contents=[
+            ContentByTopic(
+                content_id="content_1",
+                title="Intro to Python",
+                description="Learn Python basics",
+                rating=4.5,
+            )
+        ],
+        progress=0.5,
+    )
 
-    content_1 = ContentByTopic("c1", "Title 1", "Desc 1", 3.0)
-    content_2 = ContentByTopic("c2", "Title 2", "Desc 2", 4.0)
-    path_1 = LearningPath("p1", "student_123", "Math", False, [content_1])
-    path_2 = LearningPath("p2", "student_123", "Science", True, [content_2])
-
-    learning_path_repository.get_learning_path = AsyncMock(
+    learning_path_service = AsyncMock(spec=LearningPathManagerService)
+    learning_path_service.check_path_association = AsyncMock(return_value=True)
+    learning_path_service.get_learning_path = AsyncMock(
         return_value=LearningPathResponse(
             is_success=True,
-            message="Found",
-            recommendation=[path_1, path_2],
+            message="La ruta de aprendizaje ha sido recuperada con éxito",
+            learning_path=topic_summary,
         )
     )
-    learning_path_repository.save_learning_path = AsyncMock()
 
-    handler = GetRecommendedContentHandler(learning_path_repository)
-    response = await handler.handle(
-        GetRecommendedContentRequest(student_id="student_123")
-    )
+    handler = GetRecommendedContentHandler(learning_path_service)
+    request = GetRecommendedContentRequest(student_id="student_123", path_id="path_456")
+    response = await handler.handle(request)
 
     assert response.is_success is True
-    assert len(response.recommendation) == 2
-    assert response.recommendation[0].topic == "Math"
-    assert response.recommendation[1].topic == "Science"
-    assert learning_path_repository.save_learning_path.call_count == 2
+    assert response.message == "Ruta de aprendizaje recuperada exitosamente"
+    assert response.recommendation is not None
+    assert response.recommendation.topic_path_id == "path_456"
+    assert response.recommendation.topic == "Python Programming"
+    assert len(response.recommendation.contents) == 1
+    assert response.recommendation.contents[0].content_id == "content_1"
+    assert response.recommendation.contents[0].title == "Intro to Python"
+    assert response.recommendation.contents[0].rating == 4.5
+    assert response.recommendation.progress == 0.5
+    learning_path_service.check_path_association.assert_called_once_with(
+        "student_123", "path_456"
+    )
+    learning_path_service.get_learning_path.assert_called_once_with("path_456")
+
+
+@pytest.mark.asyncio
+async def test_when_service_returns_none_should_return_failure():
+    learning_path_service = AsyncMock(spec=LearningPathManagerService)
+    learning_path_service.check_path_association = AsyncMock(return_value=True)
+    learning_path_service.get_learning_path = AsyncMock(return_value=None)
+
+    handler = GetRecommendedContentHandler(learning_path_service)
+    request = GetRecommendedContentRequest(student_id="student_123", path_id="path_456")
+    response = await handler.handle(request)
+
+    assert response.is_success is False
+    assert response.message == "Error al recuperar la ruta de aprendizaje"
+    assert response.recommendation is None
+
+
+@pytest.mark.asyncio
+async def test_when_topic_has_multiple_contents_should_return_all():
+    topic_summary = TopicSummary(
+        topic_path_id="path_456",
+        topic="Advanced Python",
+        contents=[
+            ContentByTopic(
+                content_id="c1",
+                title="Decorators",
+                description="Learn decorators",
+                rating=4.8,
+            ),
+            ContentByTopic(
+                content_id="c2",
+                title="Generators",
+                description="Learn generators",
+                rating=4.6,
+            ),
+            ContentByTopic(
+                content_id="c3",
+                title="Metaclasses",
+                description="Learn metaclasses",
+                rating=4.9,
+            ),
+        ],
+        progress=0.33,
+    )
+
+    learning_path_service = AsyncMock(spec=LearningPathManagerService)
+    learning_path_service.check_path_association = AsyncMock(return_value=True)
+    learning_path_service.get_learning_path = AsyncMock(
+        return_value=LearningPathResponse(
+            is_success=True,
+            message="Success",
+            learning_path=topic_summary,
+        )
+    )
+
+    handler = GetRecommendedContentHandler(learning_path_service)
+    request = GetRecommendedContentRequest(student_id="student_123", path_id="path_456")
+    response = await handler.handle(request)
+
+    assert response.is_success is True
+    assert len(response.recommendation.contents) == 3
+    assert response.recommendation.contents[0].content_id == "c1"
+    assert response.recommendation.contents[1].content_id == "c2"
+    assert response.recommendation.contents[2].content_id == "c3"

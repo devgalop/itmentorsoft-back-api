@@ -3,55 +3,43 @@ from src.features.content_management.get_recommended_content.get_recommended_con
     GetRecommendedContentRequest,
 )
 from src.features.content_management.get_recommended_content.get_recommended_content_response import (
-    ContentByTopic,
     GetRecommendedContentResponse,
-    TopicSummary,
 )
-from itmentorsoft_persistence.repositories import (
-    LearningPathRepository,
+from src.features.content_management.shared.learning_path_manager_service import (
+    LearningPathManagerService,
 )
 
 
 class GetRecommendedContentHandler:
-    def __init__(self, learning_path_repository: LearningPathRepository):
-        self.learning_path_repository = learning_path_repository
+    def __init__(self, learning_path_service: LearningPathManagerService):
+        self.learning_path_service = learning_path_service
+
+    DEFAULT_ERROR_MESSAGE = t("content.learning_path.retrieval_failed")
 
     async def handle(
         self, request: GetRecommendedContentRequest
     ) -> GetRecommendedContentResponse:
 
-        response = await self.learning_path_repository.get_learning_path(
-            request.student_id
-        )
-
-        if not response.is_success:
+        if not await self.learning_path_service.check_path_association(
+            request.student_id, request.path_id
+        ):
             return GetRecommendedContentResponse(
                 is_success=False,
-                message=t("content.learning_path.retrieval_failed"),
-                recommendation=[],
+                message=self.DEFAULT_ERROR_MESSAGE,
+                recommendation=None,
             )
 
-        for learning_path in response.recommendation:
-            await self.learning_path_repository.save_learning_path(learning_path)
+        response = await self.learning_path_service.get_learning_path(request.path_id)
 
-        results = [
-            TopicSummary(
-                topic=learning_path.topic,
-                contents=[
-                    ContentByTopic(
-                        content_id=content.content_id,
-                        title=content.title,
-                        description=content.description,
-                        rating=content.rating,
-                    )
-                    for content in learning_path.contents
-                ],
+        if not response or not response.is_success:
+            return GetRecommendedContentResponse(
+                is_success=False,
+                message=self.DEFAULT_ERROR_MESSAGE,
+                recommendation=None,
             )
-            for learning_path in response.recommendation
-        ]
 
         return GetRecommendedContentResponse(
             is_success=True,
             message=t("content.learning_path.retrieved"),
-            recommendation=results,
+            recommendation=response.learning_path,
         )

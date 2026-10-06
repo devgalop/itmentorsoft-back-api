@@ -1,10 +1,11 @@
 from pydantic import BaseModel
+
 from src.features.content_management.shared.learning_path_manager_service import (
-    TopicSummary,
+    TopicPathAssociation,
 )
 
 
-class GetRecommendedContentResponse(BaseModel):
+class GenerateLearningPathResponse(BaseModel):
     is_success: bool
     message: str
-    recommendation: TopicSummary | None = None
+    learning_path: list[TopicPathAssociation] | None = None
