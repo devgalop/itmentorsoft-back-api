@@ -19,7 +19,7 @@ from itmentorsoft_persistence.models import (
 from itmentorsoft_persistence import AsyncSessionLocal
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
-_QUESTIONS_FILE = _PROJECT_ROOT / "docs" / "resources" / "sample_questions.json"
+_QUESTIONS_FILE = _PROJECT_ROOT / "docs" / "resources" / "rubricas.json"
 
 
 def _parse_rubric(raw: dict[str, str]) -> list[QuestionRubricScore]:
