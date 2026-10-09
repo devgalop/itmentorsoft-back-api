@@ -11,7 +11,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U admin_mentorsoft -d mentorsoft"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
       start_period: 10s
 
   floci:
@@ -23,12 +23,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - floci_data:/data
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
 
   valkey:
     image: valkey/valkey:8.1.9-alpine3.24
@@ -43,7 +37,7 @@ services:
       test: ["CMD", "valkey-cli", "-a", "${VALKEY_PASSWORD}", "ping"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
       start_period: 5s
 
   evaluator:
@@ -59,7 +53,20 @@ services:
       valkey:
         condition: service_healthy
       floci:
+        condition: service_started
+
+  notificator:
+    image: ghcr.io/devgalop/itmentorsoft-back-worker-notificator:latest
+    container_name: notificator-itmentorsoft
+    env_file: .env
+    ports:
+      - "8002:8000"
+    restart: unless-stopped
+    depends_on:
+      valkey:
         condition: service_healthy
+      floci:
+        condition: service_started
 
   api:
     build:
@@ -79,6 +86,8 @@ services:
         condition: service_healthy
       valkey:
         condition: service_healthy
+      floci:
+        condition: service_started
     restart: unless-stopped
 
 volumes:
