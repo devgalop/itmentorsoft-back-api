@@ -1,5 +1,8 @@
+import json
 from typing import Annotated
 import uuid
+import aiofiles
+from pathlib import Path
 from fastapi import Depends
 from sqlalchemy import select
 from datetime import datetime
@@ -12,7 +15,6 @@ from itmentorsoft_persistence.models import (
     AssessmentQuizEntity,
     ClassificationResultEntity,
     TopicResultEntity,
-    ContentRating,
     QuestionEntity,
     ResourceContentEntity,
     RoleEntity,
@@ -21,8 +23,13 @@ from itmentorsoft_persistence.models import (
 
 from itmentorsoft_persistence import (
     AsyncSessionLocal,
+    ContentCategory,
+    ResourceContent,
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+
+_PROJECT_ROOT = Path(__file__).resolve().parents[5]
+CONTENT_FILE_PATH = _PROJECT_ROOT / "docs" / "resources" / "contenidos.json"
 
 
 def check_env_variables():
@@ -218,6 +225,30 @@ async def seed_assessments():
         await session.commit()
 
 
+async def _read_contents_from_file(file_path: str) -> list[ResourceContent]:
+    async with aiofiles.open(file_path, mode="r", encoding="utf-8") as f:
+        content = await f.read()
+
+    raw_items = json.loads(content)
+    contents: list[ResourceContent] = []
+    for item in raw_items:
+
+        category = item.get("category", "")
+        related_topics = item.get("related_topics", "")
+        split_related_topics = related_topics.split("|") if related_topics else []
+
+        content = ResourceContent()
+        content.add_title(item.get("title", ""))
+        content.add_summary(item.get("summary", ""))
+        content.add_url(item.get("url", ""))
+        content.categorize_content(ContentCategory(category))
+        for topic in split_related_topics:
+            content.add_related_topic(topic)
+        contents.append(content)
+
+    return contents
+
+
 async def seed_contents():
     async with AsyncSessionLocal() as session:
         result = await session.execute(select(ResourceContentEntity))
@@ -226,37 +257,19 @@ async def seed_contents():
         if contents:
             print("Contents already seeded. Skipping seeding.")
             return
-        topics_result = await session.execute(
-            select(QuestionEntity.classification).distinct()
-        )
-        topics = topics_result.scalars().all()
-        students = await session.execute(
-            select(UserEntity).where(UserEntity.username.contains("student"))
-        )
-        students = students.scalars().all()
-        contents = []
-        ratings = []
-        for topic in topics:
-            for i in range(1, 30):
-                content_id = uuid.uuid4().hex
-                content = ResourceContentEntity(
-                    id=content_id,
-                    title=f"Sample Content {i}",
-                    summary=f"This is a description for Sample Content {i}.",
-                    category="básico" if i % 2 == 0 else "intermedio",
-                    url=f"https://example.com/content/{i}",
-                    related_topics=f"{topic}",
+
+        contents = await _read_contents_from_file(str(CONTENT_FILE_PATH))
+        for content in contents:
+            related_topics = "|".join(content.related_topics)
+            session.add(
+                ResourceContentEntity(
+                    id=content.content_id,
+                    title=content.title,
+                    summary=content.summary,
+                    url=content.url,
+                    category=content.category.value,
+                    related_topics=related_topics,
                 )
-                contents.append(content)
-                rating = ContentRating(
-                    id=uuid.uuid4().hex,
-                    content_id=content_id,
-                    user_id=students[i % len(students)].id,
-                    rating=secrets.randbelow(5) + 1,
-                )
-                ratings.append(rating)
-            print(f"Sample contents created for topic {topic}")
-        session.add_all(contents)
-        session.add_all(ratings)
-        print("Sample contents created")
+            )
+
         await session.commit()
