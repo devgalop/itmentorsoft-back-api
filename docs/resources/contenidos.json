@@ -1,0 +1,482 @@
+[
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_principiante_001",
+    "title": "Pro Git: libro abierto en español",
+    "summary": "Libro gratuito en español sobre control de versiones, cambios, ramas y colaboración. Comenzar por fundamentos y cambios registrados para entender cómo conservar y revisar la evolución del código.",
+    "category": "principiante",
+    "url": "https://git-scm.com/book/es/v2",
+    "related_topics": "Principios de arquitectura y mantenibilidad|control de versiones|Git|mantenibilidad|cambios|colaboración|Control de versiones e historial"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_basico_001",
+    "title": "Microsoft Learn: principios arquitectónicos",
+    "summary": "Lectura gratuita en español sobre separar responsabilidades, encapsular y limitar dependencias. Identificar presentación, negocio y persistencia y revisar cómo agrupar tareas relacionadas.",
+    "category": "básico",
+    "url": "https://learn.microsoft.com/es-es/dotnet/architecture/modern-web-apps-azure/architectural-principles",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Separación de responsabilidades|Cohesión y acoplamiento|cohesión|acoplamiento|responsabilidades|dependencias"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_basico_002",
+    "title": "Refactoring.Guru: código limpio",
+    "summary": "Lectura gratuita en inglés sobre código comprensible, duplicación y facilidad de mantenimiento. Revisar nombres e intención; el artículo abierto es independiente de los cursos premium del sitio.",
+    "category": "principiante",
+    "url": "https://refactoring.guru/refactoring/what-is-refactoring",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Legibilidad y nombres significativos|Refactorización y deuda técnica|legibilidad|nombres|duplicación|Mantenimiento del software"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_basico_003",
+    "title": "Refactoring.Guru: deuda técnica",
+    "summary": "Lectura gratuita en inglés sobre decisiones que aumentan el coste futuro del cambio. Distinguir deuda y fallos funcionales; estudiar el artículo abierto, sin comprar el curso premium anunciado en el sitio.",
+    "category": "básico",
+    "url": "https://refactoring.guru/es/refactoring/technical-debt",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Refactorización y deuda técnica|deuda técnica|coste de cambio|atajos"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_basico_004",
+    "title": "Python: introducción a unittest",
+    "summary": "Documentación gratuita en español con secciones en inglés. Estudiar el ejemplo básico, casos de prueba y aserciones; practicar un promedio con entradas normales y lista vacía.",
+    "category": "básico",
+    "url": "https://docs.python.org/es/3/library/unittest.html",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Prueba unitaria y casos límite|prueba unitaria|casos límite|assert|unittest"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_intermedio_001",
+    "title": "Microsoft Learn: arquitecturas de aplicaciones web",
+    "summary": "Lectura gratuita en español con ejemplos .NET. Comparar capas, núcleo de aplicación, interfaces y dependencias; los principios pueden aplicarse a otros lenguajes.",
+    "category": "intermedio",
+    "url": "https://learn.microsoft.com/es-es/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Arquitectura por capas y arquitectura hexagonal|Inversión de dependencias y adaptación de proveedores|Responsabilidad única y razones de cambio|capas|puertos|adaptadores|DIP"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_intermedio_002",
+    "title": "Microsoft Learn: probar aplicaciones web",
+    "summary": "Guía gratuita en español sobre pruebas unitarias, de integración y funcionales, con ejemplos ASP.NET Core. Elegir el alcance adecuado para reglas, persistencia y recorridos completos.",
+    "category": "intermedio",
+    "url": "https://learn.microsoft.com/es-es/dotnet/architecture/modern-web-apps-azure/test-asp-net-core-mvc-apps",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Estrategia de pruebas y pirámide de pruebas|prueba unitaria|prueba de integración|prueba funcional|pirámide"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_intermedio_003",
+    "title": "Refactoring.Guru: cómo refactorizar",
+    "summary": "Lectura gratuita en inglés sobre refactorización segura por pasos pequeños y comprobación del comportamiento. Aplicar a una función heredada con una línea base de pruebas antes de extraer operaciones.",
+    "category": "intermedio",
+    "url": "https://refactoring.guru/refactoring/how-to",
+    "related_topics": "Principios de arquitectura y mantenibilidad|refactorización incremental|regresión|pruebas|extract method"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_intermedio_004",
+    "title": "Refactoring.Guru: catálogo de code smells",
+    "summary": "Catálogo gratuito en inglés de síntomas como métodos largos, duplicación y cambios dispersos. Usarlo para diagnosticar responsabilidades y justificar refactorizaciones; no requiere comprar el curso premium.",
+    "category": "intermedio",
+    "url": "https://refactoring.guru/es/refactoring/smells",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Responsabilidad única y razones de cambio|code smells|cohesión|duplicación"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_avanzado_001",
+    "title": "Microsoft Learn: estilo de arquitectura de microservicios",
+    "summary": "Lectura gratuita en español sobre beneficios, límites y dificultades de microservicios. Comparar escalado independiente con complejidad operativa antes de elegir una arquitectura para un equipo pequeño.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/guide/architecture-styles/microservices",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Decisiones arquitectónicas y compensaciones|monolito modular|microservicios|trade offs|coste operativo"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_avanzado_002",
+    "title": "Microsoft Learn: registros de decisiones arquitectónicas",
+    "summary": "Guía gratuita en español sobre ADR, contexto, alternativas y consecuencias. Redactar una decisión justificada sobre cola y worker frente a esperar la evaluación dentro de HTTP.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/well-architected/architect-role/architecture-decision-record",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Registro de decisiones arquitectónicas|Decisiones arquitectónicas y compensaciones|ADR|alternativas|consecuencias"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_avanzado_003",
+    "title": "ArchUnit: guía de pruebas arquitectónicas",
+    "summary": "Guía gratuita en inglés con ejemplos Java para comprobar dependencias, capas y restricciones arquitectónicas. Estudiar importación de clases y reglas automáticas; adaptar el principio a las herramientas del proyecto.",
+    "category": "avanzado",
+    "url": "https://www.archunit.org/userguide/html/000_Index.html",
+    "related_topics": "Principios de arquitectura y mantenibilidad|prueba arquitectónica|dependencias|CI|fitness function"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_avanzado_004",
+    "title": "Microsoft Learn: patrón Strangler Fig",
+    "summary": "Lectura gratuita en español sobre sustitución gradual de un sistema mediante una fachada y enrutamiento. Analizar convivencia, migración por partes y límites de una estrategia de retorno.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/strangler-fig",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Migración gradual y patrón Strangler Fig|legado|fachada|migración gradual|enrutamiento"
+  },
+  {
+    "content_id": "contenido_arquitectura_mantenibilidad_avanzado_005",
+    "title": "Microsoft Learn: marco Well-Architected",
+    "summary": "Guías gratuitas en español sobre atributos y compromisos de arquitectura. Usar los pilares como referencia para formular escenarios verificables; la lectura no exige contratar los servicios cloud que aparecen como ejemplos.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/well-architected/",
+    "related_topics": "Principios de arquitectura y mantenibilidad|Atributos de calidad y escenarios medibles|atributo de calidad|escenario|medida|trade offs"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_principiante_001",
+    "title": "MDN: qué es JavaScript",
+    "summary": "Introducción gratuita en español para reconocer código, datos y comportamiento en una página web. Recurso de entrada para estudiantes con poca experiencia; no requiere cursos de pago.",
+    "category": "principiante",
+    "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/What_is_JavaScript",
+    "related_topics": "Fundamentos y paradigmas|programación|lenguaje|instrucciones|datos|fundamentos|Programa y lenguaje de programación"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_basico_001",
+    "title": "Python: introducción informal al lenguaje",
+    "summary": "Tutorial gratuito en español, con ejemplos de números, cadenas, variables y listas. Comparar texto y valores numéricos y practicar expresiones pequeñas antes de construir algoritmos.",
+    "category": "principiante",
+    "url": "https://docs.python.org/es/3/tutorial/introduction.html",
+    "related_topics": "Fundamentos y paradigmas|Variables, tipos y conversión|variable|tipo|cadena|número|lista|Algoritmo, entradas y salidas|Variables y valores iniciales"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_basico_002",
+    "title": "Python: control de flujo",
+    "summary": "Tutorial gratuito en español con secciones en inglés sobre if, for, range y funciones. Practicar decisiones en el límite y recorridos con acumuladores; expresar entradas y salidas de un algoritmo.",
+    "category": "básico",
+    "url": "https://docs.python.org/es/3/tutorial/controlflow.html",
+    "related_topics": "Fundamentos y paradigmas|Algoritmo, entradas y salidas|Condicionales y límites|Iteración y acumuladores|if|for|acumulador|algoritmo"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_basico_003",
+    "title": "MDN: visión general de JavaScript",
+    "summary": "Lectura gratuita en español sobre valores, control de flujo, funciones y objetos. Usar sus ejemplos para distinguir el lenguaje de los enfoques de organización imperativa, orientada a objetos y funcional.",
+    "category": "básico",
+    "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Language_overview",
+    "related_topics": "Fundamentos y paradigmas|Paradigmas de programación|Variables, tipos y conversión|multiparadigma|imperativo|funcional|orientado a objetos"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_basico_004",
+    "title": "MDN: guía de funciones",
+    "summary": "Guía gratuita en español de definición, argumentos, retorno y ámbito. Comenzar por las secciones introductorias y practicar una operación de promedio con entradas y salida explícitas.",
+    "category": "básico",
+    "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions",
+    "related_topics": "Fundamentos y paradigmas|Algoritmo, entradas y salidas|función|parámetro|retorno|promedio|ámbito"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_intermedio_001",
+    "title": "Python: estructuras de datos",
+    "summary": "Tutorial gratuito en español sobre listas, conjuntos, diccionarios y recorridos. Elegir estructuras según orden, unicidad y búsquedas por clave; analizar duplicados antes de cargar datos.",
+    "category": "intermedio",
+    "url": "https://docs.python.org/es/3/tutorial/datastructures.html",
+    "related_topics": "Fundamentos y paradigmas|Elección de estructuras de datos|lista|conjunto|diccionario|clave|unicidad"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_intermedio_002",
+    "title": "Python: errores y excepciones",
+    "summary": "Tutorial gratuito en español con secciones en inglés. Distinguir errores de formato, captura específica, propagación y limpieza; evitar convertir cualquier fallo en una nota cero.",
+    "category": "intermedio",
+    "url": "https://docs.python.org/es/3/tutorial/errors.html",
+    "related_topics": "Fundamentos y paradigmas|Manejo de excepciones y recuperación|excepción|validación|try|except|propagación"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_intermedio_003",
+    "title": "PostgreSQL: consultar tablas con SELECT",
+    "summary": "Tutorial oficial gratuito en inglés sobre consultas, filtros, expresiones y orden. Contrastar la descripción declarativa del resultado con un recorrido imperativo; leer no requiere contratar una base cloud.",
+    "category": "intermedio",
+    "url": "https://www.postgresql.org/docs/current/tutorial-select.html",
+    "related_topics": "Fundamentos y paradigmas|Programación imperativa y declarativa|SQL|SELECT|WHERE|ORDER BY|filtrado"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_intermedio_004",
+    "title": "Python: introducción a programación funcional",
+    "summary": "Guía oficial gratuita en español con partes en inglés sobre funciones, efectos, modularidad e iteradores. Separar transformaciones de persistencia y descomponer un procesamiento en funciones comprobables.",
+    "category": "intermedio",
+    "url": "https://docs.python.org/es/3/howto/functional.html",
+    "related_topics": "Fundamentos y paradigmas|Funciones puras y efectos laterales|función pura|efecto lateral|composición|modularidad"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_avanzado_001",
+    "title": "MIT OpenCourseWare: Introduction to Algorithms",
+    "summary": "Curso abierto gratuito en inglés con videos, apuntes y problemas de algoritmos y estructuras de datos. Estudiar análisis asintótico y comparar búsqueda o detección de duplicados según tamaño de entrada.",
+    "category": "avanzado",
+    "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
+    "related_topics": "Fundamentos y paradigmas|Complejidad temporal y tamaño de entrada|Big O|algoritmos|complejidad|hash|memoria"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_avanzado_002",
+    "title": "MIT Software Construction: recursión",
+    "summary": "Lectura y ejercicios gratuitos en inglés sobre casos base, pasos recursivos y descomposición. Justificar terminación y practicar factorial con validación de entradas.",
+    "category": "avanzado",
+    "url": "https://web.mit.edu/6.005/www/sp16/classes/10-recursion/",
+    "related_topics": "Fundamentos y paradigmas|Recursión y condiciones de terminación|recursión|caso base|factorial|terminación|reducción"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_avanzado_003",
+    "title": "MDN: Array.map y transformaciones",
+    "summary": "Referencia gratuita en español sobre transformar una colección mediante funciones callback. Practicar composición de map con filtrado y revisar las condiciones para preservar la entrada y evitar efectos laterales.",
+    "category": "avanzado",
+    "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map",
+    "related_topics": "Fundamentos y paradigmas|map|filter|callback|transformación|composición"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_avanzado_004",
+    "title": "MDN: modelo de concurrencia y bucle de eventos",
+    "summary": "Lectura gratuita en español sobre pila, cola y bucle de eventos de JavaScript. Distinguir concurrencia de paralelismo y analizar qué significa esperar una operación sin bloquear todo el flujo.",
+    "category": "avanzado",
+    "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Execution_model",
+    "related_topics": "Fundamentos y paradigmas|Concurrencia, paralelismo y asincronía|bucle de eventos|cola|concurrencia|asincronía|I/O"
+  },
+  {
+    "content_id": "contenido_fundamentos_paradigmas_avanzado_005",
+    "title": "Python: hilos y primitivas de sincronización",
+    "summary": "Documentación gratuita en español con partes en inglés sobre hilos, locks y coordinación. Estudiar protección de operaciones compartidas y actualizaciones perdidas; un lock no equivale a inmutabilidad.",
+    "category": "avanzado",
+    "url": "https://docs.python.org/es/3/library/threading.html",
+    "related_topics": "Fundamentos y paradigmas|Inmutabilidad y estado compartido|Concurrencia, paralelismo y asincronía|lock|hilo|sincronización|condición de carrera"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_principiante_001",
+    "title": "MDN: introducción a los objetos JavaScript",
+    "summary": "Ruta gratuita en español con guías de objetos, prototipos y conceptos de orientación a objetos. Usar como punto de entrada antes de estudiar clases, contratos y patrones.",
+    "category": "principiante",
+    "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Advanced_JavaScript_objects",
+    "related_topics": "Diseño orientado a objetos|objeto|atributo|método|orientación a objetos|prototipo"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_basico_001",
+    "title": "MDN: conceptos básicos de objetos",
+    "summary": "Tutorial gratuito en español sobre propiedades, métodos y objetos anidados. Identificar datos y comportamiento de una evaluación y representar un curso con referencias a estudiantes.",
+    "category": "principiante",
+    "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/Object_basics",
+    "related_topics": "Diseño orientado a objetos|Estado y comportamiento|Composición y relación tiene un|Clases y objetos|propiedad|método|objeto anidado|Atributos y métodos|Creación de instancias"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_basico_002",
+    "title": "MDN: trabajar con objetos",
+    "summary": "Guía gratuita en español sobre creación de objetos, propiedades y métodos. Relacionar una operación pública con los datos que usa y distinguir el uso del objeto de sus detalles internos.",
+    "category": "básico",
+    "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Working_with_objects",
+    "related_topics": "Diseño orientado a objetos|Abstracción y detalles de implementación|Estado y comportamiento|objeto|método|propiedad|interfaz pública|Composición y relación tiene un"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_basico_003",
+    "title": "Python: clases e instancias",
+    "summary": "Tutorial gratuito en español sobre clases, instancias, atributos y métodos. Revisar estado individual frente a variables de clase y las convenciones de acceso; Python no impone privacidad como otros lenguajes.",
+    "category": "básico",
+    "url": "https://docs.python.org/es/3/tutorial/classes.html",
+    "related_topics": "Diseño orientado a objetos|Clases y objetos|Estado y comportamiento|Encapsulación e invariantes|clase|instancia|atributo|método"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_basico_004",
+    "title": "MDN: clases y campos privados",
+    "summary": "Referencia gratuita en español de clases, constructores, métodos y elementos privados. Practicar creación validada y acceso controlado al valor de una Nota; la privacidad requiere además reglas de validación.",
+    "category": "básico",
+    "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes",
+    "related_topics": "Diseño orientado a objetos|Encapsulación e invariantes|Clases y objetos|constructor|campo privado|validación|invariante"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_intermedio_001",
+    "title": "Python: clases base abstractas y contratos",
+    "summary": "Documentación gratuita en español con partes en inglés sobre ABC y métodos abstractos. Definir capacidades comunes e implementar notificadores distintos; una firma compatible no garantiza por sí sola la semántica.",
+    "category": "intermedio",
+    "url": "https://docs.python.org/es/3/library/abc.html",
+    "related_topics": "Diseño orientado a objetos|Polimorfismo mediante contratos|Herencia y sustitución de subtipos|ABC|abstractmethod|contrato|polimorfismo"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_intermedio_002",
+    "title": "MIT Software Construction: interfaces y subtipos",
+    "summary": "Lectura gratuita en inglés sobre interfaces, subtipos y contratos de implementación. Revisar cuándo una capacidad debe ofrecerse en una interfaz separada y por qué heredar no basta para garantizar sustitución.",
+    "category": "intermedio",
+    "url": "https://web.mit.edu/6.005/www/sp16/classes/14-interfaces/",
+    "related_topics": "Diseño orientado a objetos|Herencia y sustitución de subtipos|Polimorfismo mediante contratos|subtipo|interfaz|contrato|sustitución"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_intermedio_003",
+    "title": "Refactoring.Guru: patrón Strategy",
+    "summary": "Tutorial gratuito en español con estructura, pseudocódigo y ejemplos de estrategias intercambiables. Modelar promedios simples y ponderados bajo un contrato; el artículo no exige adquirir el curso premium.",
+    "category": "intermedio",
+    "url": "https://refactoring.guru/es/design-patterns/strategy",
+    "related_topics": "Diseño orientado a objetos|Strategy y algoritmos intercambiables|Strategy|contexto|algoritmo|delegación|estrategia"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_intermedio_004",
+    "title": "Refactoring.Guru: patrón Observer",
+    "summary": "Tutorial gratuito en español sobre sujetos, suscriptores y notificaciones. Aplicar a panel y notificador cuando finaliza una evaluación y analizar cómo cancelar suscripciones.",
+    "category": "intermedio",
+    "url": "https://refactoring.guru/es/design-patterns/observer",
+    "related_topics": "Diseño orientado a objetos|Observer|evento|suscripción|observador|cancelación"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_intermedio_005",
+    "title": "Refactoring.Guru: patrón Adapter",
+    "summary": "Tutorial gratuito en español sobre adaptación de interfaces incompatibles. Traducir una API de proveedor al contrato del dominio y revisar validación de datos y separación de responsabilidades.",
+    "category": "intermedio",
+    "url": "https://refactoring.guru/es/design-patterns/adapter",
+    "related_topics": "Diseño orientado a objetos|Adapter e interfaces incompatibles|Adapter|puerto|traducción|proveedor|contrato"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_avanzado_001",
+    "title": "MIT Software Construction: especificaciones y contratos",
+    "summary": "Lectura gratuita en inglés sobre precondiciones, postcondiciones y fuerza de una especificación. Analizar si una implementación acepta las entradas y preserva las garantías que esperan sus consumidores.",
+    "category": "avanzado",
+    "url": "https://web.mit.edu/6.005/www/sp16/classes/06-specifications/",
+    "related_topics": "Diseño orientado a objetos|Diseño por contrato y principio de sustitución|precondición|postcondición|contrato|LSP|garantía"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_avanzado_002",
+    "title": "Python: protocolos e interfaces estructurales",
+    "summary": "Referencia gratuita en español con partes en inglés sobre Protocol y tipado estructural. Modelar contratos de lectura, escritura y exportación según capacidades; el tipado no reemplaza pruebas semánticas.",
+    "category": "avanzado",
+    "url": "https://docs.python.org/es/3/library/typing.html#typing.Protocol",
+    "related_topics": "Diseño orientado a objetos|Segregación de interfaces|ISP|Protocol|capacidad|lector|escritor|contrato"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_avanzado_003",
+    "title": "Refactoring.Guru: patrón Decorator",
+    "summary": "Tutorial gratuito en español sobre envoltorios que conservan un contrato y agregan comportamiento mediante delegación. Aplicar a métricas y registros sin modificar el resultado del calificador.",
+    "category": "avanzado",
+    "url": "https://refactoring.guru/es/design-patterns/decorator",
+    "related_topics": "Diseño orientado a objetos|Decorator y composición de comportamiento|Decorator|envoltorio|delegación|métricas|contrato"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_avanzado_004",
+    "title": "Python: dataclasses, igualdad e inmutabilidad",
+    "summary": "Documentación gratuita en español con partes en inglés sobre igualdad por atributos y frozen. Contrastar identidad de una entidad con igualdad de un valor; frozen no congela recursivamente objetos mutables internos.",
+    "category": "avanzado",
+    "url": "https://docs.python.org/es/3/library/dataclasses.html",
+    "related_topics": "Diseño orientado a objetos|Objetos de valor, entidades e identidad|Inmutabilidad y estado compartido|igualdad por valor|frozen|entidad|identidad|Fundamentos y paradigmas"
+  },
+  {
+    "content_id": "contenido_diseno_objetos_avanzado_005",
+    "title": "Python: unittest.mock y dobles de prueba",
+    "summary": "Documentación gratuita en español con partes en inglés sobre mocks, especificaciones y respuestas controladas. Probar éxitos y fallos y reconocer qué evidencia requiere pruebas adicionales del contrato real.",
+    "category": "avanzado",
+    "url": "https://docs.python.org/es/3/library/unittest.mock.html",
+    "related_topics": "Diseño orientado a objetos|mock|stub|fake|spec|side effect|contrato"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_principiante_001",
+    "title": "MDN: cómo funciona la web",
+    "summary": "Introducción gratuita en español a clientes, servidores, red y solicitudes. Recurso de entrada para entender cómo el navegador se comunica con una aplicación y por qué no equivale a acceder a una tabla.",
+    "category": "principiante",
+    "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "related_topics": "APIs y sistemas distribuidos|cliente|servidor|web|solicitud|respuesta|red|Cliente y servidor|Solicitud y respuesta"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_basico_001",
+    "title": "MDN: generalidades de HTTP",
+    "summary": "Guía gratuita en español sobre solicitudes, respuestas, clientes y servidores. Usar una consulta de resultado de evaluación para identificar dirección, método, estado y representación.",
+    "category": "principiante",
+    "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Guides/Overview",
+    "related_topics": "APIs y sistemas distribuidos|HTTP|solicitud|respuesta|cliente|servidor|Cliente y servidor|Solicitud y respuesta|API como contrato de acceso"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_basico_002",
+    "title": "MDN: métodos de petición HTTP",
+    "summary": "Referencia gratuita en español de GET, POST y otros métodos con sus propiedades. Relacionar consultas y creación de evaluaciones con semántica segura e idempotente.",
+    "category": "básico",
+    "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Methods",
+    "related_topics": "APIs y sistemas distribuidos|Métodos HTTP y recursos|GET|POST|recurso|semántica segura|idempotencia"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_basico_003",
+    "title": "MDN: códigos de estado HTTP",
+    "summary": "Referencia gratuita en español de estados de éxito y error. Estudiar 200, 201, 404 y 500 y distinguir datos del cuerpo de la semántica del estado.",
+    "category": "básico",
+    "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Status",
+    "related_topics": "APIs y sistemas distribuidos|Códigos de estado HTTP|200|201|404|500|error"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_basico_004",
+    "title": "MDN: trabajar con JSON",
+    "summary": "Tutorial gratuito en español sobre objetos, arreglos, tipos y conversión de JSON. Distinguir un documento parseable del esquema que una API exige para una evaluación.",
+    "category": "básico",
+    "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/JSON",
+    "related_topics": "APIs y sistemas distribuidos|JSON y contratos de datos|JSON|cadena|número|booleano|serialización"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_basico_005",
+    "title": "Microsoft Learn: solicitud y respuesta asíncronas",
+    "summary": "Lectura gratuita en español sobre aceptar trabajo, devolver 202 y consultar un estado. Comenzar por contexto y solución; distinguir solicitud aceptada de evaluación terminada.",
+    "category": "básico",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/asynchronous-request-reply",
+    "related_topics": "APIs y sistemas distribuidos|Comunicación síncrona y asíncrona|pendiente|202|consulta de estado|asincronía"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_intermedio_001",
+    "title": "Microsoft Learn: diseño de API web",
+    "summary": "Guía gratuita en español sobre recursos, métodos, códigos, contratos y evolución de API. Diseñar creación y consulta de evaluaciones con esquemas coherentes de éxito y error.",
+    "category": "intermedio",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/best-practices/api-design",
+    "related_topics": "APIs y sistemas distribuidos|Diseño de API orientada a recursos|REST|contrato|paginación|versionado"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_intermedio_002",
+    "title": "FastAPI: seguridad y autenticación",
+    "summary": "Tutorial oficial gratuito en español con secciones en inglés sobre seguridad, OAuth2 y tokens. Complementar la identificación del usuario con controles de permisos y propiedad del recurso en el backend.",
+    "category": "intermedio",
+    "url": "https://fastapi.tiangolo.com/es/tutorial/security/",
+    "related_topics": "APIs y sistemas distribuidos|Autenticación, autorización y propiedad del recurso|token|OAuth2|autenticación|autorización|permiso"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_intermedio_003",
+    "title": "AWS Powertools Python: idempotencia",
+    "summary": "Documentación gratuita en inglés sobre claves, persistencia y reutilización de resultados para solicitudes repetidas. La lectura y biblioteca son abiertas; ejecutar ejemplos sobre servicios AWS puede generar costes.",
+    "category": "intermedio",
+    "url": "https://docs.aws.amazon.com/powertools/python/latest/utilities/idempotency/",
+    "related_topics": "APIs y sistemas distribuidos|Idempotencia y reenvío de solicitudes|clave de idempotencia|persistencia|resultado|duplicado"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_intermedio_004",
+    "title": "Microsoft Learn: nivelación de carga basada en colas",
+    "summary": "Lectura gratuita en español sobre desacoplar recepción y procesamiento mediante una cola. Identificar productor y consumidor y analizar picos de carga, retrasos y garantías de entrega.",
+    "category": "intermedio",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/queue-based-load-leveling",
+    "related_topics": "APIs y sistemas distribuidos|Colas, productores y consumidores|cola|productor|consumidor|worker|carga"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_intermedio_005",
+    "title": "Microsoft Learn: implementación de API web",
+    "summary": "Guía gratuita en español sobre validación, operaciones, respuestas, filtrado y grandes conjuntos de datos. Revisar límites de respuesta, paginación y manejo consistente de errores.",
+    "category": "intermedio",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/best-practices/api-implementation",
+    "related_topics": "APIs y sistemas distribuidos|Diseño de API orientada a recursos|paginación|validación|error|contrato"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_avanzado_001",
+    "title": "Microsoft Learn: patrón Retry",
+    "summary": "Lectura gratuita en español sobre fallos transitorios, esperas y reintentos limitados. Distinguir errores recuperables de solicitudes inválidas y considerar efectos repetidos al decidir reintentar.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/retry",
+    "related_topics": "APIs y sistemas distribuidos|Reintentos, timeout y circuit breaker|retry|backoff|timeout|fallo transitorio|idempotencia"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_avanzado_002",
+    "title": "Microsoft Learn: patrón Circuit Breaker",
+    "summary": "Lectura gratuita en español sobre estados cerrado, abierto y semiabierto y protección frente a fallos persistentes. Combinar con reintentos limitados y analizar recuperación y degradación controlada.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/circuit-breaker",
+    "related_topics": "APIs y sistemas distribuidos|Reintentos, timeout y circuit breaker|circuit breaker|semiabierto|fallo persistente|recuperación"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_avanzado_003",
+    "title": "AWS: patrón Transactional Outbox",
+    "summary": "Guía gratuita en español sobre escritura dual, registro transaccional de eventos y publicación posterior. Analizar reenvío e idempotencia; la lectura es gratuita, ejecutar infraestructura cloud puede tener coste.",
+    "category": "avanzado",
+    "url": "https://docs.aws.amazon.com/es_es/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
+    "related_topics": "APIs y sistemas distribuidos|Transactional outbox y escritura dual|outbox|transacción local|publicador|duplicado|idempotencia"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_avanzado_004",
+    "title": "Microsoft Learn: patrón CQRS y vistas de lectura",
+    "summary": "Lectura gratuita en español sobre separación de escritura y lectura, proyecciones y consistencia eventual. Analizar retrasos de actualización y cómo evitar presentar datos pendientes como definitivos.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/cqrs",
+    "related_topics": "APIs y sistemas distribuidos|Consistencia eventual y estados observables|CQRS|proyección|lectura|escritura|consistencia eventual"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_avanzado_005",
+    "title": "Microsoft Learn: consumidores en competencia",
+    "summary": "Lectura gratuita en español sobre consumidores concurrentes, procesamiento idempotente, orden y recuperación. Analizar reentregas y coordinación para evitar efectos duplicados al escalar workers.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/competing-consumers",
+    "related_topics": "APIs y sistemas distribuidos|Idempotencia concurrente y consumidores distribuidos|consumidor|concurrencia|idempotencia|recuperación|duplicado"
+  },
+  {
+    "content_id": "contenido_apis_distribuidos_avanzado_006",
+    "title": "Microsoft Learn: patrón Saga",
+    "summary": "Lectura gratuita en español sobre transacciones locales, coordinación y compensaciones ante fallos parciales. Diseñar liberación de reservas y recuperación; distinguir compensación de rollback global.",
+    "category": "avanzado",
+    "url": "https://learn.microsoft.com/es-es/azure/architecture/patterns/saga",
+    "related_topics": "APIs y sistemas distribuidos|saga|compensación|transacción local|fallo parcial|recuperación"
+  }
+]

@@ -1,0 +1,2222 @@
+[
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_principiante_001",
+    "concepto": "Legibilidad y nombres significativos",
+    "definicion": "La legibilidad es la facilidad para comprender qué hace el código; nombres descriptivos comunican la intención de datos y operaciones.",
+    "explicacion_simple": "Un nombre claro ayuda a otra persona a entender para qué sirve un dato.",
+    "ejemplo_correcto": "La llamaría precioProducto. El nombre indica qué representa el dato sin revisar todas sus operaciones; facilita entender y mantener el código sin cambiar el valor ni el cálculo.",
+    "ejemplo_incorrecto": "La llamaría z porque una letra siempre explica mejor el significado y cambiar el nombre debe alterar el precio.",
+    "errores_comunes": [
+      "Elegir otro nombre igual de ambiguo.",
+      "Confundir renombrar con cambiar el valor.",
+      "Creer que nombres claros cambian la velocidad del algoritmo.",
+      "Usar comentarios como única solución a nombres confusos."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Legibilidad y nombres significativos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: nombre acorde al precio; relación entre nombre y significado; beneficio para comprender sin cambiar el cálculo. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: nombre acorde al precio; relación entre nombre y significado; beneficio para comprender sin cambiar el cálculo. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: nombre acorde al precio; relación entre nombre y significado; beneficio para comprender sin cambiar el cálculo. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone un nombre que expresa precio de producto y explica cómo comunica el significado sin modificar el cálculo."
+    },
+    "keywords_semanticas": [
+      "legibilidad",
+      "nombre descriptivo",
+      "variable",
+      "precio",
+      "intención",
+      "claridad",
+      "comprensión",
+      "mantenibilidad",
+      "código",
+      "renombrar"
+    ],
+    "text": "Una variable p guarda el precio de un producto. Propón un nombre más claro y explica cómo ayuda a quien lee el programa.",
+    "dificultad": "básico",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_principiante_002",
+    "concepto": "Mantenimiento del software",
+    "definicion": "El mantenimiento comprende cambios al software para corregir fallos, adaptarlo o mejorarlo después de su construcción inicial.",
+    "explicacion_simple": "Un programa necesita cambios cuando se detectan problemas o cambian las necesidades.",
+    "ejemplo_correcto": "Corregir una fórmula errónea es mantenimiento correctivo de un programa existente. Compruebo una entrada con resultado conocido y otros casos afectados para verificar la corrección y evitar romper comportamientos que antes funcionaban.",
+    "ejemplo_incorrecto": "Un programa que ya abre nunca necesita mantenimiento; basta cambiar cualquier fórmula sin comprobar resultados.",
+    "errores_comunes": [
+      "Suponer que software en funcionamiento no necesita cambios.",
+      "Confundir mantenimiento con solo cambiar el equipo físico.",
+      "Corregir sin verificar el resultado esperado.",
+      "Ignorar regresiones en otros casos."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Mantenimiento del software, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: corrección de un fallo existente; verificación de una nota esperada; comprobación de otros casos afectados. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: corrección de un fallo existente; verificación de una nota esperada; comprobación de otros casos afectados. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: corrección de un fallo existente; verificación de una nota esperada; comprobación de otros casos afectados. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica que se corrige un fallo del software existente y propone verificar la nota esperada y otros casos afectados."
+    },
+    "keywords_semanticas": [
+      "mantenimiento",
+      "corrección",
+      "fallo",
+      "programa existente",
+      "cambio",
+      "verificación",
+      "resultado esperado",
+      "regresión",
+      "fórmula",
+      "prueba"
+    ],
+    "text": "Un tutor ya funciona, pero calcula mal una nota. Explica por qué corregirlo es mantenimiento y qué comprobarías después del cambio.",
+    "dificultad": "básico",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_principiante_003",
+    "concepto": "Control de versiones e historial",
+    "definicion": "El control de versiones registra cambios identificables de archivos para consultar historia, comparar estados y recuperar versiones anteriores.",
+    "explicacion_simple": "Permite saber qué cambió y volver a una versión conocida cuando hace falta.",
+    "ejemplo_correcto": "El historial conserva cambios identificables en vez de perder el estado anterior al sobrescribir. Permite comparar qué cambió y recuperar una versión conocida para investigar un error. Cada cambio debe tener contexto; un historial no prueba que el código sea correcto.",
+    "ejemplo_incorrecto": "Sobrescribir siempre es mejor porque el historial elimina automáticamente cualquier error.",
+    "errores_comunes": [
+      "Confundir control de versiones con corrección automática.",
+      "Sobrescribir y perder estados anteriores.",
+      "Creer que guardar versiones elimina la necesidad de pruebas.",
+      "No relacionar historia con comparación o recuperación."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Control de versiones e historial, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: historia de cambios identificables; diferencia frente a sobrescribir; uso del historial para investigar o recuperar. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: historia de cambios identificables; diferencia frente a sobrescribir; uso del historial para investigar o recuperar. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: historia de cambios identificables; diferencia frente a sobrescribir; uso del historial para investigar o recuperar. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica conservar y comparar cambios frente a sobrescribir y propone consultar diferencias o recuperar una versión conocida ante un error."
+    },
+    "keywords_semanticas": [
+      "control de versiones",
+      "historial",
+      "cambio",
+      "versión",
+      "Git",
+      "comparación",
+      "recuperación",
+      "colaboración",
+      "archivo",
+      "trazabilidad"
+    ],
+    "text": "Dos compañeros cambian el mismo proyecto. Explica qué aporta un historial de versiones frente a sobrescribir archivos y menciona un uso de ese historial si aparece un error.",
+    "dificultad": "básico",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_basico_001",
+    "concepto": "Separación de responsabilidades",
+    "definicion": "Organización del software en unidades con responsabilidades delimitadas para reducir la propagación de cambios entre aspectos diferentes.",
+    "explicacion_simple": "Cada parte se ocupa de una tarea clara, como mostrar una pantalla, aplicar reglas o guardar datos.",
+    "ejemplo_correcto": "Separaría el formulario en presentación, el descuento en negocio y SQL en un repositorio. Así un cambio de base afecta al repositorio y puedo probar el cálculo sin pantalla ni base real.",
+    "ejemplo_incorrecto": "Todo debe permanecer en la misma función porque separar archivos elimina la necesidad de probar.",
+    "errores_comunes": [
+      "Confundir separación con crear archivos sin delimitar tareas.",
+      "Mezclar presentación con reglas de negocio.",
+      "Suponer que dividir elimina todas las dependencias.",
+      "Afirmar que separar hace innecesarias las pruebas."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Separación de responsabilidades, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: identificación de las tres tareas; ubicación separada de cada tarea; beneficio concreto de separación. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: identificación de las tres tareas; ubicación separada de cada tarea; beneficio concreto de separación. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: identificación de las tres tareas; ubicación separada de cada tarea; beneficio concreto de separación. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica presentación, negocio y persistencia, propone una ubicación diferenciada para cada una y explica un beneficio concreto de mantenibilidad o pruebas."
+    },
+    "keywords_semanticas": [
+      "separación de responsabilidades",
+      "separation of concerns",
+      "presentación",
+      "lógica de negocio",
+      "persistencia",
+      "servicio",
+      "repositorio",
+      "modularidad",
+      "cambio localizado",
+      "pruebas aisladas"
+    ],
+    "text": "Una función muestra un formulario, calcula descuentos y ejecuta SQL. Identifica esas tres responsabilidades, propone dónde separar cada una y explica un beneficio de la separación.",
+    "dificultad": "básico",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_basico_002",
+    "concepto": "Cohesión y acoplamiento",
+    "definicion": "La cohesión expresa cuánto se relacionan las responsabilidades internas de una unidad; el acoplamiento expresa cuánto depende de otras unidades.",
+    "explicacion_simple": "Conviene que un módulo tenga tareas relacionadas y dependa de otros mediante acuerdos claros.",
+    "ejemplo_correcto": "Cohesión relaciona tareas internas; acoplamiento mide dependencias externas. Calcular y enviar correo mezcla responsabilidades; conocer detalles SMTP acopla al proveedor. Separaría calculador y notificador, unidos por un contrato.",
+    "ejemplo_incorrecto": "Cohesión significa depender de muchas clases y el objetivo es que todas compartan sus detalles internos.",
+    "errores_comunes": [
+      "Invertir los significados de cohesión y acoplamiento.",
+      "Afirmar que toda dependencia es incorrecta.",
+      "Confundir alta cohesión con una clase muy grande.",
+      "Proponer compartir detalles internos como solución."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Cohesión y acoplamiento, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: diferencia entre ambos conceptos; dos problemas del caso SMTP; mejora mediante separación y contrato. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: diferencia entre ambos conceptos; dos problemas del caso SMTP; mejora mediante separación y contrato. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: diferencia entre ambos conceptos; dos problemas del caso SMTP; mejora mediante separación y contrato. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue cohesión de acoplamiento, identifica las dos causas del caso y propone separar responsabilidades y limitar la dependencia mediante un contrato u otra solución equivalente."
+    },
+    "keywords_semanticas": [
+      "cohesión",
+      "acoplamiento",
+      "alta cohesión",
+      "bajo acoplamiento",
+      "dependencia",
+      "contrato",
+      "módulo",
+      "responsabilidad",
+      "SMTP",
+      "encapsulación"
+    ],
+    "text": "Explica la diferencia entre cohesión y acoplamiento. Una clase calcula notas y envía correos usando detalles internos del servidor SMTP: identifica un problema de cohesión y otro de acoplamiento, y propone una mejora.",
+    "dificultad": "básico",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_basico_004",
+    "concepto": "Prueba unitaria y casos límite",
+    "definicion": "Una prueba unitaria verifica el comportamiento de una unidad pequeña bajo entradas controladas, comparando resultados con expectativas.",
+    "explicacion_simple": "Se comprueba una pieza del programa con ejemplos normales y con situaciones que podrían romperla.",
+    "ejemplo_correcto": "Para [3, 4, 5] espero 4 y para [] espero 0. Son pruebas unitarias del cálculo aislado. Una integración comprobaría además la lectura desde la base y la colaboración con el servicio; no necesito esa conexión para verificar la media.",
+    "ejemplo_incorrecto": "La prueba pasa si el programa abre; la lista vacía debe fallar aunque el contrato diga que devuelve cero.",
+    "errores_comunes": [
+      "Probar solo que no se lanza una excepción.",
+      "No indicar resultados esperados.",
+      "Confundir prueba unitaria con probar toda la aplicación.",
+      "Ignorar el comportamiento definido para la lista vacía."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Prueba unitaria y casos límite, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: caso normal con media correcta; lista vacía con resultado 0; distinción de unidad e integración. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: caso normal con media correcta; lista vacía con resultado 0; distinción de unidad e integración. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: caso normal con media correcta; lista vacía con resultado 0; distinción de unidad e integración. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Da un caso normal con promedio correcto, el caso vacío con resultado 0 y distingue comprobar el cálculo aislado de comprobar la colaboración con componentes externos."
+    },
+    "keywords_semanticas": [
+      "prueba unitaria",
+      "unit test",
+      "caso límite",
+      "lista vacía",
+      "resultado esperado",
+      "assert",
+      "contrato",
+      "aislamiento",
+      "prueba de integración",
+      "promedio"
+    ],
+    "text": "Una función calcularPromedio recibe una lista de notas; para una lista vacía debe devolver 0. Propón una prueba normal y una del caso vacío con resultados esperados, y distingue esta prueba de una prueba de integración.",
+    "dificultad": "básico",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_basico_005",
+    "concepto": "Refactorización y deuda técnica",
+    "definicion": "La refactorización cambia la estructura interna preservando el comportamiento observable; la deuda técnica es el coste futuro de decisiones que dificultan evolución y mantenimiento.",
+    "explicacion_simple": "Se puede ordenar código sin cambiar lo que hace; los atajos que complican cambios futuros generan trabajo pendiente.",
+    "ejemplo_correcto": "Extraería la validación compartida si la regla es igual. Compararía pruebas de correos válidos e inválidos antes y después. Conservo el comportamiento; la duplicación genera deuda al exigir cambios repetidos y permitir versiones divergentes.",
+    "ejemplo_incorrecto": "Refactorizar es agregar nuevas funcionalidades y la deuda técnica solo existe si el programa no compila.",
+    "errores_comunes": [
+      "Confundir refactorización con cambio funcional.",
+      "Eliminar duplicación de reglas que en realidad son distintas.",
+      "Suponer que deuda técnica equivale solo a errores de compilación.",
+      "No verificar comportamiento antes y después."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Refactorización y deuda técnica, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: extracción de validación común; pruebas antes y después; coste futuro de duplicar la regla. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: extracción de validación común; pruebas antes y después; coste futuro de duplicar la regla. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: extracción de validación común; pruebas antes y después; coste futuro de duplicar la regla. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone una extracción coherente de la regla compartida, verifica comportamiento con pruebas y explica el coste de mantenimiento y divergencia asociado a la duplicación."
+    },
+    "keywords_semanticas": [
+      "refactorización",
+      "deuda técnica",
+      "duplicación",
+      "extract method",
+      "validación",
+      "comportamiento observable",
+      "regresión",
+      "coste de cambio",
+      "prueba automatizada",
+      "código limpio"
+    ],
+    "text": "Dos funciones repiten la misma validación de correo. Explica una refactorización posible, cómo verificar que conserva el comportamiento y cómo se relaciona esta duplicación con la deuda técnica.",
+    "dificultad": "básico",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_intermedio_001",
+    "concepto": "Responsabilidad única y razones de cambio",
+    "definicion": "El principio de responsabilidad única agrupa comportamiento que cambia por una misma razón y separa responsabilidades que responden a actores o políticas diferentes.",
+    "explicacion_simple": "Una clase no debería cambiar tanto por una regla académica como por el diseño de un correo.",
+    "ejemplo_correcto": "Las notas cambian por política académica, el HTML por presentación y SMTP por infraestructura. Separaría CalculadorNotas, GeneradorInforme y Notificador; un caso de uso pasa el resultado del cálculo al informe y luego al envío. SRP no exige un método por clase.",
+    "ejemplo_incorrecto": "Cumple responsabilidad única porque todos sus métodos están en una clase llamada Evaluador.",
+    "errores_comunes": [
+      "Interpretar responsabilidad única como un método por clase.",
+      "Agrupar todo por compartir una etiqueta de negocio.",
+      "Separar sin definir colaboración.",
+      "Mantener infraestructura en la regla de cálculo."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Responsabilidad única y razones de cambio, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: tres razones de cambio; componentes con tareas separadas; coordinación del cálculo, informe y envío. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: tres razones de cambio; componentes con tareas separadas; coordinación del cálculo, informe y envío. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: tres razones de cambio; componentes con tareas separadas; coordinación del cálculo, informe y envío. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue las tres razones de cambio, propone componentes coherentes y describe su coordinación mediante un caso de uso u otra colaboración equivalente."
+    },
+    "keywords_semanticas": [
+      "SRP",
+      "responsabilidad única",
+      "razón de cambio",
+      "política académica",
+      "presentación",
+      "infraestructura",
+      "caso de uso",
+      "coordinación",
+      "SOLID",
+      "cohesión"
+    ],
+    "text": "La clase Evaluador calcula notas, genera informes HTML y configura SMTP. Aplica responsabilidad única: identifica las razones de cambio, propone una separación y explica cómo colaborarían los componentes.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_intermedio_002",
+    "concepto": "Inversión de dependencias y adaptación de proveedores",
+    "definicion": "La inversión de dependencias hace que las políticas de alto nivel y los detalles externos dependan de abstracciones adecuadas a las necesidades del dominio.",
+    "explicacion_simple": "La regla de negocio pide un servicio mediante un contrato; un adaptador conecta ese contrato con el proveedor concreto.",
+    "ejemplo_correcto": "El caso de uso depende del puerto EvaluadorSemantico. Un adaptador del proveedor implementa ese contrato y traduce el SDK; la configuración lo inyecta. En pruebas uso un falso que devuelve una nota conocida sin llamar al LLM.",
+    "ejemplo_incorrecto": "Inversión de dependencias significa que el caso de uso debe heredar de la clase del SDK.",
+    "errores_comunes": [
+      "Confundir inversión con heredar del proveedor.",
+      "Diseñar un contrato que expone todos los detalles del SDK.",
+      "Suponer que inyección por sí sola garantiza inversión.",
+      "Llamar al proveedor real en todas las pruebas unitarias."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Inversión de dependencias y adaptación de proveedores, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: puerto ajustado al caso de uso; adaptador que implementa el puerto; inyección de un doble para probar sin LLM. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: puerto ajustado al caso de uso; adaptador que implementa el puerto; inyección de un doble para probar sin LLM. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: puerto ajustado al caso de uso; adaptador que implementa el puerto; inyección de un doble para probar sin LLM. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone un puerto ajustado al caso de uso, un adaptador del proveedor que lo implementa, configuración de la implementación y un doble para probar sin llamadas reales."
+    },
+    "keywords_semanticas": [
+      "DIP",
+      "inversión de dependencias",
+      "abstracción",
+      "puerto",
+      "adaptador",
+      "inyección",
+      "SDK",
+      "LLM",
+      "doble de prueba",
+      "dominio"
+    ],
+    "text": "El caso de uso de evaluación llama directamente al SDK de un proveedor LLM. Propón aplicar inversión de dependencias, indica quién implementa el contrato y explica cómo probar el caso de uso sin llamar al proveedor.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_intermedio_003",
+    "concepto": "Arquitectura por capas y arquitectura hexagonal",
+    "definicion": "La arquitectura por capas organiza responsabilidades en niveles; la hexagonal separa el núcleo de la infraestructura mediante puertos y adaptadores, orientando las dependencias hacia contratos del núcleo.",
+    "explicacion_simple": "Una organiza el sistema por niveles; la otra protege las reglas de negocio frente a tecnologías externas.",
+    "ejemplo_correcto": "En capas: API en presentación, notas en negocio y SQL en persistencia. En hexagonal: API es adaptador de entrada, notas son núcleo y SQL es adaptador de salida tras un puerto. El núcleo no importa HTTP ni SQL concretos; capas y puertos pueden coexistir.",
+    "ejemplo_incorrecto": "Hexagonal significa crear seis microservicios y hacer que el dominio importe PostgreSQL.",
+    "errores_comunes": [
+      "Interpretar hexagonal como seis componentes obligatorios.",
+      "Confundir capas lógicas con servidores físicos.",
+      "Hacer depender el dominio del SDK de persistencia.",
+      "Afirmar que capas y puertos nunca pueden coexistir."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Arquitectura por capas y arquitectura hexagonal, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: ubicación de API, cálculo y SQL en capas; ubicación hexagonal con puertos; núcleo independiente de HTTP y SQL concretos. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: ubicación de API, cálculo y SQL en capas; ubicación hexagonal con puertos; núcleo independiente de HTTP y SQL concretos. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: ubicación de API, cálculo y SQL en capas; ubicación hexagonal con puertos; núcleo independiente de HTTP y SQL concretos. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Ubica los tres elementos en ambos enfoques, identifica puertos y adaptadores y explica que el núcleo no depende de clientes HTTP o SQL concretos."
+    },
+    "keywords_semanticas": [
+      "capas",
+      "arquitectura hexagonal",
+      "puertos y adaptadores",
+      "núcleo",
+      "dominio",
+      "adaptador de entrada",
+      "adaptador de salida",
+      "PostgreSQL",
+      "dirección de dependencias",
+      "presentación"
+    ],
+    "text": "Compara capas y arquitectura hexagonal para una aplicación con API, cálculo de notas y PostgreSQL. Ubica esos elementos en ambos enfoques y explica qué dependencia debe evitar el núcleo en la propuesta hexagonal.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_intermedio_004",
+    "concepto": "Estrategia de pruebas y pirámide de pruebas",
+    "definicion": "Una estrategia de pruebas combina pruebas unitarias, de integración y de extremo a extremo para cubrir reglas, contratos y flujos con costes y alcances distintos.",
+    "explicacion_simple": "Se comprueban muchas reglas pequeñas, las conexiones importantes y algunos recorridos completos.",
+    "ejemplo_correcto": "Unitaria: probar puntaje con evaluador falso. Integración: comprobar guardado y contrato del mensaje. E2E: enviar desde la interfaz y esperar resultado. Solo interfaz vuelve las pruebas lentas y dificulta localizar fallos; no hay porcentajes fijos universales.",
+    "ejemplo_incorrecto": "Todas son unitarias porque están automatizadas y lo mejor es probar cada regla abriendo el navegador.",
+    "errores_comunes": [
+      "Equiparar automatizada con unitaria.",
+      "No distinguir alcance y coste de las pruebas.",
+      "Usar exclusivamente pruebas de interfaz.",
+      "Interpretar la pirámide como porcentajes universales."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Estrategia de pruebas y pirámide de pruebas, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: ejemplo unitario adecuado; ejemplos de integración y extremo a extremo; motivo para combinar niveles de prueba. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: ejemplo unitario adecuado; ejemplos de integración y extremo a extremo; motivo para combinar niveles de prueba. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: ejemplo unitario adecuado; ejemplos de integración y extremo a extremo; motivo para combinar niveles de prueba. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone ejemplos coherentes para los tres niveles y explica el coste, la rapidez de diagnóstico u otra razón válida para combinar pruebas en lugar de usar solo interfaz."
+    },
+    "keywords_semanticas": [
+      "pirámide de pruebas",
+      "unitaria",
+      "integración",
+      "end to end",
+      "E2E",
+      "contrato de mensaje",
+      "doble",
+      "regla de negocio",
+      "coste de prueba",
+      "aislamiento"
+    ],
+    "text": "Para el flujo responder evaluación → guardar → publicar mensaje → mostrar resultado, propone una prueba unitaria, una de integración y una de extremo a extremo. Explica por qué no probarías todo únicamente desde la interfaz.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_avanzado_001",
+    "concepto": "Decisiones arquitectónicas y compensaciones",
+    "definicion": "Una decisión arquitectónica compara alternativas respecto a requisitos y restricciones, documentando consecuencias y condiciones bajo las cuales conviene revisarla.",
+    "explicacion_simple": "Se elige una estructura por lo que necesita el proyecto y por lo que el equipo puede operar.",
+    "ejemplo_correcto": "Elegiría monolito modular con evaluación asíncrona: reduce operación para tres personas. Microservicios permiten escalar y desplegar aparte, con más fallos de red y coordinación. Revisaría si mediciones exigen escalado independiente o equipos con despliegues autónomos.",
+    "ejemplo_incorrecto": "Los microservicios siempre son más simples y garantizan que el LLM responda inmediatamente.",
+    "errores_comunes": [
+      "Elegir por moda sin requisitos.",
+      "Confundir asincronía con microservicios obligatorios.",
+      "Ignorar costes operativos de distribución.",
+      "Prometer que distribuir elimina la latencia del proveedor."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Decisiones arquitectónicas y compensaciones, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: comparación de ventajas y costes; elección justificada para el equipo; condición observable para revisar la elección. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: comparación de ventajas y costes; elección justificada para el equipo; condición observable para revisar la elección. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: comparación de ventajas y costes; elección justificada para el equipo; condición observable para revisar la elección. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Compara consecuencias de ambas opciones respecto al equipo y la carga, recomienda una solución justificada y define una condición observable que motivaría revisar la decisión."
+    },
+    "keywords_semanticas": [
+      "monolito modular",
+      "microservicios",
+      "trade off",
+      "compensación",
+      "equipo pequeño",
+      "coste operativo",
+      "escalado independiente",
+      "asincronía",
+      "latencia",
+      "requisito"
+    ],
+    "text": "Un equipo de tres personas construye un tutor con baja carga inicial y evaluación LLM lenta. Compara monolito modular y microservicios, recomienda una opción inicial y explica una condición que justificaría revisarla.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_avanzado_002",
+    "concepto": "Registro de decisiones arquitectónicas",
+    "definicion": "Un ADR documenta contexto, decisión, alternativas y consecuencias de una elección arquitectónica para conservar su razonamiento y trazabilidad.",
+    "explicacion_simple": "Un registro explica qué se decidió, por qué y qué se gana o se acepta con la elección.",
+    "ejemplo_correcto": "Contexto: LLM lento e inestable. Decisión: guardar trabajo y usar cola y worker, devolviendo id y estado. Alternativa: esperar dentro de HTTP. Ventaja: API responde pronto y permite reintentos. Coste: operar la cola y controlar estados y duplicados.",
+    "ejemplo_incorrecto": "ADR: elegimos una cola porque es moderna; no hay alternativas ni costes.",
+    "errores_comunes": [
+      "Registrar solo el nombre de la tecnología.",
+      "Omitir contexto y alternativas.",
+      "Confundir ADR con código ejecutable.",
+      "Afirmar que las colas no necesitan manejo de duplicados."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Registro de decisiones arquitectónicas, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: contexto de latencia o fallos; decisión asíncrona y alternativa síncrona; consecuencias favorable y desfavorable. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: contexto de latencia o fallos; decisión asíncrona y alternativa síncrona; consecuencias favorable y desfavorable. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: contexto de latencia o fallos; decisión asíncrona y alternativa síncrona; consecuencias favorable y desfavorable. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Incluye contexto de latencia o fallo, decisión asíncrona, alternativa síncrona y consecuencias favorables y desfavorables pertinentes."
+    },
+    "keywords_semanticas": [
+      "ADR",
+      "architecture decision record",
+      "contexto",
+      "decisión",
+      "alternativa",
+      "consecuencia",
+      "cola",
+      "worker",
+      "estado pendiente",
+      "trazabilidad"
+    ],
+    "text": "Redacta un ADR breve para procesar evaluaciones LLM mediante una cola en vez de mantener abierta la petición HTTP. Incluye contexto, decisión, alternativa y una consecuencia favorable y una desfavorable.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_avanzado_004",
+    "concepto": "Migración gradual y patrón Strangler Fig",
+    "definicion": "Strangler Fig sustituye funcionalidades de un sistema existente por partes, redirigiendo cada capacidad migrada y manteniendo temporalmente la convivencia con el legado.",
+    "explicacion_simple": "Se reemplaza el sistema por etapas y se comprueba cada parte antes de retirar la anterior.",
+    "ejemplo_correcto": "Una fachada mantiene el contrato y dirige tráfico al módulo nuevo por etapas. Comparo resultados y errores; si falla, enruto al antiguo. Mantengo contratos y datos compatibles y defino sincronización de escrituras para que el retorno sea viable.",
+    "ejemplo_incorrecto": "Apagaría todo el sistema, borraría los datos y asumiría que la nueva versión funciona por usar otro lenguaje.",
+    "errores_comunes": [
+      "Confundir migración gradual con reemplazo total inmediato.",
+      "No contemplar compatibilidad de datos.",
+      "No medir comportamiento durante convivencia.",
+      "Llamar rollback a deshacer solo código cuando los datos ya cambiaron."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Migración gradual y patrón Strangler Fig, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: enrutamiento gradual y convivencia; comparación verificable de comportamiento; retorno con datos y contratos compatibles. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: enrutamiento gradual y convivencia; comparación verificable de comportamiento; retorno con datos y contratos compatibles. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: enrutamiento gradual y convivencia; comparación verificable de comportamiento; retorno con datos y contratos compatibles. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Describe enrutamiento progresivo, comparación verificable de comportamiento y retorno al módulo anterior, considerando contratos y compatibilidad de los datos."
+    },
+    "keywords_semanticas": [
+      "Strangler Fig",
+      "migración gradual",
+      "legado",
+      "fachada",
+      "enrutamiento",
+      "feature flag",
+      "compatibilidad",
+      "rollback",
+      "observabilidad",
+      "despliegue progresivo"
+    ],
+    "text": "Debes reemplazar el módulo de recomendaciones sin detener el tutor. Propón una migración gradual: cómo dirigir tráfico, comparar comportamiento y volver atrás si la nueva versión falla.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "arquitectura_mantenibilidad_avanzado_005",
+    "concepto": "Atributos de calidad y escenarios medibles",
+    "definicion": "Un escenario de calidad especifica estímulo, condiciones, componente afectado, respuesta esperada y medida para evaluar un atributo del sistema.",
+    "explicacion_simple": "Un requisito útil dice qué debe pasar ante una situación y cómo medir si ocurrió.",
+    "ejemplo_correcto": "Cambio LLM: modificar solo adaptador y configuración, verificado por diff y pruebas. Cambio de fórmula: CI compara casos académicos y bloquea divergencias. Ambos verifican modificabilidad y capacidad de prueba; contratos y pruebas cuestan mantenerlos, pero controlan cambios.",
+    "ejemplo_incorrecto": "Es mantenible si usa IA; no hace falta definir escenarios ni medir cambios.",
+    "errores_comunes": [
+      "Usar adjetivos sin medidas.",
+      "Confundir mantenibilidad con rendimiento.",
+      "Medir solo número de líneas.",
+      "Omitir costes de abstracciones y pruebas."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Atributos de calidad y escenarios medibles, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: escenario medible de cambio del LLM; escenario medible de regresión de notas; mantenibilidad y compensación de la propuesta. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: escenario medible de cambio del LLM; escenario medible de regresión de notas; mantenibilidad y compensación de la propuesta. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: escenario medible de cambio del LLM; escenario medible de regresión de notas; mantenibilidad y compensación de la propuesta. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Formula ambos escenarios con respuesta y verificación concretas, los vincula con mantenibilidad y explica un coste y beneficio de la propuesta."
+    },
+    "keywords_semanticas": [
+      "atributo de calidad",
+      "mantenibilidad",
+      "modificabilidad",
+      "testabilidad",
+      "escenario",
+      "estímulo",
+      "medida",
+      "contrato",
+      "regresión",
+      "compensación"
+    ],
+    "text": "Transforma «el tutor debe ser fácil de mantener» en dos escenarios medibles: cambiar el proveedor LLM y detectar una regresión del cálculo de notas. Identifica el atributo que verificas y explica una compensación de tu propuesta.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Principios de arquitectura y mantenibilidad"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_principiante_001",
+    "concepto": "Algoritmo, entradas y salidas",
+    "definicion": "Un algoritmo es una secuencia de pasos definidos que transforma entradas en un resultado para resolver un problema.",
+    "explicacion_simple": "Es una receta precisa para obtener un resultado a partir de unos datos.",
+    "ejemplo_correcto": "Las entradas son 2 y 3. Tomo ambos valores, los sumo y entrego 5 como salida. Es un algoritmo porque define una secuencia precisa para resolver la suma y termina al producir el resultado.",
+    "ejemplo_incorrecto": "Las entradas son el teclado y el monitor; sumar 2 y 3 debe dar 23 porque siempre se unen los números.",
+    "errores_comunes": [
+      "Confundir datos de entrada con dispositivos.",
+      "Confundir suma con concatenación.",
+      "Omitir los pasos del procedimiento.",
+      "No distinguir entrada y resultado."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Algoritmo, entradas y salidas, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: entradas numéricas 2 y 3; pasos de suma y salida 5; razón por la que los pasos forman un algoritmo. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: entradas numéricas 2 y 3; pasos de suma y salida 5; razón por la que los pasos forman un algoritmo. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: entradas numéricas 2 y 3; pasos de suma y salida 5; razón por la que los pasos forman un algoritmo. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica 2 y 3 como entradas, describe la suma, obtiene 5 como salida y explica que hay pasos definidos para resolver el problema."
+    },
+    "keywords_semanticas": [
+      "algoritmo",
+      "entrada",
+      "salida",
+      "pasos",
+      "suma",
+      "número",
+      "secuencia",
+      "resultado",
+      "procedimiento",
+      "terminación"
+    ],
+    "text": "Para sumar dos números, identifica las entradas, describe los pasos y señala la salida. Usa 2 y 3 como ejemplo y explica por qué eso es un algoritmo.",
+    "dificultad": "básico",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_principiante_002",
+    "concepto": "Programa y lenguaje de programación",
+    "definicion": "Un programa es un conjunto de instrucciones para realizar tareas; un lenguaje de programación permite expresar esas instrucciones mediante reglas y estructuras.",
+    "explicacion_simple": "El programa es lo que se escribe; el lenguaje permite escribirlo de una forma que se pueda procesar.",
+    "ejemplo_correcto": "El programa es la calculadora: instrucciones que reciben datos y calculan resultados. Python es el lenguaje usado para expresar esas instrucciones con reglas de sintaxis. Python permite escribir muchos programas; no es la calculadora misma.",
+    "ejemplo_incorrecto": "Python es una única calculadora y cada calculadora es un lenguaje diferente.",
+    "errores_comunes": [
+      "Confundir programa con lenguaje.",
+      "Creer que un lenguaje solo sirve para un programa.",
+      "Confundir editor con lenguaje.",
+      "Describir solo el nombre sin distinguir las funciones."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Programa y lenguaje de programación, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: programa como instrucciones para una tarea; lenguaje como medio de expresión; calculadora como programa y Python como lenguaje. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: programa como instrucciones para una tarea; lenguaje como medio de expresión; calculadora como programa y Python como lenguaje. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: programa como instrucciones para una tarea; lenguaje como medio de expresión; calculadora como programa y Python como lenguaje. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Define programa como instrucciones para una tarea y lenguaje como medio de expresión, identificando calculadora y Python correctamente."
+    },
+    "keywords_semanticas": [
+      "programa",
+      "lenguaje",
+      "Python",
+      "instrucción",
+      "sintaxis",
+      "calculadora",
+      "tarea",
+      "código",
+      "ejecución",
+      "resultado"
+    ],
+    "text": "Distingue un programa de un lenguaje de programación. Usa como ejemplo una calculadora escrita en Python e indica cuál es el programa y cuál el lenguaje.",
+    "dificultad": "básico",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_principiante_003",
+    "concepto": "Variables y valores iniciales",
+    "definicion": "Una variable asocia un nombre con un valor que puede utilizarse durante la ejecución; asignar otro valor actualiza esa asociación.",
+    "explicacion_simple": "Un nombre permite usar un dato y puede recibir un valor nuevo cuando el programa avanza.",
+    "ejemplo_correcto": "puntos es una variable que inicialmente tiene 2. La segunda instrucción toma el valor actual, suma 3 y asigna 5 a puntos. Al final su valor es 5; no es una ecuación que exija que 2 sea igual a 5.",
+    "ejemplo_incorrecto": "puntos vale 23 porque siempre se concatenan los números, y una variable nunca puede cambiar.",
+    "errores_comunes": [
+      "Confundir asignación con igualdad matemática.",
+      "Confundir suma numérica con concatenación.",
+      "Ignorar el valor previo en una actualización.",
+      "Afirmar que ninguna variable puede recibir otro valor."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Variables y valores iniciales, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: variable y valor inicial 2; actualización usando el valor previo; valor final 5 y sentido de asignación. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: variable y valor inicial 2; actualización usando el valor previo; valor final 5 y sentido de asignación. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: variable y valor inicial 2; actualización usando el valor previo; valor final 5 y sentido de asignación. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica puntos como variable, su valor inicial 2, la suma y reasignación y el valor final 5."
+    },
+    "keywords_semanticas": [
+      "variable",
+      "valor",
+      "asignación",
+      "actualización",
+      "puntos",
+      "suma",
+      "estado",
+      "instrucción",
+      "dato",
+      "nombre"
+    ],
+    "text": "En pseudocódigo, puntos = 2 y después puntos = puntos + 3. Explica qué representa puntos y qué valor tiene al final.",
+    "dificultad": "básico",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_basico_002",
+    "concepto": "Variables, tipos y conversión",
+    "definicion": "Una variable asocia un nombre con un valor; un tipo determina operaciones válidas y una conversión interpreta o transforma un valor a otro tipo.",
+    "explicacion_simple": "Un dato escrito como texto no se puede usar siempre como si ya fuera un número.",
+    "ejemplo_correcto": "\"18\" es cadena y 18 es número. Valido dígitos, convierto a entero y comparo >=18: verdadero. \"dieciocho\" no cumple el formato sin conversor de palabras, así que informo un error de validación; no confío en conversiones implícitas.",
+    "ejemplo_incorrecto": "Texto y número siempre son idénticos; cualquier palabra se convierte automáticamente a entero.",
+    "errores_comunes": [
+      "Confundir texto numérico con número.",
+      "Depender de coerciones implícitas sin conocer el lenguaje.",
+      "Omitir validación de formato.",
+      "Afirmar que cualquier texto se convierte a entero."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Variables, tipos y conversión, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: cadena frente a número; validación y conversión con resultado verdadero; rechazo controlado de la entrada no numérica. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: cadena frente a número; validación y conversión con resultado verdadero; rechazo controlado de la entrada no numérica. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: cadena frente a número; validación y conversión con resultado verdadero; rechazo controlado de la entrada no numérica. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue ambos tipos, valida y convierte antes de comparar, indica resultado verdadero para \"18\" y rechaza de forma controlada la entrada no admitida."
+    },
+    "keywords_semanticas": [
+      "variable",
+      "tipo de dato",
+      "string",
+      "cadena",
+      "entero",
+      "conversión",
+      "validación",
+      "comparación",
+      "entrada inválida",
+      "coerción"
+    ],
+    "text": "Un formulario entrega la edad como el texto \"18\". Explica la diferencia con el número 18, cómo evaluar si cumple edad >= 18 y qué hacer si llega \"dieciocho\" sin conversor de palabras a números.",
+    "dificultad": "básico",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_basico_003",
+    "concepto": "Condicionales y límites",
+    "definicion": "Una estructura condicional selecciona un camino de ejecución según una expresión lógica; sus límites determinan qué casos pertenecen a cada rama.",
+    "explicacion_simple": "Una condición decide qué instrucciones se ejecutan y debe tratar correctamente el valor justo del límite.",
+    "ejemplo_correcto": "Si nota >= 3, aprobado; si no, no aprobado. Para 2.9 no aprueba; para 3 y 4 sí. Usar >3 excluiría la nota 3, contradiciendo que el límite está incluido.",
+    "ejemplo_incorrecto": "Con nota > 3 aprueban 2.9 y 4; la nota 3 se rechaza porque los límites no importan.",
+    "errores_comunes": [
+      "Usar comparación estricta cuando se incluye igualdad.",
+      "Invertir aprobado y no aprobado.",
+      "Omitir el caso frontera.",
+      "Confundir asignación con comparación."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Condicionales y límites, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: condición mayor o igual a 3; resultados de 2.9, 3 y 4; error de excluir 3 al usar mayor estricto. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: condición mayor o igual a 3; resultados de 2.9, 3 y 4; error de excluir 3 al usar mayor estricto. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: condición mayor o igual a 3; resultados de 2.9, 3 y 4; error de excluir 3 al usar mayor estricto. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone >= 3 con ramas coherentes, clasifica correctamente los tres valores y explica que > 3 rechaza indebidamente el límite 3."
+    },
+    "keywords_semanticas": [
+      "condicional",
+      "if",
+      "else",
+      "expresión lógica",
+      "mayor o igual",
+      "comparación",
+      "caso frontera",
+      "nota",
+      "decisión",
+      "pseudocódigo"
+    ],
+    "text": "Se aprueba con nota mayor o igual a 3. Escribe una condición en pseudocódigo y explica qué resultado da para 2.9, 3 y 4, y por qué usar > 3 sería incorrecto.",
+    "dificultad": "básico",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_basico_004",
+    "concepto": "Iteración y acumuladores",
+    "definicion": "La iteración repite operaciones sobre datos o mientras se cumple una condición; un acumulador conserva un resultado parcial entre repeticiones.",
+    "explicacion_simple": "Un bucle recorre datos y una variable puede sumar lo que va encontrando.",
+    "ejemplo_correcto": "Antes del bucle: total = 0. Para cada número: total = total + número. Con [2, 4, 6], los parciales son 2, 6 y 12. Devuelvo 12. Con [] no hay iteraciones y queda 0; no reinicio el acumulador dentro del bucle.",
+    "ejemplo_incorrecto": "Inicializo el total en cero dentro de cada vuelta y el resultado siempre es el último número.",
+    "errores_comunes": [
+      "Reiniciar el acumulador dentro del bucle.",
+      "No inicializar el acumulador.",
+      "Omitir el caso vacío.",
+      "Recorrer un índice fuera del tamaño de la lista."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Iteración y acumuladores, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: total inicializado fuera del bucle; suma por elemento y resultado 12; lista vacía con resultado 0. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: total inicializado fuera del bucle; suma por elemento y resultado 12; lista vacía con resultado 0. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: total inicializado fuera del bucle; suma por elemento y resultado 12; lista vacía con resultado 0. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Inicializa total en 0 antes del bucle, suma cada elemento, obtiene 12 y explica que la lista vacía produce 0 sin iteraciones."
+    },
+    "keywords_semanticas": [
+      "iteración",
+      "bucle",
+      "for",
+      "acumulador",
+      "inicialización",
+      "lista",
+      "suma",
+      "estado parcial",
+      "lista vacía",
+      "recorrido"
+    ],
+    "text": "Describe con pseudocódigo cómo sumar la lista [2, 4, 6] usando un bucle y un acumulador. Indica la inicialización, el resultado y qué ocurriría con una lista vacía.",
+    "dificultad": "básico",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_basico_005",
+    "concepto": "Paradigmas de programación",
+    "definicion": "Un paradigma de programación es un enfoque conceptual para organizar datos, operaciones y control al resolver problemas computacionales.",
+    "explicacion_simple": "Es una forma de organizar y pensar un programa, diferente del lenguaje o editor que se utiliza.",
+    "ejemplo_correcto": "Paradigma es un enfoque de organización. Imperativo: instrucciones y cambios de estado; POO: objetos con datos y comportamiento; funcional: composición y funciones puras. Python es un lenguaje multiparadigma y Visual Studio una herramienta, no paradigmas.",
+    "ejemplo_incorrecto": "Python, Java y Visual Studio son tres paradigmas; cada lenguaje solo puede usar uno.",
+    "errores_comunes": [
+      "Confundir lenguajes con paradigmas.",
+      "Confundir editores con paradigmas.",
+      "Suponer un solo paradigma por lenguaje.",
+      "Reducir funcional a tener funciones en el programa."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Paradigmas de programación, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: paradigma como enfoque conceptual; características de los tres paradigmas; lenguaje y herramienta frente a paradigma. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: paradigma como enfoque conceptual; características de los tres paradigmas; lenguaje y herramienta frente a paradigma. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: paradigma como enfoque conceptual; características de los tres paradigmas; lenguaje y herramienta frente a paradigma. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Define paradigma como enfoque, caracteriza correctamente los tres paradigmas y distingue Python como lenguaje y Visual Studio como herramienta."
+    },
+    "keywords_semanticas": [
+      "paradigma",
+      "imperativo",
+      "orientado a objetos",
+      "funcional",
+      "estado",
+      "objeto",
+      "función pura",
+      "multiparadigma",
+      "lenguaje",
+      "herramienta"
+    ],
+    "text": "Define paradigma de programación. Describe una característica de la programación imperativa, una de la orientada a objetos y una de la funcional. Explica por qué Python y Visual Studio no son paradigmas.",
+    "dificultad": "básico",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_intermedio_001",
+    "concepto": "Programación imperativa y declarativa",
+    "definicion": "La programación imperativa explicita pasos y cambios de estado; la declarativa expresa el resultado o propiedades buscadas delegando parte del procedimiento.",
+    "explicacion_simple": "En un enfoque se detalla cómo recorrer los datos; en el otro se expresa qué datos se quieren.",
+    "ejemplo_correcto": "El bucle imperativo detalla recorrer, comparar y agregar notas. SELECT con WHERE declara qué notas se buscan y el motor decide cómo obtenerlas. Con [2, 3, 4], ambos seleccionan 3 y 4. Sin ORDER BY no supongo orden SQL.",
+    "ejemplo_incorrecto": "SQL es imperativo porque indica exactamente qué índice y bucle debe ejecutar la base de datos.",
+    "errores_comunes": [
+      "Confundir resultado solicitado con algoritmo de ejecución.",
+      "Afirmar que declarativo no ejecuta operaciones.",
+      "Suponer orden SQL sin ORDER BY.",
+      "Confundir ambos enfoques con lenguajes mutuamente exclusivos."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Programación imperativa y declarativa, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: pasos imperativos del recorrido; resultado declarado en SQL; selección común de notas aprobadas. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: pasos imperativos del recorrido; resultado declarado en SQL; selección común de notas aprobadas. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: pasos imperativos del recorrido; resultado declarado en SQL; selección común de notas aprobadas. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica el recorrido y acumulación imperativos, el resultado declarado en SQL y que ambos seleccionan las notas >= 3 sobre los mismos datos."
+    },
+    "keywords_semanticas": [
+      "imperativo",
+      "declarativo",
+      "SQL",
+      "SELECT",
+      "WHERE",
+      "bucle",
+      "resultado",
+      "plan de ejecución",
+      "filtrado",
+      "estado"
+    ],
+    "text": "Debes obtener las notas mayores o iguales a 3. Compara recorrer una lista con un bucle y escribir SELECT nota FROM resultados WHERE nota >= 3. Indica qué expresa cada enfoque y qué resultado común producen.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_intermedio_002",
+    "concepto": "Funciones puras y efectos laterales",
+    "definicion": "Una función pura devuelve el mismo resultado para las mismas entradas y no modifica estado externo ni produce efectos observables externos.",
+    "explicacion_simple": "El resultado depende de sus argumentos y la función no cambia otras cosas ni escribe fuera de sí misma.",
+    "ejemplo_correcto": "sumar(a,b) es pura con números: mismo resultado y sin cambios externos. registrarNota modifica estado global y escribe un archivo. Separaría cálculo con entradas y salidas de persistencia; pruebo el primero aislado y los efectos y fallos aparte.",
+    "ejemplo_incorrecto": "Una función es pura si tiene return aunque cambie variables globales y archivos.",
+    "errores_comunes": [
+      "Equiparar función pura con cualquier función que retorna.",
+      "Ignorar escrituras en archivos.",
+      "Usar estado global oculto como entrada.",
+      "Afirmar que todo efecto lateral debe eliminarse de la aplicación."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Funciones puras y efectos laterales, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: sumar como función pura; estado global y archivo como efectos; separación de cálculo y persistencia para pruebas. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: sumar como función pura; estado global y archivo como efectos; separación de cálculo y persistencia para pruebas. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: sumar como función pura; estado global y archivo como efectos; separación de cálculo y persistencia para pruebas. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica correctamente la función pura, reconoce modificación global y escritura, y propone separar cálculo y efectos con una explicación de cómo probarlos."
+    },
+    "keywords_semanticas": [
+      "función pura",
+      "efecto lateral",
+      "determinismo",
+      "estado global",
+      "persistencia",
+      "referencia transparente",
+      "entrada",
+      "salida",
+      "aislamiento",
+      "prueba"
+    ],
+    "text": "Compara sumar(a, b), que devuelve a+b, con registrarNota(nota), que actualiza una lista global y escribe en un archivo. Identifica cuál es pura, qué efectos tiene la otra y cómo separar cálculo y persistencia para facilitar pruebas.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_intermedio_003",
+    "concepto": "Elección de estructuras de datos",
+    "definicion": "Una estructura de datos organiza valores y determina operaciones y costes de acceso, inserción y recorrido; la elección depende del patrón de uso.",
+    "explicacion_simple": "Una lista sirve para recorrer una secuencia y un diccionario para encontrar valores mediante una clave.",
+    "ejemplo_correcto": "Una lista conserva las respuestas en orden; un mapa id→estudiante facilita búsqueda por clave, esperada O(1) si es hash. Ante id repetido rechazo el duplicado por unicidad, o actualizo con una política explícita; no sobrescribo silenciosamente.",
+    "ejemplo_incorrecto": "Usaría una variable para todos los estudiantes y sobrescribiría cualquier id repetido sin validar.",
+    "errores_comunes": [
+      "Confundir clave con posición.",
+      "Ignorar el requisito de orden.",
+      "Sobrescribir duplicados sin política.",
+      "Prometer acceso constante garantizado para cualquier estructura y caso."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Elección de estructuras de datos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: lista para conservar secuencia; mapa para consulta por identificador; política explícita para identificadores duplicados. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: lista para conservar secuencia; mapa para consulta por identificador; política explícita para identificadores duplicados. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: lista para conservar secuencia; mapa para consulta por identificador; política explícita para identificadores duplicados. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Elige estructuras adecuadas para secuencia y consulta por id, justifica ambas y define una política coherente para identificadores repetidos."
+    },
+    "keywords_semanticas": [
+      "lista",
+      "diccionario",
+      "mapa",
+      "clave",
+      "identificador",
+      "orden",
+      "estructura de datos",
+      "duplicado",
+      "tabla hash",
+      "búsqueda"
+    ],
+    "text": "Hay que conservar todas las respuestas en su orden y consultar repetidamente un estudiante por su identificador único. Propón una estructura para cada necesidad, justifica la elección y explica qué hacer si se repite un identificador al cargar datos.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_intermedio_005",
+    "concepto": "Manejo de excepciones y recuperación",
+    "definicion": "Una excepción representa un fallo durante ejecución; manejarla requiere distinguir causas, preservar información útil y definir recuperación o propagación.",
+    "explicacion_simple": "Un error debe tratarse según su causa y comunicarse sin fingir que todo funcionó.",
+    "ejemplo_correcto": "Capturo el error específico de conversión y pido corregir el campo. Fallos inesperados se registran y propagan o transforman sin revelar detalles internos. Devolver 0 oculta errores y los convierte en una nota legítima, alterando el promedio.",
+    "ejemplo_incorrecto": "Capturaría todo y devolvería cero; así se garantiza que la calificación sea correcta.",
+    "errores_comunes": [
+      "Confundir nota cero con ausencia o error.",
+      "Capturar indiscriminadamente y ocultar fallos.",
+      "No informar la entrada inválida.",
+      "Exponer trazas internas al usuario como mensaje de validación."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Manejo de excepciones y recuperación, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: error de conversión tratado específicamente; información y manejo de fallos inesperados; por qué devolver 0 altera la evaluación. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: error de conversión tratado específicamente; información y manejo de fallos inesperados; por qué devolver 0 altera la evaluación. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: error de conversión tratado específicamente; información y manejo de fallos inesperados; por qué devolver 0 altera la evaluación. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Trata específicamente el error de conversión, comunica validación y distingue fallos inesperados; explica que devolver 0 confunde error con una nota legítima y afecta el resultado."
+    },
+    "keywords_semanticas": [
+      "excepción",
+      "try",
+      "except",
+      "catch",
+      "error de conversión",
+      "validación",
+      "propagación",
+      "recuperación",
+      "registro",
+      "dato inválido"
+    ],
+    "text": "Una función convierte notas de texto a número. Explica cómo manejarías un formato inválido y por qué capturar cualquier excepción y devolver nota 0 puede producir una evaluación incorrecta.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_avanzado_001",
+    "concepto": "Complejidad temporal y tamaño de entrada",
+    "definicion": "La complejidad temporal describe el crecimiento del trabajo de un algoritmo en función del tamaño de entrada, independientemente de un tiempo fijo medido.",
+    "explicacion_simple": "Importa cómo aumenta el trabajo cuando aumentan los datos.",
+    "ejemplo_correcto": "Comparar pares realiza n(n−1)/2 operaciones: O(n²). Con un conjunto de vistos recorro una vez: O(n) esperado si consultar e insertar hash son O(1) esperados. Uso O(n) memoria extra frente a O(1) de pares; no garantizo esos costes hash en todo peor caso.",
+    "ejemplo_incorrecto": "Dos bucles siempre son O(1) y un conjunto no necesita memoria.",
+    "errores_comunes": [
+      "Confundir tiempo concreto con crecimiento asintótico.",
+      "Ignorar que se comparan pares.",
+      "Prometer coste hash constante en todo peor caso.",
+      "Omitir memoria adicional del conjunto."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Complejidad temporal y tamaño de entrada, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: O(n²) justificado por pares; conjunto con O(n) esperado y condiciones hash; compensación de memoria O(n) adicional. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: O(n²) justificado por pares; conjunto con O(n) esperado y condiciones hash; compensación de memoria O(n) adicional. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: O(n²) justificado por pares; conjunto con O(n) esperado y condiciones hash; compensación de memoria O(n) adicional. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Justifica O(n²) por pares, propone recorrido con conjunto de vistos O(n) esperado bajo acceso hash esperado constante y reconoce memoria adicional O(n)."
+    },
+    "keywords_semanticas": [
+      "complejidad temporal",
+      "Big O",
+      "O(n²)",
+      "O(n)",
+      "conjunto",
+      "hash",
+      "comparación de pares",
+      "coste esperado",
+      "memoria adicional",
+      "tamaño de entrada"
+    ],
+    "text": "Para detectar notas duplicadas se comparan todos los pares de una lista de n elementos. Analiza su complejidad y propone una alternativa basada en un conjunto; indica su coste esperado y una compensación de memoria.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_avanzado_002",
+    "concepto": "Recursión y condiciones de terminación",
+    "definicion": "La recursión resuelve un problema mediante llamadas a la misma operación con subproblemas; requiere un caso base y progreso hacia él.",
+    "explicacion_simple": "Una función se llama a sí misma con un problema más pequeño hasta llegar a una respuesta directa.",
+    "ejemplo_correcto": "factorial(0)=1; para n>0, n*factorial(n−1). Cada paso se acerca a cero. factorial(3)=3*2*1*1=6. Rechazo negativos antes: desde -1 restar uno se aleja del caso base y no termina por esta regla; también exijo enteros.",
+    "ejemplo_incorrecto": "factorial(0) debe llamar factorial(-1) y la recursión termina automáticamente para cualquier número.",
+    "errores_comunes": [
+      "Omitir el caso base.",
+      "No reducir el problema.",
+      "Usar factorial(0)=0.",
+      "Aceptar negativos con una reducción que nunca llega a cero."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Recursión y condiciones de terminación, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: caso base y reducción de factorial; terminación y factorial(3)=6; validación que rechaza negativos. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: caso base y reducción de factorial; terminación y factorial(3)=6; validación que rechaza negativos. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: caso base y reducción de factorial; terminación y factorial(3)=6; validación que rechaza negativos. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Define factorial(0)=1 y la reducción n−1 para n>0, explica terminación, calcula 6 para 3 y rechaza negativos antes de recursar."
+    },
+    "keywords_semanticas": [
+      "recursión",
+      "factorial",
+      "caso base",
+      "terminación",
+      "subproblema",
+      "n menos uno",
+      "validación",
+      "entero no negativo",
+      "pila de llamadas",
+      "reducción"
+    ],
+    "text": "Define factorial para enteros n >= 0 usando recursión. Explica el caso base, la reducción del problema, el resultado para n=3 y qué validación evita una recursión no válida con n=-1.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_avanzado_004",
+    "concepto": "Concurrencia, paralelismo y asincronía",
+    "definicion": "La concurrencia permite progreso de varias tareas en periodos superpuestos; el paralelismo ejecuta trabajo simultáneamente; la asincronía permite continuar sin esperar de forma bloqueante una operación.",
+    "explicacion_simple": "Esperar varias respuestas de red no implica que todos los cálculos ocurran al mismo tiempo en varios procesadores.",
+    "ejemplo_correcto": "Asincronía cede durante I/O. Concurrencia superpone progreso; para dos consultas inicio ambas tareas antes de esperarlas. Dos awaits seguidos pueden iniciar la segunda después. Paralelismo ejecuta trabajo simultáneo; await no lo garantiza ni crea siempre un hilo.",
+    "ejemplo_incorrecto": "await crea siempre un hilo nuevo y dos awaits consecutivos garantizan que ambas llamadas empiezan juntas.",
+    "errores_comunes": [
+      "Equiparar asincronía con paralelismo.",
+      "Afirmar que await crea siempre un hilo.",
+      "Confundir espera secuencial con inicio concurrente.",
+      "Asumir que asincronía reduce a cero la latencia de red."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Concurrencia, paralelismo y asincronía, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: distinción de los tres conceptos; cesión en I/O sin paralelismo garantizado; inicio de tareas frente a awaits secuenciales. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: distinción de los tres conceptos; cesión en I/O sin paralelismo garantizado; inicio de tareas frente a awaits secuenciales. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: distinción de los tres conceptos; cesión en I/O sin paralelismo garantizado; inicio de tareas frente a awaits secuenciales. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue los tres conceptos, explica la cesión durante I/O, la necesidad de iniciar ambas tareas para concurrencia y por qué await por sí solo no garantiza simultaneidad ni inicio conjunto."
+    },
+    "keywords_semanticas": [
+      "concurrencia",
+      "paralelismo",
+      "asincronía",
+      "await",
+      "bucle de eventos",
+      "I/O",
+      "tarea",
+      "hilo",
+      "espera secuencial",
+      "simultaneidad"
+    ],
+    "text": "Un programa envía dos consultas LLM de red mediante await y un bucle de eventos. Distingue concurrencia, paralelismo y asincronía; explica por qué await no garantiza paralelismo ni que dos awaits secuenciales inicien ambas consultas a la vez.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "fundamentos_paradigmas_avanzado_005",
+    "concepto": "Inmutabilidad y estado compartido",
+    "definicion": "La inmutabilidad evita modificar un valor una vez creado; el estado compartido mutable requiere coordinación para prevenir interferencias y actualizaciones perdidas.",
+    "explicacion_simple": "Si dos tareas cambian el mismo dato sin coordinarse pueden borrar el trabajo de la otra.",
+    "ejemplo_correcto": "Se pierde una actualización: ambos leen 10 y guardan 11, aunque debería quedar 12. Uso incremento atómico, transacción adecuada o lock sobre lectura y escritura. Valores inmutables no bastan: sustituir la referencia compartida aún requiere coordinación.",
+    "ejemplo_incorrecto": "No hay error: con valores inmutables dos incrementos desde 10 siempre producen 11 y eso es correcto.",
+    "errores_comunes": [
+      "Ignorar la actualización perdida.",
+      "Proteger solo la lectura y no la operación completa.",
+      "Confundir inmutabilidad con coordinación automática.",
+      "Suponer que compartir un objeto nunca causa interferencias."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Inmutabilidad y estado compartido, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: actualización perdida: 11 en vez de 12; coordinación de la actualización completa; inmutabilidad frente a atomicidad del cambio. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: actualización perdida: 11 en vez de 12; coordinación de la actualización completa; inmutabilidad frente a atomicidad del cambio. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: actualización perdida: 11 en vez de 12; coordinación de la actualización completa; inmutabilidad frente a atomicidad del cambio. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica por qué queda 11 en lugar de 12, propone coordinación de la actualización completa y distingue inmutabilidad del valor de atomicidad o coordinación del estado compartido."
+    },
+    "keywords_semanticas": [
+      "inmutabilidad",
+      "estado compartido",
+      "condición de carrera",
+      "actualización perdida",
+      "incremento atómico",
+      "mutex",
+      "transacción",
+      "concurrencia",
+      "referencia",
+      "coordinación"
+    ],
+    "text": "Dos tareas leen simultáneamente un contador 10, suman 1 y ambas guardan 11. Explica el error, propone una solución de coordinación y analiza por qué usar valores inmutables por sí solo no garantiza un contador final correcto.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Fundamentos y paradigmas"
+  },
+  {
+    "pregunta_id": "diseno_objetos_principiante_001",
+    "concepto": "Clases y objetos",
+    "definicion": "Una clase define características y operaciones de un tipo; un objeto es una instancia concreta con sus propios datos.",
+    "explicacion_simple": "La clase es la descripción y el objeto es un ejemplo concreto de lo descrito.",
+    "ejemplo_correcto": "Estudiante define el tipo; Ana es un objeto de ese tipo. Puede guardar nombre = \"Ana\". Otro objeto puede tener nombre = \"Luis\": comparten la definición de clase, pero no deben compartir todos los valores de su estado.",
+    "ejemplo_incorrecto": "Ana es un lenguaje y todos los objetos Estudiante deben tener el mismo nombre.",
+    "errores_comunes": [
+      "Confundir clase con instancia.",
+      "Confundir una persona concreta con un lenguaje.",
+      "Afirmar que todos los objetos comparten sus datos individuales.",
+      "No identificar un dato coherente para el objeto."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Clases y objetos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: clase Estudiante e instancia Ana; atributo coherente del objeto; valores propios de otras instancias. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: clase Estudiante e instancia Ana; atributo coherente del objeto; valores propios de otras instancias. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: clase Estudiante e instancia Ana; atributo coherente del objeto; valores propios de otras instancias. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue Estudiante como clase y Ana como instancia, propone un atributo coherente y explica el estado individual de otros estudiantes."
+    },
+    "keywords_semanticas": [
+      "clase",
+      "objeto",
+      "instancia",
+      "Estudiante",
+      "Ana",
+      "nombre",
+      "dato",
+      "estado",
+      "tipo",
+      "valor propio"
+    ],
+    "text": "Distingue la clase Estudiante del objeto que representa a Ana. Da un dato que podría guardar ese objeto y explica si otro estudiante debe tener el mismo valor.",
+    "dificultad": "básico",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_principiante_002",
+    "concepto": "Atributos y métodos",
+    "definicion": "Un atributo representa un dato asociado a un objeto; un método representa una operación que ese objeto ofrece.",
+    "explicacion_simple": "Un atributo dice algo del objeto y un método permite hacer algo con él.",
+    "ejemplo_correcto": "nombre es atributo: conserva un dato del estudiante. inscribirse(curso) es método: ejecuta una operación con un curso. El dato expresa estado y el método comportamiento; no son intercambiables solo por estar dentro del mismo objeto.",
+    "ejemplo_incorrecto": "nombre es un método que siempre se ejecuta e inscribirse es un texto que solo guarda el nombre.",
+    "errores_comunes": [
+      "Invertir atributo y método.",
+      "Creer que todo dato ejecuta una acción.",
+      "Confundir nombre de operación con valor de estado.",
+      "No distinguir guardar datos de realizar operaciones."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Atributos y métodos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: nombre como atributo; inscribirse como método; dato de estado frente a operación. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: nombre como atributo; inscribirse como método; dato de estado frente a operación. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: nombre como atributo; inscribirse como método; dato de estado frente a operación. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica nombre como atributo e inscribirse como método y explica dato almacenado frente a operación ejecutada."
+    },
+    "keywords_semanticas": [
+      "atributo",
+      "método",
+      "dato",
+      "operación",
+      "nombre",
+      "inscribirse",
+      "objeto",
+      "estado",
+      "comportamiento",
+      "curso"
+    ],
+    "text": "Un objeto Estudiante guarda nombre y ofrece inscribirse(curso). Identifica cuál es atributo y cuál método y explica la diferencia entre guardar un dato y ejecutar una operación.",
+    "dificultad": "básico",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_principiante_003",
+    "concepto": "Creación de instancias",
+    "definicion": "Crear una instancia produce un objeto concreto de una clase con valores iniciales; varios objetos pueden conservar estados independientes.",
+    "explicacion_simple": "Se pueden crear varios estudiantes a partir de la misma clase y darles datos distintos.",
+    "ejemplo_correcto": "No: si son objetos independientes con nombre propio, cambiar Ana no modifica Luis. Son dos instancias de la misma clase con estados distintos. Eso difiere de tener dos referencias al mismo objeto, donde se observaría un único estado.",
+    "ejemplo_incorrecto": "Sí: todos los objetos de la misma clase son obligatoriamente la misma instancia y cambian juntos.",
+    "errores_comunes": [
+      "Confundir compartir clase con compartir instancia.",
+      "Confundir dos objetos con dos referencias al mismo.",
+      "Suponer que todo atributo es compartido.",
+      "No relacionar independencia con estado propio."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Creación de instancias, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: Luis no cambia por cambiar Ana; dos objetos con estado independiente; compartir clase no implica compartir instancia. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: Luis no cambia por cambiar Ana; dos objetos con estado independiente; compartir clase no implica compartir instancia. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: Luis no cambia por cambiar Ana; dos objetos con estado independiente; compartir clase no implica compartir instancia. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Indica que Luis conserva su nombre y explica dos instancias con estado propio, distinguiendo compartir clase de compartir objeto."
+    },
+    "keywords_semanticas": [
+      "instancia",
+      "creación",
+      "objeto",
+      "estado independiente",
+      "nombre",
+      "referencia",
+      "clase",
+      "Ana",
+      "Luis",
+      "identidad"
+    ],
+    "text": "Se crean Ana y Luis como dos objetos Estudiante. Al cambiar el nombre del objeto de Ana, ¿debe cambiar el nombre del de Luis? Explica qué supone que sean dos instancias independientes.",
+    "dificultad": "básico",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_basico_002",
+    "concepto": "Estado y comportamiento",
+    "definicion": "El estado de un objeto es el conjunto de valores que conserva; el comportamiento son las operaciones que consultan o transforman ese estado según reglas.",
+    "explicacion_simple": "Un objeto tiene datos y acciones que los usan o modifican.",
+    "ejemplo_correcto": "Estado: situación pendiente y respuestas. finalizar() es comportamiento: valida que todo esté completo y cambia a finalizada. Si faltan respuestas, informa un error, rechaza la operación y conserva pendiente.",
+    "ejemplo_incorrecto": "Pendiente es un método y finalizar es un dato; cualquier llamada debe completar la evaluación aunque falten respuestas.",
+    "errores_comunes": [
+      "Confundir atributo con operación.",
+      "Modificar estado ignorando reglas.",
+      "Interpretar un método como simple etiqueta.",
+      "No preservar estado ante operación inválida."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Estado y comportamiento, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: datos de estado y método finalizar; validación de respuestas completas; rechazo conservando estado coherente. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: datos de estado y método finalizar; validación de respuestas completas; rechazo conservando estado coherente. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: datos de estado y método finalizar; validación de respuestas completas; rechazo conservando estado coherente. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica datos de estado y finalizar como operación, describe la validación y rechaza finalización incompleta conservando un estado coherente."
+    },
+    "keywords_semanticas": [
+      "estado",
+      "comportamiento",
+      "atributo",
+      "método",
+      "transición",
+      "validación",
+      "pendiente",
+      "finalizada",
+      "respuesta",
+      "regla de negocio"
+    ],
+    "text": "Una Evaluacion tiene estado \"pendiente\" y puede finalizarse cuando todas las respuestas están completas. Identifica estado y comportamiento y explica qué debería pasar si se intenta finalizar con respuestas faltantes.",
+    "dificultad": "básico",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_basico_003",
+    "concepto": "Encapsulación e invariantes",
+    "definicion": "La encapsulación controla el acceso al estado y expone operaciones que preservan invariantes, es decir, condiciones que deben mantenerse válidas.",
+    "explicacion_simple": "El objeto protege sus datos para que no puedan quedar en un estado que contradice sus reglas.",
+    "ejemplo_correcto": "Controlo acceso al valor y valido 0–5 en constructor y cambiarValor. Una lectura puede ser pública. Si llega 7, rechazo sin modificar el valor válido previo. Un setter sin validación no protege el invariante; también sirve crear valores nuevos inmutables.",
+    "ejemplo_incorrecto": "Encapsular significa agregar un setter público que acepte cualquier número y siempre guardar 7.",
+    "errores_comunes": [
+      "Creer que private por sí solo preserva todas las reglas.",
+      "Usar un setter sin validación.",
+      "Validar al cambiar pero no al construir.",
+      "Cambiar parcialmente el estado antes de rechazar."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Encapsulación e invariantes, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: control del acceso al valor; validación en creación y modificación; rechazo de 7 sin estado inválido. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: control del acceso al valor; validación en creación y modificación; rechazo de 7 sin estado inválido. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: control del acceso al valor; validación en creación y modificación; rechazo de 7 sin estado inválido. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone control del acceso, validación en creación y modificación y rechazo de 7 sin dejar un objeto inválido; se admite una solución inmutable equivalente."
+    },
+    "keywords_semanticas": [
+      "encapsulación",
+      "invariante",
+      "acceso controlado",
+      "validación",
+      "valor privado",
+      "setter",
+      "constructor",
+      "rango",
+      "objeto inmutable",
+      "estado válido"
+    ],
+    "text": "Una Nota solo admite valores de 0 a 5. Explica cómo encapsularías el valor, lo validarías al crear el objeto y lo modificarías de forma controlada; indica qué haría la operación al recibir 7.",
+    "dificultad": "básico",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_basico_004",
+    "concepto": "Abstracción y detalles de implementación",
+    "definicion": "La abstracción expone las capacidades relevantes de un componente ocultando detalles innecesarios para sus consumidores.",
+    "explicacion_simple": "Quien usa una operación conoce qué hace y qué recibe, sin necesitar conocer cada paso interno.",
+    "ejemplo_correcto": "El llamador conoce destinatario, mensaje y resultado o error del contrato. El componente oculta conexión, autenticación y formato SMTP. Puedo cambiar proveedor sin cambiar la llamada si preservo el contrato; no oculto errores que el consumidor necesita tratar.",
+    "ejemplo_incorrecto": "La abstracción obliga a cada consumidor a configurar sockets y contraseñas SMTP para poder llamar el método.",
+    "errores_comunes": [
+      "Confundir abstracción con ocultar información útil del contrato.",
+      "Exponer detalles del proveedor a todos los consumidores.",
+      "Equiparar abstracción con clase abstracta obligatoria.",
+      "Suponer que elimina la necesidad de manejar errores."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Abstracción y detalles de implementación, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: entradas y resultado o error del contrato; detalles ocultables del proveedor; beneficio de preservar la interfaz pública. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: entradas y resultado o error del contrato; detalles ocultables del proveedor; beneficio de preservar la interfaz pública. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: entradas y resultado o error del contrato; detalles ocultables del proveedor; beneficio de preservar la interfaz pública. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Describe entradas y resultado o errores que necesita el llamador, identifica detalles ocultables y explica un beneficio de sustituir o mantener implementación sin cambiar consumidores."
+    },
+    "keywords_semanticas": [
+      "abstracción",
+      "contrato",
+      "interfaz pública",
+      "detalle de implementación",
+      "consumidor",
+      "notificación",
+      "SMTP",
+      "proveedor",
+      "resultado",
+      "error"
+    ],
+    "text": "Un componente ofrece enviarNotificacion(destinatario, mensaje). Explica qué necesita conocer el llamador, qué detalles puede ocultar el componente y un beneficio de esa abstracción.",
+    "dificultad": "básico",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_basico_005",
+    "concepto": "Composición y relación tiene un",
+    "definicion": "La composición de objetos construye comportamiento mediante colaboración con otros objetos contenidos o referenciados; se diferencia de la relación de subtipo expresada por herencia.",
+    "explicacion_simple": "Un objeto puede usar otros para trabajar sin convertirse en un tipo de esos objetos.",
+    "ejemplo_correcto": "Curso contiene referencias a Estudiante, por ejemplo una colección con inscribir(estudiante). Tiene estudiantes, no es un estudiante: herencia sería incorrecta. Los estudiantes existen fuera del curso, así que eliminarlo no exige eliminar personas.",
+    "ejemplo_incorrecto": "Curso debe extender Estudiante porque contiene estudiantes y borrarlo debe eliminar a todas las personas.",
+    "errores_comunes": [
+      "Usar herencia para una relación tiene un.",
+      "Confundir colección con subtipo.",
+      "Imponer propiedad exclusiva sin requisito.",
+      "Confundir composición de comportamiento con composición UML de ciclo de vida obligatorio."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Composición y relación tiene un, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: colección o referencias a estudiantes; tiene un frente a herencia es un; independencia del ciclo de vida del estudiante. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: colección o referencias a estudiantes; tiene un frente a herencia es un; independencia del ciclo de vida del estudiante. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: colección o referencias a estudiantes; tiene un frente a herencia es un; independencia del ciclo de vida del estudiante. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Representa estudiantes mediante referencias o colección, justifica tiene un frente a es un y reconoce que el ciclo de vida del estudiante no depende necesariamente del curso."
+    },
+    "keywords_semanticas": [
+      "composición",
+      "asociación",
+      "colección",
+      "tiene un",
+      "es un",
+      "herencia",
+      "Curso",
+      "Estudiante",
+      "referencia",
+      "colaboración"
+    ],
+    "text": "Un Curso tiene un conjunto de Estudiantes. Explica cómo representarlo con objetos y por qué Curso no debería heredar de Estudiante. No necesitas imponer que al eliminar el curso se eliminen las personas.",
+    "dificultad": "básico",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_intermedio_001",
+    "concepto": "Polimorfismo mediante contratos",
+    "definicion": "El polimorfismo permite tratar implementaciones diferentes mediante un contrato común conservando el comportamiento esperado por el consumidor.",
+    "explicacion_simple": "Se usa la misma operación y cada implementación la resuelve a su manera.",
+    "ejemplo_correcto": "Notificador ofrece enviar(destinatario,mensaje) con resultado o error acordado. Correo y SMS lo implementan. El servicio recibe un Notificador y llama enviar sin consultar su tipo; configuración elige el canal y cada implementación respeta el contrato.",
+    "ejemplo_incorrecto": "Polimorfismo significa copiar todo el servicio para correo y SMS y elegir con if en cada método.",
+    "errores_comunes": [
+      "Confundir polimorfismo con duplicación.",
+      "Mantener discriminación de tipos en todo consumidor.",
+      "Definir implementaciones con contratos incompatibles.",
+      "Suponer que solo existe mediante herencia de clases concretas."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Polimorfismo mediante contratos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: contrato común de notificación; dos implementaciones coherentes; consumidor sin decisiones por tipo concreto. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: contrato común de notificación; dos implementaciones coherentes; consumidor sin decisiones por tipo concreto. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: contrato común de notificación; dos implementaciones coherentes; consumidor sin decisiones por tipo concreto. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone un contrato común coherente, dos implementaciones y un consumidor que invoca la operación sin discriminar cada canal, con selección externa de la implementación."
+    },
+    "keywords_semanticas": [
+      "polimorfismo",
+      "contrato",
+      "interfaz",
+      "implementación",
+      "Notificador",
+      "correo",
+      "SMS",
+      "inyección",
+      "sustitución",
+      "despacho"
+    ],
+    "text": "Debes notificar por correo y por SMS. Diseña un contrato común y dos implementaciones; explica cómo un servicio usaría cualquiera sin una cadena de if por canal.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_intermedio_002",
+    "concepto": "Herencia y sustitución de subtipos",
+    "definicion": "La herencia puede expresar subtipos que deben cumplir expectativas del contrato base; compartir código no basta para justificar una relación de sustitución.",
+    "explicacion_simple": "Una subclase debe poder usarse donde se espera la clase base sin romper lo prometido.",
+    "ejemplo_correcto": "El cliente espera poder editar, pero SoloLectura rompe esa promesa aunque compile. Separaría Documento con lectura y Editable con edición. SoloLectura implementa lectura; el editable ambas. Así ningún consumidor recibe una capacidad que siempre falla.",
+    "ejemplo_incorrecto": "Cumple sustitución porque compila; cualquier subclase puede prohibir todas las operaciones de su base.",
+    "errores_comunes": [
+      "Equiparar sustitución con compilar.",
+      "Fortalecer precondiciones o eliminar capacidades prometidas.",
+      "Usar herencia solo para reutilizar código.",
+      "Forzar métodos no soportados que fallan siempre."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Herencia y sustitución de subtipos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: expectativa de edición incumplida; problema de sustitución aunque compile; contratos que separan lectura y edición. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: expectativa de edición incumplida; problema de sustitución aunque compile; contratos que separan lectura y edición. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: expectativa de edición incumplida; problema de sustitución aunque compile; contratos que separan lectura y edición. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica que el subtipo incumple la capacidad prometida y propone contratos o composición que distingan lectura y edición sin ofrecer capacidades no soportadas."
+    },
+    "keywords_semanticas": [
+      "herencia",
+      "subtipo",
+      "LSP",
+      "sustitución",
+      "contrato",
+      "precondición",
+      "capacidad",
+      "solo lectura",
+      "edición",
+      "composición"
+    ],
+    "text": "DocumentoEditable promete editar(texto). DocumentoSoloLectura hereda de él y siempre lanza \"operación no permitida\". Explica el problema de sustitución y propone una organización que represente ambas capacidades.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_intermedio_003",
+    "concepto": "Strategy y algoritmos intercambiables",
+    "definicion": "Strategy encapsula variantes de un algoritmo bajo un contrato y permite que un contexto delegue en una variante elegida.",
+    "explicacion_simple": "Se puede cambiar una manera de calcular sin cambiar al componente que la usa.",
+    "ejemplo_correcto": "EstrategiaCalificacion.calcular(respuestas) es el contrato; PromedioSimple y Ponderado lo implementan. Evaluador recibe una estrategia y delega. Un tercer cálculo añade otra implementación, elegida por configuración o fábrica, sin alterar la lógica del contexto.",
+    "ejemplo_incorrecto": "Strategy exige que Evaluador copie todos los algoritmos y los cambie cada vez que llega uno nuevo.",
+    "errores_comunes": [
+      "Confundir Strategy con una única clase llena de condicionales.",
+      "Omitir el contexto que delega.",
+      "Cambiar el contrato para cada algoritmo.",
+      "Suponer que elimina toda configuración o selección."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Strategy y algoritmos intercambiables, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: contrato y dos estrategias; contexto que delega el cálculo; tercera estrategia seleccionada externamente. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: contrato y dos estrategias; contexto que delega el cálculo; tercera estrategia seleccionada externamente. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: contrato y dos estrategias; contexto que delega el cálculo; tercera estrategia seleccionada externamente. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Define contrato común, dos estrategias y contexto que delega, y explica añadir una implementación y seleccionarla externamente manteniendo el contrato."
+    },
+    "keywords_semanticas": [
+      "Strategy",
+      "estrategia",
+      "algoritmo intercambiable",
+      "contexto",
+      "delegación",
+      "contrato",
+      "promedio",
+      "ponderación",
+      "configuración",
+      "extensibilidad"
+    ],
+    "text": "Una evaluación puede usar promedio simple o promedio ponderado. Aplica Strategy: identifica contrato, estrategias y contexto, y explica cómo agregar un tercer cálculo sin modificar la lógica del contexto.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_intermedio_005",
+    "concepto": "Adapter e interfaces incompatibles",
+    "definicion": "Adapter traduce una interfaz existente a la interfaz que necesita un consumidor, permitiendo colaborar sin cambiar el consumidor ni necesariamente el servicio adaptado.",
+    "explicacion_simple": "Una pieza convierte la forma de llamar a otro componente al contrato que usa el programa.",
+    "ejemplo_correcto": "AdaptadorLLM implementa calificar, arma el prompt y llama generar. Valida y traduce la salida; un puntaje inválido produce error controlado, no una nota inventada. La integración va en el adaptador y las decisiones académicas permanecen en el núcleo.",
+    "ejemplo_incorrecto": "El dominio debe usar generar directamente y una salida inválida se reemplaza siempre por la nota máxima.",
+    "errores_comunes": [
+      "Exponer la interfaz del proveedor al dominio.",
+      "Inventar notas ante JSON inválido.",
+      "Mover todas las reglas de negocio al adaptador.",
+      "Traducir entradas pero no validar salidas."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Adapter e interfaces incompatibles, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: traducción de calificar a generar; validación y error sin nota inventada; reglas académicas fuera del adaptador. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: traducción de calificar a generar; validación y error sin nota inventada; reglas académicas fuera del adaptador. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: traducción de calificar a generar; validación y error sin nota inventada; reglas académicas fuera del adaptador. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone un adaptador que implementa calificar, traduce llamada y respuesta, rechaza resultados inválidos y mantiene fuera las decisiones académicas del caso de uso."
+    },
+    "keywords_semanticas": [
+      "Adapter",
+      "adaptador",
+      "puerto",
+      "interfaz incompatible",
+      "traducción",
+      "prompt",
+      "LLM",
+      "validación de salida",
+      "contrato",
+      "error controlado"
+    ],
+    "text": "Tu dominio usa calificar(respuesta, rubrica), pero un proveedor LLM ofrece generar(prompt). Describe un Adapter: cómo traduciría entrada y salida, qué ocurriría ante una salida inválida y qué debería permanecer fuera del adaptador.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_avanzado_001",
+    "concepto": "Diseño por contrato y principio de sustitución",
+    "definicion": "La sustitución requiere que una implementación no exija precondiciones más fuertes ni ofrezca garantías de salida más débiles que el contrato que reemplaza.",
+    "explicacion_simple": "Cambiar una implementación no debe quitar lo que el cliente ya podía pedir o recibir.",
+    "ejemplo_correcto": "Exigir >100 palabras fortalece precondiciones y rechaza textos antes válidos. Decimales 0–5 rompen tipo y rango. Debe aceptar el texto del contrato y devolver enteros 0–3 mediante una adaptación validada, o definir otro contrato explícito para otros consumidores.",
+    "ejemplo_incorrecto": "No hay violación porque una escala más alta siempre es compatible y exigir más texto mejora el contrato.",
+    "errores_comunes": [
+      "Fortalecer precondiciones sin revisar consumidores.",
+      "Cambiar tipo o rango silenciosamente.",
+      "Suponer que más precisión es siempre compatible.",
+      "Confundir firma similar con contrato semántico equivalente."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Diseño por contrato y principio de sustitución, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: precondición fortalecida por longitud; tipo y rango de salida incompatibles; corrección o contrato nuevo explícito. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: precondición fortalecida por longitud; tipo y rango de salida incompatibles; corrección o contrato nuevo explícito. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: precondición fortalecida por longitud; tipo y rango de salida incompatibles; corrección o contrato nuevo explícito. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica precondición fortalecida y salida incompatible y propone cumplir aceptación, tipo y rango originales o definir de forma explícita una capacidad distinta."
+    },
+    "keywords_semanticas": [
+      "diseño por contrato",
+      "LSP",
+      "precondición",
+      "postcondición",
+      "tipo",
+      "rango",
+      "entero",
+      "sustitución",
+      "garantía",
+      "compatibilidad"
+    ],
+    "text": "El contrato Calificador acepta toda respuesta de texto y devuelve un entero de 0 a 3. Una implementación exige más de 100 palabras y devuelve decimales de 0 a 5. Analiza dos violaciones del contrato y propone una corrección.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_avanzado_002",
+    "concepto": "Segregación de interfaces",
+    "definicion": "La segregación de interfaces evita obligar a consumidores a depender de operaciones que no necesitan y a implementaciones a ofrecer capacidades que no soportan.",
+    "explicacion_simple": "Es mejor ofrecer contratos pequeños según lo que cada consumidor realmente hace.",
+    "ejemplo_correcto": "Separaría Lector, Escritor y Exportador según consumidores. Reporte recibe Lector; la fuente externa solo implementa lectura. El repositorio completo puede implementar varios contratos. No uso borrar vacío ni métodos que siempre fallan para fingir capacidades.",
+    "ejemplo_incorrecto": "Todas las implementaciones deben tener los cuatro métodos aunque no hagan nada; eso aumenta la seguridad del contrato.",
+    "errores_comunes": [
+      "Forzar capacidades no soportadas.",
+      "Usar métodos vacíos para cumplir una interfaz.",
+      "Dividir sin atender necesidades de consumidores.",
+      "Equiparar interfaz pequeña con una sola operación obligatoria en todos los casos."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Segregación de interfaces, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: contratos separados por capacidades; reporte y fuente con solo lectura; repositorio completo sin métodos falsos. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: contratos separados por capacidades; reporte y fuente con solo lectura; repositorio completo sin métodos falsos. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: contratos separados por capacidades; reporte y fuente con solo lectura; repositorio completo sin métodos falsos. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone contratos por capacidades, asigna solo lectura a reporte y fuente externa y permite varias capacidades al repositorio completo sin operaciones falsas."
+    },
+    "keywords_semanticas": [
+      "ISP",
+      "segregación de interfaces",
+      "lector",
+      "escritor",
+      "exportador",
+      "consumidor",
+      "capacidad",
+      "contrato pequeño",
+      "dependencia",
+      "implementación"
+    ],
+    "text": "RepositorioGeneral ofrece leer, guardar, borrar y exportar. Un reporte solo necesita leer y una fuente externa solo permite lectura. Propón interfaces más pequeñas y explica cómo evitar métodos vacíos o que siempre fallen.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_avanzado_003",
+    "concepto": "Decorator y composición de comportamiento",
+    "definicion": "Decorator añade responsabilidades a un objeto mediante envoltorios que conservan su contrato y delegan en el objeto envuelto.",
+    "explicacion_simple": "Se rodea un componente con otro que agrega trabajo sin obligar al cliente a cambiar cómo lo llama.",
+    "ejemplo_correcto": "Un decorador implementa Calificador y recibe el delegado. Mide una llamada y registra duración en finally; conserva nota y propaga fallos, sin reevaluar. Registra id y metadatos necesarios, evitando respuestas personales completas y credenciales.",
+    "ejemplo_incorrecto": "El decorador debe reemplazar toda nota por 3, ocultar los errores y publicar las respuestas completas en los logs.",
+    "errores_comunes": [
+      "Alterar el contrato del delegado.",
+      "Ejecutar la evaluación dos veces para medir.",
+      "Ocultar excepciones como éxitos.",
+      "Registrar datos sensibles innecesarios."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Decorator y composición de comportamiento, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: envoltorio y delegación con igual contrato; medición sin alterar resultados o fallos; registro sin datos sensibles innecesarios. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: envoltorio y delegación con igual contrato; medición sin alterar resultados o fallos; registro sin datos sensibles innecesarios. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: envoltorio y delegación con igual contrato; medición sin alterar resultados o fallos; registro sin datos sensibles innecesarios. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone envoltorio con el mismo contrato, mide una única invocación preservando resultados y fallos y evita registrar contenido sensible innecesario."
+    },
+    "keywords_semanticas": [
+      "Decorator",
+      "envoltorio",
+      "delegación",
+      "contrato",
+      "métricas",
+      "duración",
+      "finally",
+      "excepción",
+      "registro",
+      "minimización de datos"
+    ],
+    "text": "Quieres medir duración y registrar fallos de un Calificador sin modificar cada proveedor. Propón un Decorator, explica la delegación y cómo preservar resultados y excepciones. Indica qué debe evitarse al registrar respuestas de estudiantes.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "diseno_objetos_avanzado_004",
+    "concepto": "Objetos de valor, entidades e identidad",
+    "definicion": "Una entidad se distingue por identidad estable a través de cambios; un objeto de valor se distingue por sus atributos y suele diseñarse inmutable.",
+    "explicacion_simple": "Dos cosas pueden tener los mismos datos y ser personas distintas; dos valores iguales representan el mismo valor.",
+    "ejemplo_correcto": "Estudiante mantiene identidad por id aunque cambie nombre; nombres iguales no significan la misma persona. RangoNota compara mínimo y máximo por valor y valida mínimo<=máximo. Su inmutabilidad evita cambios compartidos inesperados: cambiarlo crea otro valor válido.",
+    "ejemplo_incorrecto": "Todos los estudiantes con el mismo nombre son la misma entidad; el rango solo es igual si tiene el mismo id de base de datos.",
+    "errores_comunes": [
+      "Comparar entidades solo por nombre.",
+      "Confundir identificador de almacenamiento con identidad de todo valor.",
+      "Aceptar límites invertidos.",
+      "Afirmar que inmutable impide crear un valor nuevo."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Objetos de valor, entidades e identidad, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: identidad estable frente a igualdad por valor; validación de límites del rango; beneficio de inmutabilidad del valor. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: identidad estable frente a igualdad por valor; validación de límites del rango; beneficio de inmutabilidad del valor. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: identidad estable frente a igualdad por valor; validación de límites del rango; beneficio de inmutabilidad del valor. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue id estable de la entidad e igualdad por atributos del rango, valida límites coherentes y explica cómo inmutabilidad evita modificaciones compartidas inesperadas."
+    },
+    "keywords_semanticas": [
+      "entidad",
+      "objeto de valor",
+      "identidad",
+      "igualdad por valor",
+      "id estable",
+      "inmutabilidad",
+      "rango",
+      "invariante",
+      "mínimo",
+      "máximo"
+    ],
+    "text": "Compara Estudiante(id, nombre) con RangoNota(minimo, maximo). Explica igualdad e identidad de ambos, una validación del rango y el beneficio de que RangoNota sea inmutable.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "Diseño orientado a objetos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_principiante_001",
+    "concepto": "Cliente y servidor",
+    "definicion": "Un cliente solicita un servicio y un servidor lo atiende; los papeles se determinan por su participación en el intercambio.",
+    "explicacion_simple": "Una parte pide algo y otra recibe la petición y responde.",
+    "ejemplo_correcto": "El navegador actúa como cliente: solicita la nota. El backend actúa como servidor: recibe la petición, obtiene el resultado autorizado y responde. Estos papeles describen el intercambio; no significan necesariamente equipos físicos diferentes.",
+    "ejemplo_incorrecto": "El navegador siempre es la base de datos y el servidor es el estudiante que mira la pantalla.",
+    "errores_comunes": [
+      "Invertir cliente y servidor.",
+      "Confundir usuario humano con servidor de la aplicación.",
+      "Confundir navegador con base de datos.",
+      "Suponer que esos roles solo existen en máquinas distintas."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Cliente y servidor, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: navegador como cliente; backend como servidor; solicitar frente a atender y responder. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: navegador como cliente; backend como servidor; solicitar frente a atender y responder. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: navegador como cliente; backend como servidor; solicitar frente a atender y responder. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica navegador como cliente y backend como servidor y explica quién pide y quién atiende y responde."
+    },
+    "keywords_semanticas": [
+      "cliente",
+      "servidor",
+      "navegador",
+      "backend",
+      "solicitud",
+      "respuesta",
+      "nota",
+      "servicio",
+      "intercambio",
+      "rol"
+    ],
+    "text": "Un navegador pide al backend del tutor la nota de una evaluación. Identifica cliente y servidor y explica qué hace cada uno en ese intercambio.",
+    "dificultad": "básico",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_principiante_002",
+    "concepto": "Solicitud y respuesta",
+    "definicion": "Una solicitud comunica al servicio una operación requerida; una respuesta informa el resultado o estado de atenderla.",
+    "explicacion_simple": "Primero se pide algo y después se recibe información sobre lo que ocurrió.",
+    "ejemplo_correcto": "La petición de consultar la nota es la solicitud. El mensaje devuelto es la respuesta y contiene score=2 como resultado. En HTTP también puede incluir un estado para saber si la consulta tuvo éxito; pedir la nota no equivale a haberla recibido.",
+    "ejemplo_incorrecto": "El JSON recibido es la solicitud original y enviar una petición garantiza que ya se obtuvo la nota.",
+    "errores_comunes": [
+      "Invertir petición y respuesta.",
+      "Confundir enviar con completar.",
+      "No identificar score como resultado.",
+      "Suponer que toda petición tiene éxito garantizado."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Solicitud y respuesta, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: petición enviada como solicitud; mensaje recibido como respuesta; score=2 como resultado comunicado. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: petición enviada como solicitud; mensaje recibido como respuesta; score=2 como resultado comunicado. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: petición enviada como solicitud; mensaje recibido como respuesta; score=2 como resultado comunicado. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue petición enviada y mensaje recibido, e identifica score=2 como la nota comunicada en la respuesta."
+    },
+    "keywords_semanticas": [
+      "solicitud",
+      "respuesta",
+      "petición",
+      "resultado",
+      "score",
+      "nota",
+      "JSON",
+      "HTTP",
+      "estado",
+      "consulta"
+    ],
+    "text": "El navegador envía una petición para consultar una nota y recibe {\"score\":2}. Distingue solicitud y respuesta e indica qué información útil contiene esta última.",
+    "dificultad": "básico",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_principiante_003",
+    "concepto": "API como contrato de acceso",
+    "definicion": "Una API define operaciones y datos mediante los cuales otros componentes pueden usar capacidades de un sistema sin conocer toda su implementación.",
+    "explicacion_simple": "Es una forma acordada de pedir datos o acciones a otro programa.",
+    "ejemplo_correcto": "La API ofrece una operación acordada para consultar la nota y devuelve los datos permitidos. El navegador usa ese contrato; no necesita conocer ni acceder a todas las tablas. El backend puede consultar la base internamente y aplicar permisos antes de responder.",
+    "ejemplo_incorrecto": "Una API es la contraseña de la base de datos y permite al navegador leer cualquier tabla sin permiso.",
+    "errores_comunes": [
+      "Confundir API con contraseña.",
+      "Confundir interfaz con almacenamiento.",
+      "Suponer acceso ilimitado a tablas.",
+      "Omitir operación y datos del contrato."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre API como contrato de acceso, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: API como operación acordada; consulta de datos permitidos; distinción frente al acceso directo a tablas. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: API como operación acordada; consulta de datos permitidos; distinción frente al acceso directo a tablas. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: API como operación acordada; consulta de datos permitidos; distinción frente al acceso directo a tablas. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica la consulta mediante un contrato y distingue los datos permitidos por la API del acceso directo a todas las tablas."
+    },
+    "keywords_semanticas": [
+      "API",
+      "contrato",
+      "operación",
+      "datos",
+      "navegador",
+      "backend",
+      "nota",
+      "interfaz",
+      "base de datos",
+      "permiso"
+    ],
+    "text": "Explica para qué sirve la API del tutor cuando el navegador necesita una nota y por qué eso no significa darle acceso directo a todas las tablas de la base de datos.",
+    "dificultad": "básico",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_basico_002",
+    "concepto": "Métodos HTTP y recursos",
+    "definicion": "Los métodos HTTP expresan la semántica de la operación sobre un recurso; GET recupera representación y POST suele procesar o crear recursos según el contrato.",
+    "explicacion_simple": "La dirección identifica lo que se usa y el método indica la operación que se pide.",
+    "ejemplo_correcto": "GET /evaluaciones/123 consulta y POST /evaluaciones crea. GET tiene semántica segura: no solicita crear evaluaciones ni cambiar notas. Puede producir logs, pero no cambios de negocio pedidos por la consulta. POST devuelve el recurso o id acordado.",
+    "ejemplo_incorrecto": "GET /crear-evaluacion debe cambiar notas cada vez porque GET significa guardar.",
+    "errores_comunes": [
+      "Usar GET para una acción que modifica estado de negocio.",
+      "Confundir ruta con método.",
+      "Afirmar que GET significa guardar.",
+      "Interpretar seguro como ausencia de cualquier log."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Métodos HTTP y recursos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: GET para consulta con ruta coherente; POST para crear con ruta coherente; semántica segura de GET sin cambiar notas. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: GET para consulta con ruta coherente; POST para crear con ruta coherente; semántica segura de GET sin cambiar notas. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: GET para consulta con ruta coherente; POST para crear con ruta coherente; semántica segura de GET sin cambiar notas. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone GET para consultar y POST para crear con rutas de recursos coherentes y explica que GET no solicita cambios de estado de negocio."
+    },
+    "keywords_semanticas": [
+      "HTTP",
+      "GET",
+      "POST",
+      "recurso",
+      "ruta",
+      "endpoint",
+      "consulta",
+      "creación",
+      "semántica segura",
+      "cuerpo de solicitud"
+    ],
+    "text": "Propón método y ruta para consultar la evaluación 123 y para crear una evaluación. Explica por qué consultar mediante GET no debería crear evaluaciones ni modificar notas.",
+    "dificultad": "básico",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_basico_003",
+    "concepto": "Códigos de estado HTTP",
+    "definicion": "Los códigos de estado HTTP comunican el resultado general de una solicitud y diferencian éxito, errores del cliente y errores del servidor.",
+    "explicacion_simple": "La respuesta incluye un número que ayuda al cliente a saber si la petición funcionó o qué clase de problema ocurrió.",
+    "ejemplo_correcto": "200: consulta exitosa; 201: recurso creado; 404: recurso solicitado no encontrado; 500: fallo interno inesperado. El cuerpo añade detalles, pero no cambia la semántica del estado. No oculto un error devolviendo éxito 200.",
+    "ejemplo_incorrecto": "200 significa error, 201 recurso inexistente, 404 creación exitosa y 500 una consulta correcta.",
+    "errores_comunes": [
+      "Invertir éxito y error.",
+      "Confundir 201 con cualquier consulta.",
+      "Usar 500 para todo problema del cliente.",
+      "Devolver éxito HTTP para ocultar un fallo real."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Códigos de estado HTTP, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: 200 y 201 con significados correctos; 404 y 500 con significados correctos; justificación de las cuatro asociaciones. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: 200 y 201 con significados correctos; 404 y 500 con significados correctos; justificación de las cuatro asociaciones. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: 200 y 201 con significados correctos; 404 y 500 con significados correctos; justificación de las cuatro asociaciones. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Asocia y justifica 200 para consulta exitosa, 201 para creación, 404 para recurso inexistente y 500 para fallo interno inesperado."
+    },
+    "keywords_semanticas": [
+      "código HTTP",
+      "200",
+      "201",
+      "404",
+      "500",
+      "éxito",
+      "creación",
+      "no encontrado",
+      "error del servidor",
+      "respuesta"
+    ],
+    "text": "Asocia un código HTTP a cada caso y justifica: consultar con éxito, crear un recurso con éxito, recurso inexistente y fallo interno inesperado. Usa los códigos 200, 201, 404 y 500.",
+    "dificultad": "básico",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_basico_004",
+    "concepto": "JSON y contratos de datos",
+    "definicion": "JSON es un formato textual de intercambio con objetos, arreglos y valores tipados; un contrato define campos, tipos y restricciones de cada mensaje.",
+    "explicacion_simple": "Un mensaje estructurado debe usar las claves y tipos que espera quien lo recibe.",
+    "ejemplo_correcto": "assessment_id es cadena, score número y completed booleano. \"dos\" no cumple un campo numérico y id no reemplaza un assessment_id requerido. JSON parseable no garantiza cumplir el esquema; valido claves y tipos y rechazo entradas incompatibles.",
+    "ejemplo_incorrecto": "JSON no tiene tipos ni nombres de campos relevantes; cualquier texto con llaves cumple cualquier contrato.",
+    "errores_comunes": [
+      "Confundir JSON parseable con contrato válido.",
+      "Equiparar número con palabra.",
+      "Ignorar nombres de campos requeridos.",
+      "Usar cadenas true o false como si fueran booleanos sin conversión explícita."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre JSON y contratos de datos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: tipos de los tres valores; dos incumplimientos del contrato; JSON válido frente a esquema válido. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: tipos de los tres valores; dos incumplimientos del contrato; JSON válido frente a esquema válido. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: tipos de los tres valores; dos incumplimientos del contrato; JSON válido frente a esquema válido. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica cadena, número y booleano, explica ambas violaciones y distingue JSON válido de cumplimiento del contrato."
+    },
+    "keywords_semanticas": [
+      "JSON",
+      "objeto",
+      "campo",
+      "cadena",
+      "número",
+      "booleano",
+      "esquema",
+      "contrato",
+      "validación",
+      "serialización"
+    ],
+    "text": "Una API espera {\"assessment_id\":\"a123\",\"score\":2,\"completed\":true}. Identifica el tipo de cada valor y explica por qué enviar score como \"dos\" o cambiar assessment_id por id puede incumplir el contrato.",
+    "dificultad": "básico",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_basico_005",
+    "concepto": "Comunicación síncrona y asíncrona",
+    "definicion": "En comunicación síncrona el resultado se entrega dentro del intercambio esperado; en un flujo asíncrono la solicitud y la finalización se desacoplan en el tiempo.",
+    "explicacion_simple": "Se puede esperar el resultado de inmediato o recibir un identificador y consultarlo después.",
+    "ejemplo_correcto": "Síncrono: HTTP espera la nota y puede agotar timeout. Asíncrono: registro trabajo y devuelvo pronto id y pendiente, por ejemplo 202. El cliente consulta estado o recibe notificación y obtiene resultado al finalizar. Aceptado no significa completado.",
+    "ejemplo_incorrecto": "Asíncrono significa que la nota ya está lista cuando se crea la solicitud y nunca se consulta el estado.",
+    "errores_comunes": [
+      "Confundir aceptado con completado.",
+      "Suponer que asincronía elimina latencia.",
+      "Omitir un mecanismo de consultar o notificar estado.",
+      "Confundir respuesta HTTP rápida con resultado académico inmediato."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Comunicación síncrona y asíncrona, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: espera del resultado dentro de HTTP; id y estado pendiente en asincronía; consulta o aviso de finalización y resultado. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: espera del resultado dentro de HTTP; id y estado pendiente en asincronía; consulta o aviso de finalización y resultado. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: espera del resultado dentro de HTTP; id y estado pendiente en asincronía; consulta o aviso de finalización y resultado. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Compara ambos flujos, devuelve identificador y estado pendiente en el asíncrono y explica consulta o notificación para conocer finalización y resultado."
+    },
+    "keywords_semanticas": [
+      "síncrono",
+      "asíncrono",
+      "HTTP",
+      "timeout",
+      "pendiente",
+      "202",
+      "identificador",
+      "consulta de estado",
+      "notificación",
+      "LLM"
+    ],
+    "text": "Una evaluación LLM tarda 30 segundos. Compara responder el resultado dentro de la petición HTTP con devolver un identificador de proceso pendiente. Explica cómo el estudiante sabría cuándo termina la segunda opción.",
+    "dificultad": "básico",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_intermedio_001",
+    "concepto": "Diseño de API orientada a recursos",
+    "definicion": "Una API orientada a recursos utiliza identificadores y representaciones estables, métodos con semántica coherente y contratos previsibles para las operaciones.",
+    "explicacion_simple": "Se nombran los recursos y se usan operaciones consistentes para consultarlos o crearlos.",
+    "ejemplo_correcto": "POST /evaluaciones crea con 201 o acepta trabajo con 202 según contrato. GET /evaluaciones/{id}/estado y /respuestas consultan con 200. Uso errores con codigo y mensaje coherentes y estados adecuados, sin trazas; documento esquemas y no modifico al consultar.",
+    "ejemplo_incorrecto": "Usaría GET /hacerTodo para crear, borrar y consultar y siempre devolvería 200 aunque falle.",
+    "errores_comunes": [
+      "Usar consultas para modificar recursos.",
+      "Cambiar esquemas de error arbitrariamente.",
+      "Devolver 200 para todos los fallos.",
+      "Confundir método HTTP con nombre de acción en la ruta."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Diseño de API orientada a recursos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: tres rutas y métodos coherentes; códigos de éxito justificados; esquema de errores consistente. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: tres rutas y métodos coherentes; códigos de éxito justificados; esquema de errores consistente. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: tres rutas y métodos coherentes; códigos de éxito justificados; esquema de errores consistente. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Define las tres operaciones con métodos y rutas coherentes, códigos de éxito justificados y un contrato consistente de errores con estados adecuados."
+    },
+    "keywords_semanticas": [
+      "API orientada a recursos",
+      "REST",
+      "POST",
+      "GET",
+      "201",
+      "202",
+      "200",
+      "representación",
+      "esquema de error",
+      "contrato"
+    ],
+    "text": "Diseña rutas y métodos para crear una evaluación, consultar su estado y obtener sus respuestas. Indica un código de éxito razonable para cada operación y explica cómo mantendrías consistente el contrato de errores.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_intermedio_002",
+    "concepto": "Autenticación, autorización y propiedad del recurso",
+    "definicion": "La autenticación verifica identidad; la autorización verifica permisos sobre una acción y recurso, incluyendo pertenencia cuando corresponde.",
+    "explicacion_simple": "Saber quién entra no significa que pueda ver los datos de cualquier otra persona.",
+    "ejemplo_correcto": "Autenticación valida token, vigencia e identidad; autorización verifica acción y recurso. Compruebo que la evaluación pertenezca al estudiante o exista permiso explícito con alcance correcto. Un token válido no basta; deniego con 403 o 404 según política sin entregar datos.",
+    "ejemplo_incorrecto": "Si el token es válido, puede leer cualquier evaluación porque ya está autenticado.",
+    "errores_comunes": [
+      "Equiparar autenticación con autorización.",
+      "Confiar en user_id enviado por el cliente.",
+      "Verificar rol sin comprobar alcance o propiedad.",
+      "Exponer resultados antes de validar acceso."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Autenticación, autorización y propiedad del recurso, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: identidad y permiso diferenciados; validación de token y propiedad o permiso; denegación sin entregar resultados. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: identidad y permiso diferenciados; validación de token y propiedad o permiso; denegación sin entregar resultados. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: identidad y permiso diferenciados; validación de token y propiedad o permiso; denegación sin entregar resultados. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Distingue autenticación y autorización, valida identidad y token, verifica propiedad o permiso explícito y deniega acceso indebido sin entregar resultados."
+    },
+    "keywords_semanticas": [
+      "autenticación",
+      "autorización",
+      "token",
+      "identidad",
+      "permiso",
+      "propiedad",
+      "RBAC",
+      "IDOR",
+      "403",
+      "control de acceso"
+    ],
+    "text": "Un estudiante con token válido pide GET /evaluaciones/otra-persona. Distingue autenticación y autorización y explica dos verificaciones necesarias antes de entregar el resultado.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_intermedio_003",
+    "concepto": "Idempotencia y reenvío de solicitudes",
+    "definicion": "Una operación idempotente produce el mismo efecto de negocio al repetirse con la misma intención; sus respuestas pueden variar sin duplicar el efecto.",
+    "explicacion_simple": "Si se repite una solicitud por un fallo de red, no debería crear otra evaluación por accidente.",
+    "ejemplo_correcto": "Reutilizo una clave estable por creación. Guardo clave, identidad, huella y resultado con unicidad y atomicidad. Mismos datos y clave devuelven la evaluación existente sin crear otra; datos distintos con la misma clave generan conflicto. POST no lo garantiza solo.",
+    "ejemplo_incorrecto": "Generar una clave nueva en cada reintento evita duplicados; no hay que guardar nada.",
+    "errores_comunes": [
+      "Cambiar clave en cada reintento.",
+      "Guardar clave sin resultado ni vínculo a la solicitud.",
+      "Confundir misma respuesta con mismo efecto.",
+      "Verificar existencia y luego insertar sin control de concurrencia."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Idempotencia y reenvío de solicitudes, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: clave estable y datos vinculados; persistencia con unicidad y atomicidad; reutilización del resultado sin duplicar. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: clave estable y datos vinculados; persistencia con unicidad y atomicidad; reutilización del resultado sin duplicar. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: clave estable y datos vinculados; persistencia con unicidad y atomicidad; reutilización del resultado sin duplicar. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone clave estable asociada a identidad, solicitud y resultado, persistencia atómica o unicidad y reutilización de la evaluación ante el mismo reintento sin duplicar el efecto."
+    },
+    "keywords_semanticas": [
+      "idempotencia",
+      "clave de idempotencia",
+      "reintento",
+      "duplicado",
+      "unicidad",
+      "atomicidad",
+      "huella",
+      "solicitud",
+      "efecto de negocio",
+      "POST"
+    ],
+    "text": "El cliente envía crearEvaluacion y pierde la respuesta; al reintentar se crean dos evaluaciones. Propón una clave de idempotencia, qué debe guardarse, cómo evitarías dos creaciones concurrentes y cómo responder a un reintento con la misma clave y los mismos datos.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_intermedio_004",
+    "concepto": "Colas, productores y consumidores",
+    "definicion": "Una cola desacopla productores y consumidores de trabajo, amortigua picos y requiere manejo de confirmación, reintentos y posibles duplicados según sus garantías.",
+    "explicacion_simple": "Un componente deja trabajo pendiente y otro lo recoge cuando puede procesarlo.",
+    "ejemplo_correcto": "La API produce y el worker consume. El mensaje incluye assessment_id y datos o referencias para cargar respuestas y rúbricas. Confirmo después de guardar el resultado. Entrega al menos una vez puede repetir mensajes; controlo el efecto por evaluación.",
+    "ejemplo_incorrecto": "El worker debe borrar el mensaje antes de empezar y una cola garantiza que jamás habrá duplicados.",
+    "errores_comunes": [
+      "Confirmar antes de persistir el resultado.",
+      "Suponer entrega exactamente una vez por usar una cola.",
+      "Omitir identificador o contrato.",
+      "Confundir productor y consumidor."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Colas, productores y consumidores, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: roles y mensaje con id y datos o referencias; confirmación tras persistir el resultado; duplicados y control del efecto por evaluación. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: roles y mensaje con id y datos o referencias; confirmación tras persistir el resultado; duplicados y control del efecto por evaluación. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: roles y mensaje con id y datos o referencias; confirmación tras persistir el resultado; duplicados y control del efecto por evaluación. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Identifica productor y consumidor, define id y datos o referencias necesarias, confirma tras persistencia y contempla repetición con control de efectos por evaluación."
+    },
+    "keywords_semanticas": [
+      "cola",
+      "productor",
+      "consumidor",
+      "worker",
+      "mensaje",
+      "assessment_id",
+      "confirmación",
+      "persistencia",
+      "al menos una vez",
+      "duplicado"
+    ],
+    "text": "La API publica evaluaciones y un worker las califica. Identifica productor, consumidor y contenido mínimo del mensaje. Explica cuándo confirmar el procesamiento y por qué debe contemplarse recibir un mensaje dos veces.",
+    "dificultad": "intermedio",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_avanzado_001",
+    "concepto": "Reintentos, timeout y circuit breaker",
+    "definicion": "Los reintentos atienden fallos transitorios; un timeout limita espera y un circuit breaker suspende temporalmente llamadas cuando se acumulan fallos para reducir daño en cascada.",
+    "explicacion_simple": "Se puede volver a intentar un fallo temporal, dejar de esperar demasiado y parar llamadas a un servicio que sigue caído.",
+    "ejemplo_correcto": "Uso timeout y presupuesto total; reintentos finitos con backoff y jitter, respetando Retry-After ante 429. El circuito abre por fallos y prueba recuperación semiabierto. Un 400 inválido se corrige, no se reintenta ciegamente; no invento notas ni ignoro efectos repetidos.",
+    "ejemplo_incorrecto": "Reintentaría infinitamente cualquier error sin esperar; circuit breaker significa generar una nota aunque no llegue respuesta.",
+    "errores_comunes": [
+      "Reintentar errores de validación como transitorios.",
+      "Ignorar Retry-After.",
+      "No limitar intentos ni tiempo total.",
+      "Confundir circuit breaker con reintento o calificación inventada."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Reintentos, timeout y circuit breaker, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: timeout y reintentos finitos con espera; Retry-After y circuito con recuperación; 400 inválido sin reintento ciego. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: timeout y reintentos finitos con espera; Retry-After y circuito con recuperación; 400 inválido sin reintento ciego. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: timeout y reintentos finitos con espera; Retry-After y circuito con recuperación; 400 inválido sin reintento ciego. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Propone timeout y reintentos finitos con espera creciente, respeta Retry-After, explica interrupción y recuperación del circuito y evita reintentar ciegamente el 400 de entrada inválida."
+    },
+    "keywords_semanticas": [
+      "retry",
+      "timeout",
+      "backoff",
+      "jitter",
+      "429",
+      "Retry-After",
+      "circuit breaker",
+      "semiabierto",
+      "fallo transitorio",
+      "presupuesto de tiempo"
+    ],
+    "text": "El proveedor LLM responde con timeouts y algunos 429. Propón una política con timeout, reintentos limitados con espera, tratamiento de Retry-After y circuit breaker. Explica qué ocurre ante un 400 de entrada inválida.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_avanzado_002",
+    "concepto": "Transactional outbox y escritura dual",
+    "definicion": "Transactional outbox registra el cambio de negocio y un evento pendiente en la misma transacción local; un publicador posterior envía el evento y controla su estado.",
+    "explicacion_simple": "El dato y la intención de avisar se guardan juntos para que un fallo no deje el trabajo olvidado.",
+    "ejemplo_correcto": "Guardar sin publicar deja trabajo olvidado. En una transacción guardo respuestas y outbox con event_id y assessment_id. Un publicador envía y marca; si cae entre ambos puede reenviar. El consumidor debe ser idempotente: outbox no garantiza exactamente una vez.",
+    "ejemplo_incorrecto": "Basta guardar y publicar por separado; outbox elimina todo duplicado sin coordinación adicional.",
+    "errores_comunes": [
+      "Suponer atomicidad entre base y cola sin mecanismo.",
+      "Guardar outbox fuera de la transacción de negocio.",
+      "Marcar enviado antes de publicación confirmada.",
+      "Afirmar exactamente una vez sin deduplicación."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Transactional outbox y escritura dual, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: fallo de escritura dual identificado; respuesta y evento guardados atómicamente; publicación posterior y consumidor idempotente. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: fallo de escritura dual identificado; respuesta y evento guardados atómicamente; publicación posterior y consumidor idempotente. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: fallo de escritura dual identificado; respuesta y evento guardados atómicamente; publicación posterior y consumidor idempotente. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica escritura dual, persistencia atómica de respuestas y evento pendiente, publicación posterior con seguimiento y repetición posible que exige idempotencia del consumidor."
+    },
+    "keywords_semanticas": [
+      "transactional outbox",
+      "escritura dual",
+      "transacción local",
+      "evento pendiente",
+      "publicador",
+      "event_id",
+      "assessment_id",
+      "duplicado",
+      "idempotencia",
+      "consistencia"
+    ],
+    "text": "La API guarda respuestas en PostgreSQL y falla antes de publicar en la cola. Explica el problema de escritura dual y propone outbox: qué se guarda atómicamente, cómo se publica después y por qué sigue siendo necesaria la idempotencia del consumidor.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_avanzado_003",
+    "concepto": "Consistencia eventual y estados observables",
+    "definicion": "La consistencia eventual permite que distintas representaciones converjan después de propagación asíncrona; durante el intervalo deben existir estados y reglas claros para los consumidores.",
+    "explicacion_simple": "Que el trabajo esté recibido no significa que todas las pantallas ya tengan su resultado final.",
+    "ejemplo_correcto": "Consulta: id y estado pendiente, procesando, completada o fallida. Solo completada incluye nota final; espera usa nota ausente/null y fallo informa error seguro. Cero es una nota válida, no espera. Guardo resultado y finalización coherentemente.",
+    "ejemplo_incorrecto": "Una evaluación pendiente tiene nota definitiva cero; si después cambia no hace falta mostrar estado.",
+    "errores_comunes": [
+      "Confundir nota cero con ausencia de resultado.",
+      "Mostrar completada antes de persistir una nota.",
+      "No representar el fallo.",
+      "Suponer actualización instantánea de todas las vistas."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Consistencia eventual y estados observables, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: estados de espera, éxito y fallo; consulta con nota final solo al completar; cero válido y finalización coherente. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: estados de espera, éxito y fallo; consulta con nota final solo al completar; cero válido y finalización coherente. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: estados de espera, éxito y fallo; consulta con nota final solo al completar; cero válido y finalización coherente. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Define estados y respuesta de consulta coherente para espera, éxito y fallo; explica que cero es una nota válida y exige coherencia entre persistencia de resultado y finalización."
+    },
+    "keywords_semanticas": [
+      "consistencia eventual",
+      "estado",
+      "pendiente",
+      "procesando",
+      "completada",
+      "fallida",
+      "consulta",
+      "null",
+      "resultado final",
+      "propagación"
+    ],
+    "text": "La API acepta una evaluación y el worker actualiza la nota segundos después. Diseña estados visibles y un contrato de consulta que distinga pendiente, completada y fallida; explica por qué no devolverías score=0 como si fuera una nota final mientras está pendiente.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  },
+  {
+    "pregunta_id": "apis_distribuidos_avanzado_004",
+    "concepto": "Idempotencia concurrente y consumidores distribuidos",
+    "definicion": "La idempotencia concurrente preserva un único efecto de negocio cuando varios consumidores procesan simultáneamente el mismo evento, usando controles atómicos y persistencia duradera.",
+    "explicacion_simple": "No basta preguntar si ya se hizo: dos procesos pueden recibir la misma respuesta y actuar a la vez.",
+    "ejemplo_correcto": "Ambos pueden ver ausencia antes de insertar: hay carrera. Uso unicidad por assessment_id y transacción o adquisición atómica, con recuperación si hay lock. Si cae un worker, reentrego; resultado duradero evita repetir el efecto. Un lock temporal solo no basta.",
+    "ejemplo_incorrecto": "Un if en memoria basta para todos los workers y un lock sin vencimiento nunca causa problemas.",
+    "errores_comunes": [
+      "Usar chequeo no atómico como exclusión.",
+      "Confiar en memoria local entre procesos.",
+      "Bloquear para siempre sin recuperación.",
+      "Confundir bloqueo temporal con registro duradero del resultado."
+    ],
+    "criterios_rubrica": {
+      "0": "Respuesta vacía, irrelevante o incorrecta; no aporta ninguna idea correcta respecto al problema planteado.",
+      "1": "Aporta una idea correcta aislada sobre Idempotencia concurrente y consumidores distribuidos, pero no desarrolla correctamente ninguna de las tres partes requeridas.",
+      "2": "Desarrolla correctamente solo una de estas partes: carrera por comprobaciones separadas; control atómico y resultado único duradero; recuperación o reentrega segura tras caída. Las otras faltan o contienen confusiones.",
+      "3": "Desarrolla correctamente dos de estas partes: carrera por comprobaciones separadas; control atómico y resultado único duradero; recuperación o reentrega segura tras caída. Falta la tercera o es incorrecta; no contradice las partes correctas.",
+      "4": "Aborda las tres partes: carrera por comprobaciones separadas; control atómico y resultado único duradero; recuperación o reentrega segura tras caída. Mantiene una omisión menor de contenido, sin errores centrales.",
+      "5": "Explica la carrera, propone control atómico con unicidad o transacción para un único efecto duradero y permite recuperación o reentrega segura después de una caída."
+    },
+    "keywords_semanticas": [
+      "idempotencia concurrente",
+      "condición de carrera",
+      "assessment_id",
+      "restricción única",
+      "transacción",
+      "bloqueo",
+      "adquisición atómica",
+      "recuperación",
+      "reentrega",
+      "persistencia"
+    ],
+    "text": "Dos workers reciben el mismo assessment_id; ambos comprueban que no hay resultado y luego insertan. Explica la carrera, propone un control atómico y describe qué harías si un worker cae antes de completar el procesamiento.",
+    "dificultad": "avanzado",
+    "categoria_contenido": "APIs y sistemas distribuidos"
+  }
+]

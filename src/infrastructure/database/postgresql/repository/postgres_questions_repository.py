@@ -108,11 +108,7 @@ class PostgresQuestionsRepository(QuestionRepository):
     async def get_all_questions_paginated(
         self, page: int, page_size: int
     ) -> PaginatedQuestionsResult:
-        count_smt = (
-            select(func.count())
-            .select_from(QuestionEntity)
-            .where(QuestionEntity.is_enabled)
-        )
+        count_smt = select(func.count()).select_from(QuestionEntity)
         total_result = await self.session_factory.execute(count_smt)
         total = total_result.scalar()
         if not total:
@@ -121,7 +117,7 @@ class PostgresQuestionsRepository(QuestionRepository):
         smt = (
             select(QuestionEntity)
             .options(selectinload(QuestionEntity.rubric))
-            .where(QuestionEntity.is_enabled)
+            .order_by(QuestionEntity.version.desc())
             .offset(page * page_size)
             .limit(page_size)
         )
@@ -214,6 +210,7 @@ class PostgresQuestionsRepository(QuestionRepository):
                 select(QuestionEntity)
                 .options(selectinload(QuestionEntity.rubric))
                 .where(QuestionEntity.id == question_id)
+                .order_by(QuestionEntity.version.desc())
             )
             result = await self.session_factory.execute(smt_first_version)
             question_entities = result.scalars().all()

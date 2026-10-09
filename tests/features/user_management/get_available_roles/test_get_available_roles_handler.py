@@ -6,6 +6,10 @@ from src.features.user_management.get_available_roles.get_available_roles_handle
 )
 from itmentorsoft_persistence.dto import Role
 
+from src.features.user_management.get_available_roles.get_available_roles_response import (
+    RoleDetail,
+)
+
 
 @pytest.mark.asyncio
 async def test_when_roles_exist_then_returns_success_with_role_name_list():
@@ -21,7 +25,10 @@ async def test_when_roles_exist_then_returns_success_with_role_name_list():
     response = await handler.handle()
 
     assert response.is_success is True
-    assert response.roles == ["admin", "student"]
+    assert response.roles == [
+        RoleDetail(id="1", name="admin", homologate_name="Administrador"),
+        RoleDetail(id="2", name="student", homologate_name="Estudiante"),
+    ]
 
 
 @pytest.mark.asyncio

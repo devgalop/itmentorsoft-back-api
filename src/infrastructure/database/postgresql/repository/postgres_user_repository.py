@@ -153,8 +153,8 @@ class PostgresUserRepository(UserRepository):
             .options(selectinload(UserEntity.role))
             .where(
                 UserEntity.role_id == role_entity.id,
-                UserEntity.status == UserStatus.ACTIVE.value,
             )
+            .order_by(UserEntity.role_id)
         )
         result = await self.session_factory.execute(stmt)
         users_found = result.scalars().all()

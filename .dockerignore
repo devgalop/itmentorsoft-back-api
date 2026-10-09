@@ -26,7 +26,8 @@ htmlcov/
 
 # Docs / project metadata
 docs/
-!docs/resources/sample_questions.json
+!docs/resources/rubricas.json
+!docs/resources/contenidos.json
 tests/
 bandit/
 .atl/
