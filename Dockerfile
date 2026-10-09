@@ -10,7 +10,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
-COPY docs/resources/sample_questions.json ./docs/resources/
+COPY docs/resources/rubricas.json ./docs/resources/
+COPY docs/resources/contenidos.json ./docs/resources/
 
 EXPOSE 8000
 
