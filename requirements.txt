@@ -102,4 +102,4 @@ watchfiles==1.1.1
 websockets==16.0
 yarl==1.23.0
 valkey==6.1.1
-git+https://github.com/devgalop/itmentorsoft-persistence.git@857dc10c4b6363ef4032927550cb16b5e2125842
+git+https://github.com/devgalop/itmentorsoft-persistence.git@48fb872c3f494843574e5ff0a6e2b6f8d067b1a2
