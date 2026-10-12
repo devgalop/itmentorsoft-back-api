@@ -11,13 +11,13 @@ from itmentorsoft_persistence.dto import (
     QuestionRubricScore,
 )
 from itmentorsoft_persistence.repositories import QuestionRepository, UserRepository
-from src.features.shared.notification_service import (
-    NotificationConfigBuilder,
-    NotificationService,
-)
 from src.features.shared.template_loader import TemplateLoader
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 from src.i18n import t
+from src.infrastructure.notification.notification_message import (
+    QuestionCreatedNotifyRequest,
+)
+from src.infrastructure.notification.notificator_service import NotificatorService
 
 
 class CreateQuestionRequest(BaseModel):
@@ -36,7 +36,7 @@ class QuestionManagerService:
         self,
         question_repository: QuestionRepository,
         question_builder: Type[QuestionBuilder],
-        notification_service: NotificationService,
+        notification_service: NotificatorService,
         template_loader: TemplateLoader,
         user_repository: UserRepository,
     ):
@@ -124,32 +124,21 @@ class QuestionManagerService:
         Returns:
             bool: True if the notification was sent successfully, False otherwise.
         """
-        SUBJECT = "New Question Registered"
         OBJECT_NAME = "Pregunta + rubrica de evaluación"
         admin_users = await self.user_repository.get_admin_users()
         if not admin_users:
             print("No admin users found to notify.")
             return False
-        html_content = self.template_loader.load("item_created")
         for admin_user in admin_users:
-            notification_config_builder = NotificationConfigBuilder(
-                admin_user.email, SUBJECT
-            )
-
-            final_html_content = (
-                html_content.replace("%REVIEWER%", admin_user.username)
-                .replace("%CREATED_BY%", author_user_name)
-                .replace("%OBJECT_NAME%", OBJECT_NAME)
-                .replace("%OBJECT_CODE%", f"{question.question_id}-v{question.version}")
-                .replace("%CREATED_DATE%", datetime.now().strftime("%Y-%m-%d"))
-                .replace(
-                    "%URL_REVIEW%",
-                    f"{EnvironmentVariablesConstants.REVIEW_URL_BASE}?page=0&page_size=10",
+            _ = await self.notification_service.send_question_created_notification(
+                QuestionCreatedNotifyRequest(
+                    recipient=admin_user.email,
+                    reviewer=admin_user.username,
+                    owner=author_user_name,
+                    object_name=OBJECT_NAME,
+                    object_code=f"{question.question_id}-v{question.version}",
+                    created_at=datetime.now().strftime("%Y-%m-%d"),
+                    url_review=f"{EnvironmentVariablesConstants.REVIEW_URL_BASE}?page=0&page_size=10",
                 )
             )
-
-            notification_config_builder.set_template(final_html_content)
-            notification_config = notification_config_builder.build()
-
-            _ = await self.notification_service.send_notification(notification_config)
         return True

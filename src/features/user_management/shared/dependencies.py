@@ -72,6 +72,7 @@ from src.infrastructure.database.postgresql.repository.postgres_user_repository 
 from src.infrastructure.notification.brevo_notification_service import (
     BrevoNotificationService,
 )
+from src.infrastructure.notification.notificator_service import NotificatorService
 from src.infrastructure.security.bcrypt_password_hasher import BcryptPasswordHasher
 from src.infrastructure.security.jwt_token_generator import JWTTokenGenerator
 from src.features.shared.notification_service import NotificationService
@@ -80,6 +81,10 @@ from src.features.user_management.create_user_from_admin.create_user_from_admin_
     CreateUserFromAdminHandler,
 )
 from src.infrastructure.security.simple_otp_generator import SimpleOTPGenerator
+from src.infrastructure.broker.aws.services.aws_sqs_connection import (
+    SqsConnectionFactory,
+)
+from common_py_aws import PublisherService, SqsConnection, SqsPublisherService
 
 
 def get_user_repository(
@@ -122,6 +127,22 @@ def get_refresh_token_repository(
     )
 
 
+def get_sqs_connection_factory() -> SqsConnection:
+    return SqsConnectionFactory.create_sqs_client()
+
+
+def get_publisher_service(
+    sqs_client: Annotated[SqsConnection, Depends(get_sqs_connection_factory)],
+) -> PublisherService:
+    return SqsPublisherService(sqs_client=sqs_client)
+
+
+def get_notificator_service(
+    publisher_service: Annotated[PublisherService, Depends(get_publisher_service)],
+) -> NotificatorService:
+    return NotificatorService(publisher_service=publisher_service)
+
+
 def get_create_user_handler(
     user_repository: Annotated[UserRepository, Depends(get_user_repository)],
     password_hasher: Annotated[PasswordHasher, Depends(get_password_hasher)],
@@ -160,7 +181,7 @@ def get_user_manager_service(
     password_hasher: Annotated[PasswordHasher, Depends(get_password_hasher)],
     role_repository: Annotated[RoleRepository, Depends(get_role_repository)],
     notification_service: Annotated[
-        NotificationService, Depends(get_notification_service)
+        NotificatorService, Depends(get_notificator_service)
     ],
     template_loader: Annotated[TemplateLoader, Depends(get_template_loader)],
     otp_generator: Annotated[OTPGenerator, Depends(get_otp_generator)],
@@ -207,7 +228,7 @@ def get_recovery_password_handler(
         UserRecoveryTokenRepository, Depends(get_user_recovery_token_repository)
     ],
     notification_service: Annotated[
-        NotificationService, Depends(get_notification_service)
+        NotificatorService, Depends(get_notificator_service)
     ],
     token_generator: Annotated[TokenGenerator, Depends(get_token_generator)],
     password_hasher: Annotated[PasswordHasher, Depends(get_password_hasher)],

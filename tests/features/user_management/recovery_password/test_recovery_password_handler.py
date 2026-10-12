@@ -10,7 +10,7 @@ from src.features.user_management.recovery_password.recovery_password_request im
 from src.features.user_management.recovery_password.recovery_password_response import (
     RecoveryPasswordResponse,
 )
-from src.features.shared.notification_service import NotificationService
+from src.infrastructure.notification.notificator_service import NotificatorService
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.token_generator import TokenGenerator
 from src.features.user_management.shared.password_hasher import PasswordHasher
@@ -24,7 +24,7 @@ async def test_when_email_does_not_exist_then_response_message_is_returned():
     user_repository.get_user_response_by_email.return_value = None
     token_generator = AsyncMock(spec=TokenGenerator)
     user_recovery_repository = AsyncMock(spec=UserRecoveryTokenRepository)
-    notification_service = AsyncMock(spec=NotificationService)
+    notification_service = AsyncMock(spec=NotificatorService)
     password_hasher = AsyncMock(spec=PasswordHasher)
     template_loader = TemplateLoader()
 
@@ -50,7 +50,7 @@ async def test_when_email_does_not_exist_then_response_message_is_returned():
     )
     token_generator.generate_random_token.assert_not_called()
     password_hasher.hash_password.assert_not_called()
-    notification_service.send_notification.assert_not_called()
+    notification_service.send_recovery_notification.assert_not_called()
     user_recovery_repository.save_token.assert_not_called()
 
 
@@ -65,7 +65,7 @@ async def test_when_email_exists_then_recovery_process_is_initiated():
         token="random-token", expiration_time=1234567890
     )
     user_recovery_repository = AsyncMock(spec=UserRecoveryTokenRepository)
-    notification_service = AsyncMock(spec=NotificationService)
+    notification_service = AsyncMock(spec=NotificatorService)
     password_hasher = AsyncMock(spec=PasswordHasher)
     password_hasher.hash_password.return_value = "hashed-token"
     template_loader = TemplateLoader()
@@ -92,5 +92,5 @@ async def test_when_email_exists_then_recovery_process_is_initiated():
     )
     token_generator.generate_random_token.assert_called_once()
     password_hasher.hash_password.assert_called_once_with("random-token")
-    notification_service.send_notification.assert_called_once()
+    notification_service.send_recovery_notification.assert_called_once()
     user_recovery_repository.save_token.assert_called_once()

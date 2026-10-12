@@ -1,11 +1,16 @@
 import json
+from common_py_aws import PublishMessageRequest
 from itmentorsoft_persistence.dto import Assessment
-from src.features.shared.publisher_service import PublishMessageRequest
+
+from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 
 class EvaluateMessage(PublishMessageRequest):
     def __init__(self, assessment: Assessment):
         self.assessment = assessment
+
+    def get_url(self) -> str:
+        return EnvironmentVariablesConstants.AWS_SQS_QUALIFICATION_QUEUE_URL
 
     def get_message(self) -> str:
         """Retrieve the serialized assessment message to be published.

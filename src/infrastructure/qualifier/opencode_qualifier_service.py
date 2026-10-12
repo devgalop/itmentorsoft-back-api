@@ -1,269 +1,177 @@
-import os
-import uuid
-import logging
-from typing import Any
-from openai import OpenAI, APIStatusError, APIConnectionError
-import json
 import asyncio
+import json
+import logging
+import uuid
+
+from openai import OpenAI
+
+from itmentorsoft_persistence.dto import QualifierResult
 from src.features.assessments.shared.qualifier_service import (
     BatchQualificationError,
     BatchQualifierPrompt,
-    QualifierPrompt,
-    QualifierResult,
     QualifierService,
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 logger = logging.getLogger(__name__)
 
-_RETRYABLE_STATUS_CODES = {500, 502, 503, 504}
-_MAX_RETRIES = 3
-_INITIAL_BACKOFF_SECONDS = 1.0
-
 
 class OpencodeQualifierService(QualifierService):
+    """Qualifier service implementation using the OpenAI-compatible Opencode API."""
 
     def __init__(self, model_id: str):
+        self.model_id = model_id
         self.client = OpenAI(
             api_key=EnvironmentVariablesConstants.OPENCODE_API_KEY,
             base_url=EnvironmentVariablesConstants.OPENCODE_API_URL,
-            default_headers={"x-opencode-session": uuid.uuid4().hex},
-        )
-        self.generic_prompt: str = self.get_generic_prompt()
-        self.batch_generic_prompt: str = self.get_batch_generic_prompt()
-        self.model_id: str = model_id
-
-    async def _call_with_retry(self, messages: list[dict[str, str]]) -> Any:
-        """Call the OpenAI-compatible API with retry logic for transient errors.
-
-        Retries on 500/502/503/504 status codes and connection errors with
-        exponential backoff. Raises the original exception after max retries.
-        """
-        last_exception: Exception | None = None
-        for attempt in range(_MAX_RETRIES):
-            try:
-                return await asyncio.to_thread(
-                    self.client.chat.completions.create,
-                    model=self.model_id,
-                    messages=messages,
-                )
-            except APIStatusError as e:
-                last_exception = e
-                if e.status_code not in _RETRYABLE_STATUS_CODES:
-                    raise
-                logger.warning(
-                    "Retryable API error %d on attempt %d/%d for model %s: %s",
-                    e.status_code,
-                    attempt + 1,
-                    _MAX_RETRIES,
-                    self.model_id,
-                    e.message,
-                )
-            except APIConnectionError as e:
-                last_exception = e
-                logger.warning(
-                    "Connection error on attempt %d/%d for model %s: %s",
-                    attempt + 1,
-                    _MAX_RETRIES,
-                    self.model_id,
-                    e,
-                )
-            if attempt < _MAX_RETRIES - 1:
-                await asyncio.sleep(_INITIAL_BACKOFF_SECONDS * (2**attempt))
-        raise last_exception  # type: ignore[misc]
-
-    async def qualify(self, qualifier_prompt: QualifierPrompt) -> QualifierResult:
-        system_prompt = self.get_prompt(qualifier_prompt)
-        logger.debug(
-            "qualify: model=%s question_id=%s system_prompt_chars=%d user_answer_chars=%d",
-            self.model_id,
-            qualifier_prompt.rubric.question_id,
-            len(system_prompt),
-            len(qualifier_prompt.user_answer),
-        )
-        completion = await self._call_with_retry(
-            [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": qualifier_prompt.user_answer},
-            ]
-        )
-        response = completion.choices[0].message.content
-        if not response:
-            raise ValueError("Received empty response from the qualifier service.")
-
-        response_json = json.loads(response)
-        try:
-            score_int = int(round(float(response_json.get("score", 0))))
-        except (TypeError, ValueError):
-            score_int = 0
-
-        return QualifierResult(
-            id=uuid.uuid4().hex,
-            question_id=qualifier_prompt.rubric.question_id,
-            user_id=qualifier_prompt.user_id,
-            score=score_int,
-            feedback=response_json.get("feedback", ""),
-            key_concepts_detected=response_json.get("key_concepts_detected", []),
-            misconceptions_detected=response_json.get("misconceptions_detected", []),
-            question_topic=qualifier_prompt.rubric.classification,
-            assessment_id=qualifier_prompt.assessment_id,
-            question_difficulty=qualifier_prompt.rubric.difficulty.value,
-            answer_id=qualifier_prompt.answer_id,
         )
 
-    def get_prompt(self, qualifier_prompt: QualifierPrompt) -> str:
-        """Generates the prompt for the qualifier service by replacing placeholders in the generic prompt.
-
-        Args:
-            qualifier_prompt (QualifierPrompt): The qualifier prompt containing the rubric and qualifier mode.
-
-        Returns:
-            str: The generated prompt with placeholders replaced by actual values.
-        """
-        rubric_to_text = qualifier_prompt.rubric.to_text()
-        prompt = self.generic_prompt.replace("%RUBRICA%", rubric_to_text).replace(
-            "%MODO_CALIFICACION%", qualifier_prompt.qualifier_mode
+    async def qualify(self, qualifier_prompt):
+        """Single-answer qualification (not implemented for batch-only service)."""
+        raise NotImplementedError(
+            "OpencodeQualifierService only supports batch qualification. "
+            "Use qualify_batch instead."
         )
-        return prompt
-
-    def get_generic_prompt(self) -> str:
-        """Reads the generic prompt from a text file and returns it as a string.
-
-        Returns:
-            str: The base prompt to be used for the qualifier service, with placeholders for the rubric and qualifier mode.
-        """
-        prompt_file = os.path.join(os.path.dirname(__file__), "input_prompt.txt")
-        with open(prompt_file, "r", encoding="utf-8") as f:
-            return f.read()
-
-    def get_batch_generic_prompt(self) -> str:
-        """Reads the batch prompt from a text file and returns it as a string.
-
-        Returns:
-            str: The base batch prompt with placeholders for qualifier mode.
-        """
-        prompt_file = os.path.join(os.path.dirname(__file__), "input_prompt_batch.txt")
-        with open(prompt_file, "r", encoding="utf-8") as f:
-            return f.read()
-
-    def get_batch_system_prompt(self, batch_prompt: BatchQualifierPrompt) -> str:
-        """Generates the system prompt for batch qualification.
-
-        Args:
-            batch_prompt (BatchQualifierPrompt): The batch prompt containing qualifier mode.
-
-        Returns:
-            str: The system prompt with %MODO_CALIFICACION% replaced.
-        """
-        return self.batch_generic_prompt.replace(
-            "%MODO_CALIFICACION%", batch_prompt.qualifier_mode
-        )
-
-    def build_batch_user_content(self, batch_prompt: BatchQualifierPrompt) -> str:
-        """Builds the user content for batch qualification.
-
-        Args:
-            batch_prompt (BatchQualifierPrompt): Contains rubrics and answers.
-
-        Returns:
-            str: Formatted user content with all rubric-answer pairs.
-        """
-        parts: list[str] = []
-        for rubric, answer in zip(batch_prompt.rubrics, batch_prompt.answers):
-            parts.append(
-                f"--- Respuesta [{answer.answer_id}] ---\n"
-                f"RÚBRICA: {rubric.to_text()}\n"
-                f"RESPUESTA DEL ESTUDIANTE: {answer.answer}\n"
-            )
-        return "\n".join(parts)
 
     async def qualify_batch(
         self, batch_prompt: BatchQualifierPrompt
     ) -> list[QualifierResult]:
         """Evaluate multiple answers in a single LLM call.
 
-        Returns QualifierResult list in the same order as batch_prompt.answers.
-        Raises BatchQualificationError if response cannot be parsed.
+        Sends all rubrics and answers to the LLM in one request, parses the
+        JSON array response, and returns QualifierResult objects in the same
+        order as the input answers.
+
+        Raises:
+            ValueError: If the LLM returns an empty/None response.
+            BatchQualificationError: If the response cannot be parsed as a
+                valid JSON array.
         """
-        system_prompt = self.get_batch_system_prompt(batch_prompt)
-        user_content = self.build_batch_user_content(batch_prompt)
-        logger.debug(
-            "qualify_batch: model=%s rubrics=%d system_prompt_chars=%d user_content_chars=%d",
-            self.model_id,
-            len(batch_prompt.rubrics),
-            len(system_prompt),
-            len(user_content),
-        )
+        # Build lookup maps for answer -> question matching
+        answer_to_question = {
+            answer.answer_id: rubric
+            for answer, rubric in zip(batch_prompt.answers, batch_prompt.rubrics)
+        }
+        expected_answer_ids = {answer.answer_id for answer in batch_prompt.answers}
 
-        # API call is outside the try block so API errors propagate directly
-        # (allowing the caller to fall back to per-item qualify), while only
-        # JSON parsing errors are wrapped in BatchQualificationError.
-        completion = await self._call_with_retry(
-            [
+        # Build the prompt content
+        system_prompt = self._build_system_prompt()
+        user_prompt = self._build_user_prompt(batch_prompt)
+
+        # Call the LLM
+        response = await asyncio.to_thread(
+            self.client.chat.completions.create,
+            model=self.model_id,
+            messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_content},
-            ]
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.1,
+            response_format={"type": "json_object"},
         )
 
-        response = completion.choices[0].message.content
-        if not response:
-            raise ValueError("Received empty response from the qualifier service.")
+        raw_content = response.choices[0].message.content
 
+        # Validate non-empty response
+        if not raw_content:
+            raise ValueError("LLM returned empty response")
+
+        # Parse JSON
         try:
-            parsed = json.loads(response)
+            parsed = json.loads(raw_content)
         except json.JSONDecodeError:
             raise BatchQualificationError(
-                raw_response=response,
-                message=f"Failed to parse batch qualification response as JSON: {response[:200]}",
+                raw_response=raw_content,
+                message="Failed to parse batch qualification response as JSON",
             )
 
+        # Must be a list
         if not isinstance(parsed, list):
             raise BatchQualificationError(
-                raw_response=response,
-                message=f"Expected JSON array, got {type(parsed).__name__}",
+                raw_response=raw_content,
+                message="Batch qualification response is not a JSON array",
             )
 
-        parsed_items: list[dict[str, Any]] = parsed
-
-        # Build lookups for mapping
-        answer_lookup = {a.answer_id: a for a in batch_prompt.answers}
-        rubric_lookup = {r.question_id: r for r in batch_prompt.rubrics}
-
-        results: list[QualifierResult] = []
-        for item in parsed_items:
-            aid = item.get("answer_id")
-            if aid not in answer_lookup:
-                logger.warning(f"Orphan result with answer_id={aid}, discarding")
-                continue
-            answer = answer_lookup[aid]
-            rubric = rubric_lookup[answer.question_id]
-
-            try:
-                score_int = int(round(float(item.get("score", 0))))
-            except (TypeError, ValueError):
-                score_int = 0
-
-            results.append(
-                QualifierResult(
-                    id=uuid.uuid4().hex,
-                    question_id=rubric.question_id,
-                    user_id=batch_prompt.user_id,
-                    score=score_int,
-                    feedback=item.get("feedback", ""),
-                    key_concepts_detected=list(
-                        item.get("key_concepts_detected", []) or []
-                    ),
-                    misconceptions_detected=list(
-                        item.get("misconceptions_detected", []) or []
-                    ),
-                    question_topic=rubric.classification,
-                    assessment_id=batch_prompt.assessment_id,
-                    question_difficulty=rubric.difficulty.value,
-                    answer_id=aid,
+        # Map LLM results by answer_id for lookup
+        results_by_answer_id = {}
+        for item in parsed:
+            answer_id = item.get("answer_id")
+            if answer_id in expected_answer_ids:
+                results_by_answer_id[answer_id] = item
+            else:
+                logger.warning(
+                    "LLM returned result for unknown answer_id '%s', discarding",
+                    answer_id,
                 )
+
+        # Build QualifierResult list in input order
+        results = []
+        for answer in batch_prompt.answers:
+            item = results_by_answer_id.get(answer.answer_id)
+            if item is None:
+                continue
+
+            rubric = answer_to_question[answer.answer_id]
+            qualifier_result = QualifierResult(
+                id=str(uuid.uuid4()),
+                question_id=rubric.question_id,
+                user_id=batch_prompt.user_id,
+                score=item["score"],
+                feedback=item["feedback"],
+                key_concepts_detected=item.get("key_concepts_detected", []),
+                misconceptions_detected=item.get("misconceptions_detected", []),
+                question_topic=rubric.concept,
+                assessment_id=batch_prompt.assessment_id,
+                question_difficulty=rubric.difficulty.value,
+                answer_id=answer.answer_id,
+            )
+            results.append(qualifier_result)
+
+        return results
+
+    def _build_system_prompt(self) -> str:
+        return (
+            "You are an expert educational assessor. You will receive a batch of "
+            "questions with their rubrics and student answers. Evaluate each answer "
+            "and return a JSON array with one object per answer. Each object must "
+            "contain: answer_id (string), score (integer 0-100), feedback (string), "
+            "key_concepts_detected (array of strings), misconceptions_detected "
+            "(array of strings). Return ONLY the JSON array, no other text."
+        )
+
+    def _build_user_prompt(self, batch_prompt: BatchQualifierPrompt) -> str:
+        rubrics_data = []
+        for rubric in batch_prompt.rubrics:
+            rubrics_data.append(
+                {
+                    "question_id": rubric.question_id,
+                    "text": rubric.text_to_evaluate,
+                    "concept": rubric.concept,
+                    "definition": rubric.definition,
+                    "correct_sample": rubric.correct_sample,
+                    "wrong_sample": rubric.wrong_sample,
+                    "rubric_scores": [
+                        {"score": r.score, "explanation": r.explanation}
+                        for r in rubric.rubric
+                    ],
+                }
             )
 
-        # Sort results to match input answer order
-        answer_order = {a.answer_id: i for i, a in enumerate(batch_prompt.answers)}
-        results.sort(key=lambda r: answer_order.get(r.answer_id, 999))
-        return results
+        answers_data = []
+        for answer in batch_prompt.answers:
+            answers_data.append(
+                {
+                    "answer_id": answer.answer_id,
+                    "question_id": answer.question_id,
+                    "answer_text": answer.answer,
+                }
+            )
+
+        return json.dumps(
+            {
+                "qualifier_mode": batch_prompt.qualifier_mode,
+                "rubrics": rubrics_data,
+                "answers": answers_data,
+            },
+            ensure_ascii=False,
+        )
