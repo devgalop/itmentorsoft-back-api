@@ -103,10 +103,9 @@ async def test_create_question_happy_path_with_admin_users():
 
     question_repository.save_question.assert_called_once()
     user_repository.get_admin_users.assert_called_once()
-    template_loader.load.assert_called_once_with("item_created")
 
     # Two notifications sent (one per admin)
-    assert notification_service.send_notification.call_count == 2
+    assert notification_service.send_question_created_notification.call_count == 2
 
 
 @pytest.mark.asyncio
@@ -192,7 +191,7 @@ async def test_create_question_exception_during_save():
 
 @pytest.mark.asyncio
 async def test_create_question_exception_during_notification():
-    """Returns is_success=False when notification sending raises (whole method wrapped in try/except)."""
+    """Returns is_success=True even when notification fails (question already saved)."""
     # Arrange
     question_repository = AsyncMock()
     question_repository.save_question = AsyncMock()
@@ -201,9 +200,9 @@ async def test_create_question_exception_during_notification():
     question_builder_cls = MagicMock(return_value=mock_builder)
 
     notification_service = AsyncMock()
-    # First call succeeds, second call fails
-    notification_service.send_notification = AsyncMock(
-        side_effect=[True, Exception("SMTP server unreachable")]
+    # Notification raises exception
+    notification_service.send_question_created_notification = AsyncMock(
+        side_effect=Exception("SMTP server unreachable")
     )
 
     template_loader = MagicMock()

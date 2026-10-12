@@ -4,12 +4,6 @@ from typing import Annotated
 from sqlalchemy.ext.asyncio import AsyncSession
 from functools import lru_cache
 
-from src.features.assessments.evaluate.evaluate_assessment_contract import (
-    EvaluateAssessmentContract,
-)
-from src.features.assessments.evaluate.evaluate_assessment_service import (
-    EvaluateAssessmentService,
-)
 from src.features.assessments.get_all_question_versions.get_all_question_versions_handler import (
     GetAllQuestionVersionsHandler,
 )
@@ -55,7 +49,6 @@ from src.features.assessments.get_questions_topics.get_questions_topics_handler 
 from src.features.assessments.save_review_question.save_review_question_handler import (
     SaveReviewQuestionHandler,
 )
-from src.features.assessments.shared.classification_service import ClassificationService
 from src.features.assessments.shared.get_assessment_service import (
     GetAssessmentService,
 )
@@ -79,10 +72,8 @@ from src.features.assessments.save_assessments_answers.save_assessments_answers_
 )
 from itmentorsoft_persistence.repositories import AssessmentRepository
 from src.features.assessments.shared.qualifier_service import (
-    AvailableProcesses,
     ModelExplorerService,
     ModelSelectorService,
-    QualifierService,
 )
 from itmentorsoft_persistence.repositories import (
     QuestionAssessmentRepository,
@@ -109,21 +100,11 @@ from src.features.assessments.update_question_status.update_question_status_hand
 )
 from src.features.shared.cache_service import CacheService
 from src.features.shared.notification_service import NotificationService
-from src.features.shared.publisher_service import PublisherService
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.dependencies import get_user_repository
 from itmentorsoft_persistence.repositories import UserRepository
-from src.infrastructure.broker.aws.services.aws_sqs_connection_factory import (
-    SqsConnection,
-)
-from src.infrastructure.broker.aws.services.aws_sqs_manager import SqsManagerService
-from src.infrastructure.broker.aws.services.aws_sqs_publisher_service import (
-    EvaluateAssessmentPublishAdapter,
-)
+
 from src.infrastructure.cache.valkey_cache_service import ValkeyCacheService
-from src.infrastructure.classifier.opencode_classifier_service import (
-    OpenCodeClassificationService,
-)
 from itmentorsoft_persistence.mappers import (
     PostgresAssessmentMapper,
     PostgresQuestionMapper,
@@ -145,9 +126,11 @@ from src.infrastructure.model_manager.opencode_model_manager_proxy import (
 from src.infrastructure.notification.brevo_notification_service import (
     BrevoNotificationService,
 )
-from src.infrastructure.qualifier.opencode_qualifier_service import (
-    OpencodeQualifierService,
+from src.infrastructure.notification.notificator_service import NotificatorService
+from src.infrastructure.broker.aws.services.aws_sqs_connection import (
+    SqsConnectionFactory,
 )
+from common_py_aws import PublisherService, SqsConnection, SqsPublisherService
 
 
 def get_question_repository(
@@ -194,13 +177,29 @@ def get_template_loader() -> TemplateLoader:
     return TemplateLoader()
 
 
+def get_sqs_connection_factory() -> SqsConnection:
+    return SqsConnectionFactory.create_sqs_client()
+
+
+def get_publisher_service(
+    sqs_client: Annotated[SqsConnection, Depends(get_sqs_connection_factory)],
+) -> PublisherService:
+    return SqsPublisherService(sqs_client=sqs_client)
+
+
+def get_notificator_service(
+    publisher_service: Annotated[PublisherService, Depends(get_publisher_service)],
+) -> NotificatorService:
+    return NotificatorService(publisher_service=publisher_service)
+
+
 def get_question_manager_service(
     question_repository: Annotated[
         QuestionRepository, Depends(get_question_repository)
     ],
     notification_service: Annotated[
-        NotificationService,
-        Depends(get_notification_service),
+        NotificatorService,
+        Depends(get_notificator_service),
     ],
     template_loader: Annotated[
         TemplateLoader,
@@ -290,63 +289,16 @@ def get_model_selector_service() -> ModelSelectorService:
     return OpencodeModelsManagerProxy()
 
 
-@lru_cache()
-def get_qualifier_service(
-    model_selector_service: Annotated[
-        ModelSelectorService, Depends(get_model_selector_service)
-    ],
-) -> QualifierService:
-    model = model_selector_service.get_selected_model(AvailableProcesses.QUALIFIER)
-    return OpencodeQualifierService(model)
-
-
-@lru_cache()
-def get_classification_service(
-    model_selector_service: Annotated[
-        ModelSelectorService, Depends(get_model_selector_service)
-    ],
-) -> ClassificationService:
-    model = model_selector_service.get_selected_model(AvailableProcesses.CLASSIFIER)
-    return OpenCodeClassificationService(model_id=model)
-
-
-def get_evaluate_assessment_service() -> EvaluateAssessmentService:
-    return EvaluateAssessmentService()
-
-
-@lru_cache()
-def get_sqs_connection(
-    evaluate_contract: Annotated[
-        EvaluateAssessmentContract, Depends(get_evaluate_assessment_service)
-    ],
-) -> SqsConnection:
-    sqs_manager_service = SqsManagerService(evaluate_contract=evaluate_contract)
-    sqs_connection_factory = sqs_manager_service.create_connection_factory()
-    return sqs_connection_factory.create_connection()
-
-
-def get_qualify_publisher_service(
-    sqs_connection: Annotated[SqsConnection, Depends(get_sqs_connection)],
-) -> PublisherService:
-    return EvaluateAssessmentPublishAdapter(sqs_client=sqs_connection)
-
-
 def get_save_assessment_answers_service(
     assessment_repository: Annotated[
         AssessmentRepository, Depends(get_assessment_repository)
     ],
     user_repository: Annotated[UserRepository, Depends(get_user_repository)],
-    evaluator_service: Annotated[
-        EvaluateAssessmentService, Depends(get_evaluate_assessment_service)
-    ],
-    publisher_service: Annotated[
-        PublisherService, Depends(get_qualify_publisher_service)
-    ],
+    publisher_service: Annotated[PublisherService, Depends(get_publisher_service)],
 ) -> SaveAssessmentsAnswersService:
     return SaveAssessmentsAnswersService(
         assessment_repository=assessment_repository,
         user_repository=user_repository,
-        evaluator_service=evaluator_service,
         publisher_service=publisher_service,
     )
 

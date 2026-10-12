@@ -40,6 +40,7 @@ class EnvironmentVariablesConstants:
         "VALKEY_PORT",
         "VALKEY_PASSWORD",
         "VALKEY_DB",
+        "AWS_SQS_NOTIFY_QUEUE_URL",
     ]
 
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "")
@@ -94,6 +95,7 @@ class EnvironmentVariablesConstants:
     AWS_ENDPOINT_URL = os.getenv("AWS_ENDPOINT_URL", "")
     AWS_SQS_QUALIFICATION_QUEUE_URL = os.getenv("AWS_SQS_QUALIFICATION_QUEUE_URL", "")
     AWS_SQS_CLASSIFICATION_QUEUE_URL = os.getenv("AWS_SQS_CLASSIFICATION_QUEUE_URL", "")
+    AWS_SQS_NOTIFY_QUEUE_URL = os.getenv("AWS_SQS_NOTIFY_QUEUE_URL", "")
 
     VALKEY_HOST = os.getenv("VALKEY_HOST", "")
     VALKEY_PORT = os.getenv("VALKEY_PORT", "")

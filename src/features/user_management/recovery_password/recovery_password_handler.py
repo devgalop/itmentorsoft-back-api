@@ -7,10 +7,6 @@ from itmentorsoft_persistence.repositories import (
     UserRecoveryTokenRepository,
 )
 from src.features.shared.template_loader import TemplateLoader
-from src.features.shared.notification_service import (
-    NotificationConfigBuilder,
-    NotificationService,
-)
 from src.features.user_management.recovery_password.recovery_password_request import (
     RecoveryPasswordRequest,
 )
@@ -20,6 +16,10 @@ from src.features.user_management.recovery_password.recovery_password_response i
 from itmentorsoft_persistence.repositories import UserRepository
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 from src.i18n import t
+from src.infrastructure.notification.notification_message import (
+    RecoverPasswordNotifyRequest,
+)
+from src.infrastructure.notification.notificator_service import NotificatorService
 
 EMAIL_RECOVERY_SUBJECT = t("user.recovery.subject")
 RECOVERY_URL_BASE = EnvironmentVariablesConstants.RECOVERY_URL_BASE
@@ -30,7 +30,7 @@ class RecoveryPasswordHandler:
         self,
         user_repository: UserRepository,
         user_recovery_token_repository: UserRecoveryTokenRepository,
-        notification_service: NotificationService,
+        notification_service: NotificatorService,
         token_generator: TokenGenerator,
         password_hasher: PasswordHasher,
         template_loader: TemplateLoader,
@@ -65,25 +65,14 @@ class RecoveryPasswordHandler:
 
         await self.user_recovery_token_repository.save_token(recovery_token_info)
 
-        notification_config_builder = NotificationConfigBuilder(
-            request.email, EMAIL_RECOVERY_SUBJECT
+        _ = await self.notification_service.send_recovery_notification(
+            RecoverPasswordNotifyRequest(
+                recipient=user.email,
+                id_trx=recovery_token_info.id_trx,
+                url_token=token.token,
+                url_base=RECOVERY_URL_BASE,
+                user=user.username,
+            )
         )
-
-        try:
-            html_content = self.template_loader.load("recovery_password")
-            html_content = (
-                html_content.replace("%URL_BASE%", RECOVERY_URL_BASE)
-                .replace("%URL_TOKEN%", token.token)
-                .replace("%USER%", user.username)
-                .replace("%ID_TRX%", recovery_token_info.id_trx)
-            )
-            notification_config_builder.set_template(html_content)
-            notification_config = notification_config_builder.build()
-
-            _ = await self.notification_service.send_notification(notification_config)
-        except FileNotFoundError:
-            return RecoveryPasswordResponse(
-                message=t("user.recovery.template_not_found")
-            )
 
         return RecoveryPasswordResponse(message=response_message)

@@ -1,11 +1,11 @@
+from common_py_aws import SqsConnection
+
 from src.features.shared.publisher_service import (
     PublishMessageRequest,
     PublishMessageResponse,
     PublisherService,
 )
-from src.infrastructure.broker.aws.services.aws_sqs_connection_factory import (
-    SqsConnection,
-)
+
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 
 

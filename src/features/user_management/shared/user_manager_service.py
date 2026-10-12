@@ -1,10 +1,6 @@
 from datetime import datetime
 from time import time
 
-from src.features.shared.notification_service import (
-    NotificationConfigBuilder,
-    NotificationService,
-)
 from src.features.shared.template_loader import TemplateLoader
 from src.features.user_management.shared.otp_generator import OTPGenerator
 from src.features.user_management.shared.password_hasher import PasswordHasher
@@ -21,6 +17,11 @@ from itmentorsoft_persistence.dto import (
 )
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
 from src.i18n import t
+from src.infrastructure.notification.notification_message import (
+    OtpNotifyRequest,
+    UserCreatedNotifyRequest,
+)
+from src.infrastructure.notification.notificator_service import NotificatorService
 
 
 class CreateUserRequest:
@@ -80,7 +81,7 @@ class UserManagerService:
         user_repository: UserRepository,
         password_hasher: PasswordHasher,
         role_repository: RoleRepository,
-        notification_service: NotificationService,
+        notification_service: NotificatorService,
         template_loader: TemplateLoader,
         otp_generator: OTPGenerator,
     ):
@@ -131,27 +132,15 @@ class UserManagerService:
         user_entity.set_role_id(role.role_id)
         await self.user_repository.save(user_entity)
 
-        notification_config_builder = NotificationConfigBuilder(
-            request.email, t("user.account_created_subject")
-        )
-
-        try:
-            html_content = self.template_loader.load("user_created")
-            html_content = (
-                html_content.replace("%USER%", request.username)
-                .replace("%EMAIL%", request.email)
-                .replace("%ROLE%", request.role)
-                .replace(
-                    "%REGISTER_DATE%", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                )
-                .replace("%LOGIN_URL%", EnvironmentVariablesConstants.LOGIN_URL_BASE)
+        _ = await self.notification_service.send_user_created_notification(
+            UserCreatedNotifyRequest(
+                recipient=request.email,
+                user=request.username,
+                role=request.role,
+                created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                login_url=EnvironmentVariablesConstants.LOGIN_URL_BASE,
             )
-            notification_config_builder.set_template(html_content)
-            notification_config = notification_config_builder.build()
-
-            _ = await self.notification_service.send_notification(notification_config)
-        except FileNotFoundError:
-            print("Email template not found. Please contact support.")
+        )
 
         return CreateUserResponse(
             is_success=True, message=t("user.created"), user_id=user_entity.id
@@ -295,20 +284,11 @@ class UserManagerService:
         Args:
             request (UserOTPNotificationRequest): The request containing email, OTP, expiration time, and username.
         """
-        notification_config_builder = NotificationConfigBuilder(
-            request.email, self.EMAIL_OTP_SUBJECT
-        )
-
-        try:
-            html_content = self.template_loader.load(self.NOTIFICATION_TEMPLATE)
-            html_content = (
-                html_content.replace("%USER%", request.username)
-                .replace("%OTP_CODE%", request.otp)
-                .replace("%OTP_EXPIRATION_MINUTES%", str(request.expiration_time // 60))
+        _ = await self.notification_service.send_otp_notification(
+            OtpNotifyRequest(
+                recipient=request.email,
+                user=request.username,
+                otp_code=request.otp,
+                expiration=str(request.expiration_time // 60),
             )
-            notification_config_builder.set_template(html_content)
-            notification_config = notification_config_builder.build()
-
-            _ = await self.notification_service.send_notification(notification_config)
-        except FileNotFoundError:
-            print("Email template not found. Please contact support.")
+        )
