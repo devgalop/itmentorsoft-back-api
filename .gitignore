@@ -215,3 +215,6 @@ bandit/
 .atl/
 
 .sonar/
+.env
+.env.stage
+.env.dev
