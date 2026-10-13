@@ -8,6 +8,7 @@ from itmentorsoft_persistence.dto import (
     LearningPathProgress,
     LearningPathProgressResponse,
     LearningPathResponse,
+    PaginatedLearningPathProgressResponse,
 )
 from itmentorsoft_persistence.repositories import (
     LearningPathRepository,
@@ -53,17 +54,22 @@ class PostgresLearningPathRepository(LearningPathRepository):
             stmt = (
                 select(
                     ResourceContentEntity,
-                    func.avg(ContentRating.rating).label("avg_rating"),
+                    func.coalesce(func.avg(ContentRating.rating), 0).label(
+                        "avg_rating"
+                    ),
                 )
                 .join(
-                    ContentRating, ResourceContentEntity.id == ContentRating.content_id
+                    ContentRating,
+                    ResourceContentEntity.id == ContentRating.content_id,
+                    isouter=True,
                 )
                 .where(ResourceContentEntity.related_topics.ilike(f"%{topic}%"))
                 .group_by(ResourceContentEntity.id)
-                .order_by(func.avg(ContentRating.rating).desc())
+                .order_by(func.coalesce(func.avg(ContentRating.rating), 0).desc())
                 .limit(5)
             )
-            content_results = await self.session_factory.execute(stmt)
+            content_results_query = await self.session_factory.execute(stmt)
+            content_results = content_results_query.all()
             if not content_results:
                 continue
             contents = [
@@ -72,8 +78,9 @@ class PostgresLearningPathRepository(LearningPathRepository):
                     title=content.title,
                     description=content.summary,
                     rating=float(avg_rating),
+                    is_completed=False,
                 )
-                for content, avg_rating in content_results.all()
+                for content, avg_rating in content_results
             ]
             # 3. Construir el LearningPath con los contenidos obtenidos
             learning_path = LearningPath(
@@ -90,6 +97,48 @@ class PostgresLearningPathRepository(LearningPathRepository):
             message="Learning paths retrieved successfully.",
             path_id=uuid.uuid4().hex,
             recommendation=learning_paths,
+        )
+
+    async def get_complete_learning_path(
+        self, user_id: str, page: int, page_size: int
+    ) -> PaginatedLearningPathProgressResponse:
+        total_smt = (
+            select(func.count())
+            .select_from(LearningPathEntity)
+            .where(LearningPathEntity.user_id == user_id)
+        )
+        total_result = await self.session_factory.execute(total_smt)
+        total = total_result.scalar() or 0
+        if total == 0:
+            return PaginatedLearningPathProgressResponse(
+                is_success=True,
+                message="No learning paths found.",
+                path_progress_list=[],
+                total=0,
+            )
+
+        stmt = (
+            select(LearningPathEntity)
+            .where(LearningPathEntity.user_id == user_id)
+            .order_by(
+                LearningPathEntity.created_at.desc(), LearningPathEntity.is_completed
+            )
+            .offset(page * page_size)
+            .limit(page_size)
+        )
+        result = await self.session_factory.execute(stmt)
+        learning_paths = result.scalars().all()
+        complete_learning_paths: list[LearningPath] = []
+        for learning_path in learning_paths:
+            progress = await self.get_learning_path_by_id(learning_path.id)
+            if not progress:
+                continue
+            complete_learning_paths.append(progress)
+        return PaginatedLearningPathProgressResponse(
+            is_success=True,
+            message="Complete learning paths retrieved successfully.",
+            path_progress_list=complete_learning_paths,
+            total=total,
         )
 
     async def save_learning_path(self, learning_path: LearningPath):
@@ -215,6 +264,7 @@ class PostgresLearningPathRepository(LearningPathRepository):
                     title=content.content.title,
                     description=content.content.summary,
                     rating=average_ratings.get(content.content.id, 0.0),
+                    is_completed=content.is_completed,
                 )
                 for content in learning_path.contents
             ],
