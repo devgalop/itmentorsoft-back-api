@@ -8,6 +8,9 @@ from src.features.content_management.generate_learning_path.generate_learning_pa
 from src.features.content_management.get_all_contents.get_all_contents_handler import (
     GetAllContentsHandler,
 )
+from src.features.content_management.get_complete_learning_path.get_complete_learning_path_handler import (
+    GetCompleteLearningPathHandler,
+)
 from src.features.content_management.get_contents_by_topic.get_contents_by_topic_handler import (
     GetContentsByTopicHandler,
 )
@@ -263,3 +266,12 @@ def get_get_recommended_content_handler(
     ],
 ) -> GetRecommendedContentHandler:
     return GetRecommendedContentHandler(learning_path_service)
+
+
+def get_get_complete_learning_path_handler(
+    learning_path_service: Annotated[
+        LearningPathManagerService, Depends(get_learning_path_service)
+    ],
+) -> GetCompleteLearningPathHandler:
+
+    return GetCompleteLearningPathHandler(learning_path_service)

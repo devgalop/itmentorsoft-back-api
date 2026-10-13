@@ -8,6 +8,7 @@ class ContentByTopic(BaseModel):
     title: str
     description: str
     rating: float
+    is_completed: bool = False
 
 
 class TopicSummary(BaseModel):
@@ -15,11 +16,13 @@ class TopicSummary(BaseModel):
     topic: str
     contents: list[ContentByTopic]
     progress: float = 0.0
+    is_completed: bool = False
 
 
 class TopicPathAssociation(BaseModel):
     topic_path_id: str
     topic: str
+    is_completed: bool = False
 
 
 class LearningPathCreatedResponse(BaseModel):
@@ -32,6 +35,14 @@ class LearningPathResponse(BaseModel):
     is_success: bool
     message: str
     learning_path: TopicSummary | None
+
+
+class PaginatedLearningPathResponse(BaseModel):
+    is_success: bool
+    message: str
+    items: list[TopicSummary]
+    total: int
+    page: int = 0
 
 
 class LearningPathManagerService:
@@ -125,13 +136,56 @@ class LearningPathManagerService:
                     title=content.title,
                     description=content.description,
                     rating=content.rating,
+                    is_completed=content.is_completed,
                 )
                 for content in learning_path_created.contents
             ],
             progress=learning_path_created.progress,
+            is_completed=learning_path_created.is_completed,
         )
         return LearningPathResponse(
             is_success=True,
             message=t("learning_path.retrieved"),
             learning_path=learning_path,
+        )
+
+    async def get_complete_learning_path(
+        self, user_id: str, page: int = 0, page_size: int = 10
+    ) -> PaginatedLearningPathResponse:
+        learning_paths = await self.learning_path_repository.get_complete_learning_path(
+            user_id, page, page_size
+        )
+        if not learning_paths or not learning_paths.path_progress_list:
+            return PaginatedLearningPathResponse(
+                is_success=False,
+                message=t("learning_path.not_found"),
+                items=[],
+                total=0,
+                page=page,
+            )
+
+        return PaginatedLearningPathResponse(
+            is_success=True,
+            message=t("learning_path.retrieved"),
+            items=[
+                TopicSummary(
+                    topic_path_id=path.path_id,
+                    topic=path.topic,
+                    contents=[
+                        ContentByTopic(
+                            content_id=content.content_id,
+                            title=content.title,
+                            description=content.description,
+                            rating=content.rating,
+                            is_completed=content.is_completed,
+                        )
+                        for content in path.contents
+                    ],
+                    progress=path.progress,
+                    is_completed=path.is_completed,
+                )
+                for path in learning_paths.path_progress_list
+            ],
+            total=learning_paths.total,
+            page=page,
         )

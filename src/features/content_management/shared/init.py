@@ -57,6 +57,9 @@ from src.features.content_management.update_rating.update_rating_endpoint import
 from src.features.content_management.generate_learning_path.generate_learning_path_endpoint import (
     router as generate_learning_path_router,
 )
+from src.features.content_management.get_complete_learning_path.get_complete_learning_path_endpoint import (
+    router as get_complete_learning_path_router,
+)
 
 router = APIRouter()
 router.include_router(get_all_contents_router)
@@ -78,3 +81,4 @@ router.include_router(get_rating_by_user_router)
 router.include_router(get_content_rating_by_user_router)
 router.include_router(update_rating_router)
 router.include_router(generate_learning_path_router)
+router.include_router(get_complete_learning_path_router)
