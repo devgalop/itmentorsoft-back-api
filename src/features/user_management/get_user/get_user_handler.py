@@ -26,5 +26,6 @@ class GetUserHandler:
                 email=user.email,
                 name=user.name,
                 role=user.role.value,
+                status=user.status.value,
             ),
         )

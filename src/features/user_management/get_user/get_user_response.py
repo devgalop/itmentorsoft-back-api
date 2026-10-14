@@ -7,6 +7,7 @@ class UserResponse(BaseModel):
     email: str
     name: str
     role: str
+    status: str
 
 
 class GetUserResponse(BaseModel):
