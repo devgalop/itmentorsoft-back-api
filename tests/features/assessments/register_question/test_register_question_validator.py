@@ -107,9 +107,9 @@ def test_when_common_misconception_is_empty_then_exception_is_raised():
 def test_when_rubric_score_is_out_of_range_then_exception_is_raised():
     data = {
         **VALID_REGISTER_REQUEST,
-        "rubric": [{"score": 5, "criteria": "This is a valid criteria text"}],
+        "rubric": [{"score": 6, "criteria": "This is a valid criteria text"}],
     }
-    with pytest.raises(ValueError, match="Puntuación debe estar entre 0 y 3"):
+    with pytest.raises(ValueError, match="Puntuación debe estar entre 0 y 5"):
         RegisterQuestionRequest(**data)
 
 

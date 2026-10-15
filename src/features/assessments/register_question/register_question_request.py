@@ -8,7 +8,7 @@ class QuestionRubric(BaseModel):
 
     @field_validator("score")
     def validate_score(cls, value: int) -> int:
-        if value < 0 or value > 3:
+        if value < 0 or value > 5:
             raise ValueError(t("validation.score.range"))
         return value
 

@@ -89,9 +89,9 @@ def test_when_common_misconception_has_less_than_2_items_then_exception_is_raise
 def test_when_rubric_score_is_out_of_range_then_exception_is_raised():
     data = {
         **VALID_UPDATE_REQUEST,
-        "rubric": [{"score": 5, "criteria": "This is a valid criteria text here"}],
+        "rubric": [{"score": 6, "criteria": "This is a valid criteria text here"}],
     }
-    with pytest.raises(ValueError, match="Score must be between 0 and 3"):
+    with pytest.raises(ValueError, match="Score must be between 0 and 5"):
         UpdateQuestionRequest(**data)
 
 
