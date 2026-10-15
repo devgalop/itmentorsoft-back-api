@@ -199,7 +199,7 @@ MESSAGES_ES: dict[str, str] = {
     "validation.url.required": "URL no debe estar vacía",
     "validation.url.invalid_format": "Formato de URL inválido, debe comenzar con https://",
     # assessment validation
-    "validation.score.range": "Puntuación debe estar entre 0 y 3",
+    "validation.score.range": "Puntuación debe estar entre 0 y 5",
     "validation.criteria.required": "Criterio no puede estar vacío",
     "validation.criteria.max_length": "Criterio no puede exceder 300 caracteres",
     "validation.criteria.min_length": "Criterio debe tener al menos 10 caracteres",

@@ -103,4 +103,4 @@ websockets==16.0
 yarl==1.23.0
 valkey==6.1.1
 git+https://github.com/devgalop/common-py-aws.git@master
-git+https://github.com/devgalop/itmentorsoft-persistence.git@52c013be75fd9cf111093faa30020489e8b3e6c6
+git+https://github.com/devgalop/itmentorsoft-persistence.git@1dec25330edbf406f8141be81da084f60267d350
