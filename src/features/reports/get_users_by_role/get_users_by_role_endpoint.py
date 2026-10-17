@@ -80,11 +80,8 @@ async def get_users_by_role(
     Returns:
         GetUsersByRoleResponse: Response object containing the result of the query.
     """
-    try:
-        request = GetUsersByRoleRequest(role=role)
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.model_dump())
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetUsersByRoleRequest(role=role)
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.model_dump())
+    return response

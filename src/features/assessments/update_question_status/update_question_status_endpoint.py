@@ -75,10 +75,7 @@ async def update_question_status(
     ],
     _: Annotated[TokenData, Depends(require_roles(["admin", "teacher"]))],
 ) -> UpdateQuestionStatusResponse:
-    try:
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

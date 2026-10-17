@@ -40,11 +40,8 @@ async def get_all_question_versions(
     _: Annotated[TokenData, Depends(require_roles(["teacher", "admin"]))],
 ) -> GetAllQuestionVersionsResponse:
 
-    try:
-        request = GetAllQuestionVersionsRequest(question_id=question_id)
-        response = await handler.handle(request=request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.model_dump())
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    request = GetAllQuestionVersionsRequest(question_id=question_id)
+    response = await handler.handle(request=request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.model_dump())
+    return response

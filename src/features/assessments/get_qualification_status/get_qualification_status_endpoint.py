@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from src.features.assessments.get_qualification_status.get_qualification_status_handler import (
     GetQualificationStatusHandler,
@@ -53,16 +53,13 @@ async def get_qualification_status(
         TokenData, Depends(require_roles(["admin", "teacher", "student"]))
     ],
 ) -> GetQualificationStatusResponse:
-    try:
-        request = GetQualificationStatusRequest(
-            user_id=user_id, assessment_id=assessment_id
-        )
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data,
-            user_id_to_validate=user_id,
-            blank_list_roles=["admin", "teacher"],
-        )
-        response = await handler.handle(request)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetQualificationStatusRequest(
+        user_id=user_id, assessment_id=assessment_id
+    )
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data,
+        user_id_to_validate=user_id,
+        blank_list_roles=["admin", "teacher"],
+    )
+    response = await handler.handle(request)
+    return response

@@ -68,18 +68,13 @@ async def get_recommended_content(
     ],
     token_data: Annotated[TokenData, Depends(require_roles(["student"]))],
 ) -> GetRecommendedContentResponse:
-    try:
+    request = GetRecommendedContentRequest(
+        path_id=path_id, student_id=token_data.user_id
+    )
 
-        request = GetRecommendedContentRequest(
-            path_id=path_id, student_id=token_data.user_id
-        )
+    response = await handler.handle(request)
 
-        response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.message)
 
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.message)
-
-        return response
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return response

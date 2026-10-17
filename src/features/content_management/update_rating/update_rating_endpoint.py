@@ -68,13 +68,10 @@ async def update_rating(
     handler: Annotated[UpdateRatingHandler, Depends(get_update_rating_handler)],
     token_data: Annotated[TokenData, Depends(require_roles(["student"]))],
 ) -> UpdateRatingResponse:
-    try:
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data, user_id_to_validate=request.user_id
-        )
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data, user_id_to_validate=request.user_id
+    )
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

@@ -81,11 +81,8 @@ async def get_top_best_content(
     Returns:
         GetTopBestContentResponse: A response containing the top best educational resource contents based on rating for the specified topic.
     """
-    try:
-        request = GetTopBestContentRequest(topic=topic, limit=limit)
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetTopBestContentRequest(topic=topic, limit=limit)
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

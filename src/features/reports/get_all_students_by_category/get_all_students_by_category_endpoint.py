@@ -104,14 +104,9 @@ async def get_all_students_by_category(
 
     Returns a response containing the list of students, total number of students, and the current page.
     """
-    try:
-        response = await handler.handle(
-            GetStudentsByCategoryRequest(
-                category=category, page=page, page_size=page_size
-            )
-        )
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    response = await handler.handle(
+        GetStudentsByCategoryRequest(category=category, page=page, page_size=page_size)
+    )
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.message)
+    return response

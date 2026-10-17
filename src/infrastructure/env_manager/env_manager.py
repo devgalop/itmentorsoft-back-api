@@ -107,6 +107,21 @@ class EnvironmentVariablesConstants:
     USER_ACCESS_LOCK_LIMIT = os.getenv("USER_ACCESS_LOCK_LIMIT", "3")
     USER_OTP_EXPIRED_TIME_SECONDS = os.getenv("USER_OTP_EXPIRED_TIME_SECONDS", "120")
 
+    # Rate Limiting Configuration
+    RATE_LIMIT_ENABLED = os.getenv("RATE_LIMIT_ENABLED", "true")
+    RATE_LIMIT_DEFAULT_LIMIT = os.getenv("RATE_LIMIT_DEFAULT_LIMIT", "60")
+    RATE_LIMIT_DEFAULT_WINDOW = os.getenv("RATE_LIMIT_DEFAULT_WINDOW", "60")
+    RATE_LIMIT_LOGIN_LIMIT = os.getenv("RATE_LIMIT_LOGIN_LIMIT", "5")
+    RATE_LIMIT_LOGIN_WINDOW = os.getenv("RATE_LIMIT_LOGIN_WINDOW", "60")
+    RATE_LIMIT_REGISTER_LIMIT = os.getenv("RATE_LIMIT_REGISTER_LIMIT", "3")
+    RATE_LIMIT_REGISTER_WINDOW = os.getenv("RATE_LIMIT_REGISTER_WINDOW", "60")
+    RATE_LIMIT_BLOCK_MULTIPLIER = os.getenv("RATE_LIMIT_BLOCK_MULTIPLIER", "5")
+    RATE_LIMIT_BLOCK_DURATION = os.getenv("RATE_LIMIT_BLOCK_DURATION", "900")
+    RATE_LIMIT_WHITELIST_IPS = os.getenv("RATE_LIMIT_WHITELIST_IPS", "")
+    RATE_LIMIT_EXCLUDED_PATHS = os.getenv(
+        "RATE_LIMIT_EXCLUDED_PATHS", "/health,/docs,/openapi.json"
+    )
+
     @staticmethod
     def validate_mandatory_env_vars():
         for var in EnvironmentVariablesConstants._mandatory_env_vars:

@@ -77,12 +77,7 @@ async def get_available_models(
     _: Annotated[TokenData, Depends(require_roles(["admin"]))],
 ) -> GetAvailableModelsResponse:
     """Endpoint to retrieve the list of available models from the LLM Provider."""
-    try:
-        response = await handler.handle()
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.model_dump())
-        return response
-    except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Failed to fetch available models: {str(e)}"
-        )
+    response = await handler.handle()
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.model_dump())
+    return response
