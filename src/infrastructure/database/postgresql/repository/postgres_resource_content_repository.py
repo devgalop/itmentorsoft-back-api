@@ -170,6 +170,18 @@ class PostgresResourceContentRepository(ResourceContentRepository):
         )
 
     async def rate_resource_content(self, request: RateContent):
+        previous_rating_smt = select(ContentRating).where(
+            ContentRating.user_id == request.user_id,
+            ContentRating.content_id == request.content_id,
+        )
+        result = await self.session_factory.execute(previous_rating_smt)
+        previous_rating = result.scalars().first()
+        if previous_rating:
+            previous_rating.rating = request.rating
+            previous_rating.comment = request.comment
+            self.session_factory.add(previous_rating)
+            await self.session_factory.commit()
+            return
         entity = self.rating_mapper.to_entity(request)
         self.session_factory.add(entity)
         await self.session_factory.commit()

@@ -26,6 +26,7 @@ class RateContentHandler:
                 is_success=False,
                 message=t("content.not_found", content_id=request.content_id),
             )
+
         rate_content = RateContentDTO(
             id=uuid.uuid4().hex,
             content_id=request.content_id,
