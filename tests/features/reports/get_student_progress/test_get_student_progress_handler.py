@@ -63,17 +63,13 @@ async def test_when_student_has_progress_should_return_progress():
     assert response.progress.classification == "Intermediate"
     assert len(response.progress.knowledge_profile) == 3
     assert response.progress.knowledge_profile[0].topic == "Mathematics"
-    assert response.progress.knowledge_profile[0].score == 100.0
+    assert response.progress.knowledge_profile[0].score == 60.0  # (3/5)*100
     assert response.progress.knowledge_profile[0].index == 1
     assert response.progress.knowledge_profile[1].topic == "Mathematics"
-    assert response.progress.knowledge_profile[1].score == pytest.approx(
-        66.66666666666667
-    )
+    assert response.progress.knowledge_profile[1].score == 40.0  # (2/5)*100
     assert response.progress.knowledge_profile[1].index == 2
     assert response.progress.knowledge_profile[2].topic == "Science"
-    assert response.progress.knowledge_profile[2].score == pytest.approx(
-        33.33333333333333
-    )
+    assert response.progress.knowledge_profile[2].score == 20.0  # (1/5)*100
     assert response.progress.knowledge_profile[2].index == 1
     student_report_service.get_student_progress.assert_called_once_with(
         "123e4567e89b12d3a456426614174000"

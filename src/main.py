@@ -12,7 +12,6 @@ from src.features.reports.shared.init import router as reports_router
 from itmentorsoft_persistence import init_db
 from src.infrastructure.cache.valkey_client import ValkeyClient
 from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
-    seed_assessments,
     seed_contents,
     seed_database,
 )
@@ -38,7 +37,6 @@ async def lifespan(app: FastAPI):
     await init_db()
     await seed_database(BcryptPasswordHasher())
     await seed_questions()
-    await seed_assessments()
     await seed_contents()
     print("Application startup complete.")
     yield
