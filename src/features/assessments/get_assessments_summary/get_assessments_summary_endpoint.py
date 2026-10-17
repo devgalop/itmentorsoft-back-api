@@ -75,18 +75,15 @@ async def get_assessments_summary(
     page: int = 0,
     page_size: int = 10,
 ) -> GetAssessmentsSummaryResponse:
-    try:
-        request = GetAssessmentsSummaryRequest(
-            student_id=student_id, page=page, page_size=page_size
-        )
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data,
-            user_id_to_validate=student_id,
-            blank_list_roles=["admin", "teacher"],
-        )
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.model_dump())
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetAssessmentsSummaryRequest(
+        student_id=student_id, page=page, page_size=page_size
+    )
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data,
+        user_id_to_validate=student_id,
+        blank_list_roles=["admin", "teacher"],
+    )
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.model_dump())
+    return response

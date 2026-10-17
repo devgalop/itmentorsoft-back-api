@@ -56,15 +56,11 @@ async def get_content_rating_by_user(
     ],
     token_data: Annotated[TokenData, Depends(require_roles(["student"]))],
 ) -> GetContentRatingByUserResponse:
-    try:
-        request = GetContentRatingByUserRequest(user_id=user_id, content_id=content_id)
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data, user_id_to_validate=user_id
-        )
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=t("content.rating.not_found"))
-        return response
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+    request = GetContentRatingByUserRequest(user_id=user_id, content_id=content_id)
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data, user_id_to_validate=user_id
+    )
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=t("content.rating.not_found"))
+    return response

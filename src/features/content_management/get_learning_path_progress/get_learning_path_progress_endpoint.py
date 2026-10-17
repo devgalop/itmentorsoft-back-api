@@ -67,11 +67,8 @@ async def get_learning_path_progress(
     ],
     _: Annotated[TokenData, Depends(require_roles(["student"]))],
 ) -> GetLearningPathProgressResponse:
-    try:
-        request = GetLearningPathProgressRequest(path_id=path_id)
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetLearningPathProgressRequest(path_id=path_id)
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

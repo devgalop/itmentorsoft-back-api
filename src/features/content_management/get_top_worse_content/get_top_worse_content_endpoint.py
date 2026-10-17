@@ -81,11 +81,8 @@ async def get_top_worse_content(
     Returns:
         GetTopWorseContentResponse: The response containing the top worse educational resource contents based on rating for the specified topic.
     """
-    try:
-        request = GetTopWorseContentRequest(topic=topic, limit=limit)
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetTopWorseContentRequest(topic=topic, limit=limit)
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

@@ -91,18 +91,15 @@ async def get_student_progress(
     """
     if not id:
         raise HTTPException(status_code=400, detail="User ID is required.")
-    try:
-        request = GetStudentProgressRequest(student_id=id)
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data,
-            user_id_to_validate=id,
-            blank_list_roles=["admin", "teacher"],
-        )
-        response = await handler.handle(request)
+    request = GetStudentProgressRequest(student_id=id)
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data,
+        user_id_to_validate=id,
+        blank_list_roles=["admin", "teacher"],
+    )
+    response = await handler.handle(request)
 
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.message)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.message)
 
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return response

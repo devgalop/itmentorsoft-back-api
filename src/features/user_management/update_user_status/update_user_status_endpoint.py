@@ -81,10 +81,7 @@ async def update_user_status(
     ],
     _: Annotated[TokenData, Depends(require_roles(["admin"]))],
 ) -> UpdateUserStatusResponse:
-    try:
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.model_dump())
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.model_dump())
+    return response

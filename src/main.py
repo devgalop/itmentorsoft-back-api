@@ -17,7 +17,20 @@ from src.infrastructure.database.postgresql.shared.postgresql_seeder import (
 )
 from src.infrastructure.security.bcrypt_password_hasher import BcryptPasswordHasher
 from src.infrastructure.env_manager.env_manager import EnvironmentVariablesConstants
+from src.infrastructure.security.rate_limiter.rate_limiter_service import (
+    RateLimiterService,
+)
+from src.infrastructure.security.rate_limit_middleware import (
+    RateLimitMiddleware,
+    RateLimitEnvVars,
+)
 from src.i18n import t
+
+# Initialize cache and rate limiter at module level
+# These will be connected during lifespan
+cache_client = ValkeyClient()
+rate_limiter = RateLimiterService(cache_client)
+rate_limit_config = RateLimitEnvVars()
 
 
 @asynccontextmanager
@@ -27,12 +40,13 @@ async def lifespan(app: FastAPI):
     EnvironmentVariablesConstants.validate_mandatory_env_vars()
 
     print("Initializing the cache service...")
-    cache_client = ValkeyClient()
     await cache_client.connect()
 
     app.state.valkey = cache_client
 
     print("Cache service initialized.")
+    print("Rate limiter service initialized.")
+
     print("Initializing the database...")
     await init_db()
     await seed_database(BcryptPasswordHasher())
@@ -48,6 +62,14 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+# Add rate limiting middleware if enabled
+if rate_limit_config.RATE_LIMIT_ENABLED:
+    app.add_middleware(
+        RateLimitMiddleware,
+        rate_limiter=rate_limiter,
+        config=rate_limit_config,
+    )
 
 app.include_router(user_management_router, prefix="/users", tags=["Users"])
 app.include_router(content_management_router, prefix="/content", tags=["Content"])

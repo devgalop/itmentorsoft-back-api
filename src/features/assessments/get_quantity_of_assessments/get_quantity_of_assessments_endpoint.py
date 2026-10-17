@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from src.features.assessments.get_quantity_of_assessments.get_quantity_of_assessments_handler import (
     GetQuantityOfAssessmentsHandler,
@@ -79,14 +79,11 @@ async def get_quantity_of_assessments(
     ],
 ) -> GetQuantityOfAssessmentsResponse:
 
-    try:
-        request = GetQuantityOfAssessmentsRequest(student_id=student_id)
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data,
-            user_id_to_validate=student_id,
-            blank_list_roles=["admin", "teacher"],
-        )
-        response = await handler.handle(request)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetQuantityOfAssessmentsRequest(student_id=student_id)
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data,
+        user_id_to_validate=student_id,
+        blank_list_roles=["admin", "teacher"],
+    )
+    response = await handler.handle(request)
+    return response

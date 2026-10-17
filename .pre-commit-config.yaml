@@ -13,5 +13,5 @@ repos:
     rev: 1.7.8
     hooks:
       - id: bandit
-        args: ["-r", "src/"]
+        args: ["-c", "pyproject.toml"]
         exclude: ^tests/

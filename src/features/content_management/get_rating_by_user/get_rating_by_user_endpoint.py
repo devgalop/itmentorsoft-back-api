@@ -92,14 +92,11 @@ async def get_ratings_by_user(
     ],
     token_data: Annotated[TokenData, Depends(require_roles(["student"]))],
 ) -> GetContentRatingByUserResponse:
-    try:
-        request = GetContentRatingByUserRequest(user_id=user_id)
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data, user_id_to_validate=user_id
-        )
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetContentRatingByUserRequest(user_id=user_id)
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data, user_id_to_validate=user_id
+    )
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

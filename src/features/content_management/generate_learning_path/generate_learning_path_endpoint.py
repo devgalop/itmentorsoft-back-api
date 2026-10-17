@@ -90,18 +90,15 @@ async def generate_learning_path(
     token_data: Annotated[TokenData, Depends(require_roles(["student"]))],
 ) -> GenerateLearningPathResponse:
 
-    try:
-        request = GenerateLearningPathRequest(student_id=student_id)
+    request = GenerateLearningPathRequest(student_id=student_id)
 
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data, user_id_to_validate=student_id
-        )
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data, user_id_to_validate=student_id
+    )
 
-        response = await handler.handle(request=request)
+    response = await handler.handle(request=request)
 
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.message)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.message)
 
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return response

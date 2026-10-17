@@ -82,18 +82,15 @@ async def get_complete_learning_path(
     page_size: int = 10,
 ) -> GetCompleteLearningPathResponse:
 
-    try:
-        request = GetCompleteLearningPathRequest(
-            user_id=user_id, page=page, page_size=page_size
-        )
+    request = GetCompleteLearningPathRequest(
+        user_id=user_id, page=page, page_size=page_size
+    )
 
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data, user_id_to_validate=user_id
-        )
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data, user_id_to_validate=user_id
+    )
 
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

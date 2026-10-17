@@ -300,6 +300,7 @@ MESSAGES_ES: dict[str, str] = {
     "validation.assessment.required": "Datos de evaluación son requeridos para evaluación",
     # ===== GLOBAL =====
     "error.unexpected": "Ocurrió un error inesperado",
+    "error.rate_limit_exceeded": "Límite de solicitudes excedido. Por favor intenta nuevamente más tarde",
     "learning_path.created": "Ruta de aprendizaje creada exitosamente",
     "learning_path.failed": "Error al crear la ruta de aprendizaje",
     "learning_path.not_found": "La ruta de aprendizaje no fue encontrada",

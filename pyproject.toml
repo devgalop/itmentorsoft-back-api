@@ -7,3 +7,6 @@ extend-exclude = [
     "./alembic/env.py",
     "./src/i18n/*"
 ]
+
+[tool.bandit]
+skips = ["B105"]

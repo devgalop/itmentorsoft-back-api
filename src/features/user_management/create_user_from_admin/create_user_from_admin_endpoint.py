@@ -79,10 +79,7 @@ async def create_user_from_admin(
     Returns:
         CreateUserFromAdminResponse: Response object containing the result of the user creation process.
     """
-    try:
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.message)
+    return response

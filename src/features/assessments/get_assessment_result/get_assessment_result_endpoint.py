@@ -119,18 +119,13 @@ async def get_assessment_result(
     Returns:
         GetAssessmentResultResponse: The response containing the assessment result or an error message.
     """
-    try:
-        request = GetAssessmentResultRequest(
-            user_id=user_id, assessment_id=assessment_id
-        )
-        UserIdentityValidator.is_valid_user(
-            user_logged=token_data,
-            user_id_to_validate=user_id,
-            blank_list_roles=["admin", "teacher"],
-        )
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=404, detail=response.message)
-        return response
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    request = GetAssessmentResultRequest(user_id=user_id, assessment_id=assessment_id)
+    UserIdentityValidator.is_valid_user(
+        user_logged=token_data,
+        user_id_to_validate=user_id,
+        blank_list_roles=["admin", "teacher"],
+    )
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=404, detail=response.message)
+    return response

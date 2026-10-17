@@ -69,13 +69,8 @@ async def get_pending_approval_questions(
     ],
     _: Annotated[TokenData, Depends(require_roles(["admin"]))],
 ):
-    try:
-        request = GetPendingApprovalQuestionsRequest(page=page, page_size=page_size)
-        response = await handler.handle(request)
-        if not response.is_success:
-            raise HTTPException(status_code=400, detail=response.model_dump())
-        return response
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Invalid request: {str(e)}")
+    request = GetPendingApprovalQuestionsRequest(page=page, page_size=page_size)
+    response = await handler.handle(request)
+    if not response.is_success:
+        raise HTTPException(status_code=400, detail=response.model_dump())
+    return response
