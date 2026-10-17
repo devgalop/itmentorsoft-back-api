@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from src.features.assessments.shared.questions_seeder import seed_questions
 from src.features.user_management.shared.init import router as user_management_router
@@ -54,6 +54,18 @@ app.include_router(content_management_router, prefix="/content", tags=["Content"
 app.include_router(assessments_router, prefix="/assessments", tags=["Assessments"])
 app.include_router(reports_router, prefix="/reports", tags=["Reports"])
 app.include_router(health_check_router, prefix="/health", tags=["Health Check"])
+
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "status": exc.status_code,
+            "message": exc.detail,
+            "path": request.url.path,
+        },
+    )
 
 
 @app.exception_handler(Exception)
