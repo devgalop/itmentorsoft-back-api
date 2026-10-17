@@ -105,8 +105,8 @@ async def seed_database(
 
         teacher = UserEntity(
             id=uuid.uuid4().hex,
-            username="default_teacher",
-            email="default_teacher@yopmail.com",
+            username="profe_1",
+            email="el_profe_123@yopmail.com",
             hashed_password=password_hasher.hash_password(
                 EnvironmentVariablesConstants.TEACHER_PASSWORD
             ),
@@ -117,19 +117,19 @@ async def seed_database(
         session.add(teacher)
         print("Teacher user created")
 
-        for i in range(1, 3):
-            student = UserEntity(
-                id=uuid.uuid4().hex,
-                username=f"student{i}",
-                email=f"student{i}@yopmail.com",
-                hashed_password=password_hasher.hash_password(
-                    EnvironmentVariablesConstants.STUDENT_PASSWORD
-                ),
-                status="active",
-                role_id=role_student.id,
-                name=f"Student {i}",
-            )
-            session.add(student)
+        student = UserEntity(
+            id=uuid.uuid4().hex,
+            username="yesid.garcia",
+            email="yga@yopmail.com",
+            hashed_password=password_hasher.hash_password(
+                EnvironmentVariablesConstants.STUDENT_PASSWORD
+            ),
+            status="active",
+            role_id=role_student.id,
+            name="Yesid Garcia",
+        )
+        session.add(student)
+
         print("Student users created")
         await session.commit()
 

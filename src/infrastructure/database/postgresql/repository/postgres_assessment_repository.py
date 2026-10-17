@@ -160,7 +160,7 @@ class PostgresAssessmentRepository(AssessmentRepository):
         ]
 
         student_name = (
-            topic_result_entities[0].user.username
+            topic_result_entities[0].user.name
             if topic_result_entities
             else "Unknown Student"
         )

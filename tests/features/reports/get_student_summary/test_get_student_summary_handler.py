@@ -142,15 +142,11 @@ async def test_map_to_response_converts_knowledge_profiles_correctly():
     response = await handler.handle(request)
 
     assert response.summary.profile[0].topic == "Mathematics"
-    assert response.summary.profile[0].score == 100.0  # (3/3)*100
+    assert response.summary.profile[0].score == 60.0  # (3/5)*100
     assert response.summary.profile[1].topic == "Science"
-    assert response.summary.profile[1].score == pytest.approx(
-        66.66666666666667
-    )  # (2/3)*100
+    assert response.summary.profile[1].score == 40.0  # (2/5)*100
     assert response.summary.profile[2].topic == "History"
-    assert response.summary.profile[2].score == pytest.approx(
-        33.33333333333333
-    )  # (1/3)*100
+    assert response.summary.profile[2].score == 20.0  # (1/5)*100
 
 
 @pytest.mark.asyncio
