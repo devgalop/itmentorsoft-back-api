@@ -48,9 +48,22 @@ class PostgresLearningPathRepository(LearningPathRepository):
                 recommendation=[],
             )
         # 2. Para cada tema, buscar el top 5 de contenidos con mejor puntaje
+        #    excluyendo los que el usuario ya marcó como completados
         learning_paths = []
         for result in results:
             topic = result.topic
+            # Subquery: content_ids que el usuario ya completó en sus learning paths
+            completed_content_ids = (
+                select(LearningPathContentEntity.content_id)
+                .join(
+                    LearningPathEntity,
+                    LearningPathContentEntity.learning_path_id == LearningPathEntity.id,
+                )
+                .where(
+                    LearningPathEntity.user_id == user_id,
+                    LearningPathContentEntity.is_completed,
+                )
+            )
             stmt = (
                 select(
                     ResourceContentEntity,
@@ -63,7 +76,10 @@ class PostgresLearningPathRepository(LearningPathRepository):
                     ResourceContentEntity.id == ContentRating.content_id,
                     isouter=True,
                 )
-                .where(ResourceContentEntity.related_topics.ilike(f"%{topic}%"))
+                .where(
+                    ResourceContentEntity.related_topics.ilike(f"%{topic}%"),
+                    ResourceContentEntity.id.not_in(completed_content_ids),
+                )
                 .group_by(ResourceContentEntity.id)
                 .order_by(func.coalesce(func.avg(ContentRating.rating), 0).desc())
                 .limit(5)
@@ -169,12 +185,24 @@ class PostgresLearningPathRepository(LearningPathRepository):
         await self.session_factory.commit()
 
         progress = await self.get_learning_path_progress(path_id)
-        if not progress.is_success:
+        if not progress.is_success or not progress.path_progress:
             return LearningPathProgressResponse(
                 is_success=False,
                 message="Learning path not found.",
                 path_progress=None,
             )
+
+        if progress.path_progress.progress >= 100.0:
+            learning_path_stmt = select(LearningPathEntity).where(
+                LearningPathEntity.id == path_id
+            )
+            result_learning_path = await self.session_factory.execute(
+                learning_path_stmt
+            )
+            learning_path = result_learning_path.scalars().first()
+            if learning_path:
+                learning_path.is_completed = True
+                await self.session_factory.commit()
 
         return LearningPathProgressResponse(
             is_success=True,
@@ -210,8 +238,10 @@ class PostgresLearningPathRepository(LearningPathRepository):
             LearningPathEntity.user_id == user_id,
         )
         result = await self.session_factory.execute(stmt)
-        learning_path = result.scalars().first()
-        return learning_path is not None and not learning_path.is_completed
+        learning_path = result.scalars().all()
+        return learning_path is not None and any(
+            not lp.is_completed for lp in learning_path
+        )
 
     async def get_learning_path_by_id(self, path_id: str) -> LearningPath | None:
         stmt = (

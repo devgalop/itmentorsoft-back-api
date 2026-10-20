@@ -20,7 +20,7 @@ class UpdateContentPathStatusHandler:
             request.path_id, request.content_id, request.status
         )
 
-        if not response.is_success:
+        if not response.is_success or not response.path_progress:
             return UpdateContentPathStatusResponse(
                 is_success=response.is_success,
                 message=response.message,
